@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroStyle AR - Beauty & Astrology</title>
+    <style>
+        :root {
+            --bg-color: #1a0b2e;
+            --card-bg: #2d1b4e;
+            --accent: #d4af37;
+            --text-light: #f4ecff;
+            --btn-gradient: linear-gradient(135deg, #d4af37 0%, #ff8c00 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f0518;
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Simulare ecran telefon */
+        .app-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg-color);
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #333;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(45, 27, 78, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 10;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Ecrane aplicație */
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 25px;
+            background: var(--btn-gradient);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn:active { transform: scale(0.95); }
+
+        /* AR Scanner Mock */
+        .scanner-box {
+            height: 200px;
+            border: 2px dashed var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.05);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            top: 0;
+            animation: scan 2s infinite alternate;
+        }
+
+        @keyframes scan {
+            0% { top: 10%; }
+            100% { top: 90%; }
+        }
+
+        /* Results Card */
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .result-card h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: var(--accent);
+        }
+
+        .ar-preview {
+            height: 250px;
+            background: url('https://images.unsplash.com/photo-1611558709798-e009c8fd7706?auto=format&fit=crop&w=400&q=80') center/cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .ar-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .loader {
+            text-align: center;
+            padding-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <h1>✨ AstroStyle AR</h1>
+    </div>
+
+    <div class="content">
+        <!-- SCREEN 1: INPUT DATE -->
+        <div id="screen-input" class="screen active">
+            <div class="scanner-box">
+                <div class="scanner-line"></div>
+                <p>📷 Scanează Fața (Simulare)</p>
+            </div>
+
+            <h3 style="margin-bottom: 5px;">1. Date Biometrice</h3>
+            <label>Forma Feței (Detectată):</label>
+            <select id="face-shape">
+                <option value="rotunda">Rotundă (necesită alungire vizuală)</option>
+                <option value="patrata">Pătrată (necesită îndulcirea trăsăturilor)</option>
+                <option value="ovala">Ovală (proporții echilibrate)</option>
+            </select>
+
+            <label>Subton Piele (Detectat):</label>
+            <select id="skin-tone">
+                <option value="rece">Rece (vene albastre, ten rozaliu)</option>
+                <option value="cald">Cald (vene verzi, ten auriu)</option>
+                <option value="neutru">Neutru</option>
+            </select>
+
+            <h3 style="margin-top: 25px; margin-bottom: 5px;">2. Astrologie</h3>
+            <label>Zodia Ta:</label>
+            <select id="zodiac">
+                <option value="foc">Berbec, Leu, Săgetător (Foc)</option>
+                <option value="pamant">Taur, Fecioară, Capricorn (Pământ)</option>
+                <option value="aer">Gemeni, Balanță, Vărsător (Aer)</option>
+                <option value="apa">Rac, Scorpion, Pești (Apă)</option>
+            </select>
+
+            <button class="btn" onclick="generateLook()">Generează Look-ul Magic</button>
+        </div>
+
+        <!-- SCREEN 2: LOADING -->
+        <div id="screen-loading" class="screen">
+            <div class="loader">
+                <h2 style="color: var(--accent);">🔮</h2>
+                <p>Se analizează geometria facială...</p>
+                <p>Se aliniază culorile cu astrele...</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: REZULTATE -->
+        <div id="screen-results" class="screen">
+            <div class="ar-preview">
+                <div class="ar-overlay">🔴 AR Live Preview</div>
+            </div>
+
+            <div class="result-card">
+                <h3>📐 Filtrul de Bază (Fizionomie)</h3>
+                <p id="res-bio">Aici apare analiza biometrică.</p>
+            </div>
+
+            <div class="result-card">
+                <h3>✨ Filtrul de Personalitate (Zodie)</h3>
+                <p id="res-astro">Aici apare influența zodiei.</p>
+            </div>
+
+            <div class="result-card" style="border-left-color: #ff8c00;">
+                <h3>💇‍♀️ Recomandarea Finală (AR)</h3>
+                <p id="res-final">Sinteza coafurii și a machiajului.</p>
+            </div>
+
+            <button class="btn" onclick="resetApp()">Încearcă alt Look</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Baza de date a algoritmului (Mock Data)
+    const logicDB = {
+        face: {
+            rotunda: "Coafuri cu volum în creștet și șuvițe laterale pentru a crea iluzia de alungire. Conturare accentuată pe pomeți.",
+            patrata: "Bucle lejere și tunsori asimetrice pentru a îndulci linia maxilarului. Machiaj luminos în centrul feței.",
+            ovala: "Orice tunsoare funcționează. Machiaj echilibrat care să mențină simetria naturală."
+        },
+        tone: {
+            rece: "Nuanțe de păr cenușii, platinate sau negru intens. Machiaj cu blush roz și ruj în tonuri de fructe de pădure.",
+            cald: "Nuanțe de păr miere, caramel sau cupru. Machiaj cu bronzer cald și ruj piersică/cărămiziu.",
+            neutru: "Ești norocoasă, poți purta atât tonuri aurii, cât și argintii, atât culori reci, cât și calde."
+        },
+        zodiac: {
+            foc: "🔥 Element Foc: Adăugăm o notă dramatică! O culoare vibrantă, volum statement și un eyeliner cat-eye îndrăzneț pentru atitudinea ta de lider.",
+            pamant: "🌿 Element Pământ: Rafinament și stabilitate. Alegem un look 'Old Money', păr mătăsos, culori naturale și un machiaj 'no-makeup' impecabil.",
+            aer: "💨 Element Aer: Modern și schimbător. Propunem o tunsoare texturată, ușor de coafat, cu șuvițe luminoase și farduri în culori pastelate/metalice.",
+            apa: "💧 Element Apă: Mister și senzualitate. Păr fluid, bucle tip 'mermaid', machiaj smokey-eyes estompat și un luciu de buze hidratant."
+        }
+    };
+
+    function generateLook() {
+        // Preia valorile selectate
+        const face = document.getElementById('face-shape').value;
+        const tone = document.getElementById('skin-tone').value;
+        const zodiac = document.getElementById('zodiac').value;
+
+        // Schimbă ecranul spre Loading
+        document.getElementById('screen-input').classList.remove('active');
+        document.getElementById('screen-loading').classList.add('active');
+
+        // Simulează timpul de procesare algoritm (2 secunde)
+        setTimeout(() => {
+            // Populează rezultatele
+            document.getElementById('res-bio').innerHTML = `<strong>Formă & Culoare:</strong> ${logicDB.face[face]} ${logicDB.tone[tone]}`;
+            document.getElementById('res-astro').innerHTML = logicDB.zodiac[zodiac];
+            
+            // Construiește fraza finală
+            let finalVerdict = "Am proiectat un look ";
+            if(zodiac === 'foc') finalVerdict += "îndrăzneț și voluminos, ";
+            if(zodiac === 'pamant') finalVerdict += "elegant și natural, ";
+            if(zodiac === 'aer') finalVerdict += "modern și texturat, ";
+            if(zodiac === 'apa') finalVerdict += "fluid și seducător, ";
+            finalVerdict += "adaptat perfect proporțiilor tale faciale.";
+            
+            document.getElementById('res-final').innerHTML = `<strong>Verdict AR:</strong> ${finalVerdict}`;
+
+            // Afișează ecranul de rezultate
+            document.getElementById('screen-loading').classList.remove('active');
+            document.getElementById('screen-results').classList.add('active');
+        }, 2000);
+    }
+
+    function resetApp() {
+        document.getElementById('screen-results').classList.remove('active');
+        document.getElementById('screen-input').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
