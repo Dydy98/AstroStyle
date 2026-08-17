@@ -3,309 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstroStyle AR - Beauty & Astrology</title>
+    <title>AstroBeauty — Analiză Biometrică, Stil & Test Psihologic Avansat</title>
     <style>
         :root {
-            --bg-color: #1a0b2e;
-            --card-bg: #2d1b4e;
-            --accent: #d4af37;
-            --text-light: #f4ecff;
-            --btn-gradient: linear-gradient(135deg, #d4af37 0%, #ff8c00 100%);
+            --bg-main: #f4eae6;
+            --container-bg: rgba(255, 255, 255, 0.85);
+            --primary-color: #b76e79; /* Rose Gold */
+            --secondary-color: #c0c0c0; /* Argintiu */
+            --text-color: #1a1a1a;
+            --border-color: #d1a3a4;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f0518;
-            color: var(--text-light);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+        /* Teme dinamice în funcție de stil */
+        body.theme-punk { --bg-main: #121212; --container-bg: rgba(26, 26, 26, 0.95); --primary-color: #ff2a6d; --secondary-color: #05d9e8; --text-color: #f0f0f0; --border-color: #ff2a6d; }
+        body.theme-rock { --bg-main: #1c1c1c; --container-bg: rgba(38, 38, 38, 0.95); --primary-color: #e63946; --secondary-color: #457b9d; --text-color: #f1faee; --border-color: #e63946; }
+        body.theme-boho { --bg-main: #2b231d; --container-bg: rgba(53, 44, 38, 0.92); --primary-color: #dda15e; --secondary-color: #bc6c25; --text-color: #fefae0; --border-color: #dda15e; }
+        body.theme-cyberpunk { --bg-main: #0b090a; --container-bg: rgba(20, 18, 22, 0.95); --primary-color: #00f5d4; --secondary-color: #7b2cbf; --text-color: #e0fbfc; --border-color: #00f5d4; }
+        body.theme-glam { --bg-main: #1d1a2f; --container-bg: rgba(35, 30, 53, 0.92); --primary-color: #e0aaff; --secondary-color: #c77dff; --text-color: #ffffff; --border-color: #e0aaff; }
+        body.theme-minimalist { --bg-main: #eef1f6; --container-bg: rgba(255, 255, 255, 0.95); --primary-color: #495057; --secondary-color: #adb5bd; --text-color: #212529; --border-color: #ced4da; }
 
-        /* Simulare ecran telefon */
-        .app-container {
-            width: 100%;
-            max-width: 390px;
-            height: 844px;
-            background-color: var(--bg-color);
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            border: 8px solid #333;
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px;
-            background: rgba(45, 27, 78, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            z-index: 10;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 22px;
-            color: var(--accent);
-            letter-spacing: 1px;
-        }
-
-        .content {
-            padding: 20px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        /* Ecrane aplicație */
-        .screen { display: none; }
-        .screen.active { display: block; animation: fadeIn 0.5s; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--accent);
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 30px;
-            border: none;
-            border-radius: 25px;
-            background: var(--btn-gradient);
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.2s;
-        }
-
-        .btn:active { transform: scale(0.95); }
-
-        /* AR Scanner Mock */
-        .scanner-box {
-            height: 200px;
-            border: 2px dashed var(--accent);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(212, 175, 55, 0.05);
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-            top: 0;
-            animation: scan 2s infinite alternate;
-        }
-
-        @keyframes scan {
-            0% { top: 10%; }
-            100% { top: 90%; }
-        }
-
-        /* Results Card */
-        .result-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--accent);
-        }
-
-        .result-card h3 {
-            margin-top: 0;
-            font-size: 16px;
-            color: var(--accent);
-        }
-
-        .ar-preview {
-            height: 250px;
-            background: url('https://images.unsplash.com/photo-1611558709798-e009c8fd7706?auto=format&fit=crop&w=400&q=80') center/cover;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            position: relative;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-color); min-height: 100vh; padding: 20px; transition: background 0.5s ease; }
         
-        .ar-overlay {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.6);
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 12px;
-        }
+        .container { max-width: 750px; margin: auto; background: var(--container-bg); padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 2px solid var(--border-color); backdrop-filter: blur(10px); }
         
-        .loader {
-            text-align: center;
-            padding-top: 100px;
-        }
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 5px; font-size: 2rem; }
+        .subtitle { text-align: center; font-size: 0.9rem; margin-bottom: 25px; opacity: 0.8; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        
+        .form-group { display: flex; flex-direction: column; }
+        label { margin-bottom: 6px; font-size: 0.85rem; font-weight: bold; }
+        
+        select, input { padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.7); color: inherit; font-size: 0.95rem; outline: none; }
+        body.theme-punk select, body.theme-rock select, body.theme-cyberpunk select, body.theme-glam select, body.theme-boho select { background: rgba(0,0,0,0.3); color: #fff; }
+
+        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: #1a1a1a; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.05rem; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); }
+
+        /* Container Test Psihologic 30 Întrebări */
+        #quiz-section { display: none; margin-top: 20px; border-top: 2px solid var(--border-color); padding-top: 20px; }
+        .question-card { background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .question-title { font-weight: bold; margin-bottom: 10px; font-size: 0.95rem; }
+        .options-group { display: flex; flex-direction: column; gap: 6px; }
+        .option-label { font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+        /* Card Rezultate */
+        #result { display: none; margin-top: 30px; padding: 25px; background: rgba(0,0,0,0.04); border-radius: 15px; border: 1px solid var(--border-color); }
+        .result-img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; border: 2px solid var(--primary-color); }
+        .result-section-title { color: var(--primary-color); font-size: 1.1rem; margin-top: 15px; margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
+        ul { padding-left: 20px; font-size: 0.95rem; }
+        ul li { margin-bottom: 5px; }
     </style>
 </head>
-<body>
+<body class="theme-rose-gold" id="app-body">
 
-<div class="app-container">
-    <div class="header">
-        <h1>✨ AstroStyle AR</h1>
+<div class="container">
+    <h1>AstroBeauty AI</h1>
+    <p class="subtitle">Sistem Integrat: Analiză Biometrică, Stil Estetic, Metabolism & Test Psihologic (30 Întrebări)</p>
+    
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Stil Estetic Principal</label>
+            <select id="style" onchange="updateThemePreview()">
+                <option value="rose-gold">Rose Gold Classic (Implicit)</option>
+                <option value="punk">Punk / Dark Alternative</option>
+                <option value="rock">Rock / Edgy</option>
+                <option value="boho">Boho Chic</option>
+                <option value="cyberpunk">Cyberpunk Neon</option>
+                <option value="glam">Glamour Lux</option>
+                <option value="minimalist">Minimalist Curat</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tip de Corp / Morfologie</label>
+            <select id="bodyType">
+                <option value="hourglass">Clepsidră (Proporționat)</option>
+                <option value="ectomorph">Ectomorf (Sly & Subțire)</option>
+                <option value="endomorph">Endomorf (Rotunjit & Plin)</option>
+                <option value="mesomorph">Mezomorf (Atletic / Musculos)</option>
+                <option value="rectangle">Dreptunghi / Pătrat (Linia dreaptă)</option>
+                <option value="triangle">Triunghi / Păăă (Umeri înguști, șolduri late)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tip de Metabolism</label>
+            <select id="metabolism">
+                <option value="fast">Metabolism Rapid (Ardere accelerată)</option>
+                <option value="slow">Metabolism Lent (Stocare eficientă)</option>
+                <option value="mixed">Metabolism Mixt / Echilibrat</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Rasă / Etnie</label>
+            <select id="race">
+                <option value="caucasian">Caucazian</option>
+                <option value="asian">Asiatic</option>
+                <option value="black">Black / African</option>
+                <option value="latino">Latino / Hispanic</option>
+                <option value="mixed">Mixed</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Culoarea Pielii</label>
+            <select id="skinColor">
+                <option value="fair">Porțelan / Foarte deschisă</option>
+                <option value="light">Deschisă</option>
+                <option value="tan">Măslinie / Bronzată</option>
+                <option value="deep">Închisă / Profundă</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tip Ten</label>
+            <select id="skinType">
+                <option value="normal">Normal (Echilibrat)</option>
+                <option value="oily">Gras / Sebum ridicat</option>
+                <option value="dry">Uscat / Deshidratat</option>
+                <option value="combination">Mixt (Zona T uleioasă)</option>
+            </select>
+        </div>
     </div>
 
-    <div class="content">
-        <!-- SCREEN 1: INPUT DATE -->
-        <div id="screen-input" class="screen active">
-            <div class="scanner-box">
-                <div class="scanner-line"></div>
-                <p>📷 Scanează Fața (Simulare)</p>
-            </div>
+    <button class="btn" onclick="startQuizPhase()">Începe Chestionarul Psihologic & Stare Mood (30 Întrebări)</button>
 
-            <h3 style="margin-bottom: 5px;">1. Date Biometrice</h3>
-            <label>Forma Feței (Detectată):</label>
-            <select id="face-shape">
-                <option value="rotunda">Rotundă (necesită alungire vizuală)</option>
-                <option value="patrata">Pătrată (necesită îndulcirea trăsăturilor)</option>
-                <option value="ovala">Ovală (proporții echilibrate)</option>
-            </select>
+    <!-- Secțiunea de Teste cu 30 de Întrebări -->
+    <div id="quiz-section">
+        <h3 style="color:var(--primary-color); margin-bottom:15px; text-align:center;">🧠 Chestionar Avansat de Temperament & Mood (30 Puncte de Control)</h3>
+        <div id="questions-container"></div>
+        <button class="btn" onclick="generateFinalAnalysis()">Calculează Analiza Completă & Horoscopul Stării</button>
+    </div>
 
-            <label>Subton Piele (Detectat):</label>
-            <select id="skin-tone">
-                <option value="rece">Rece (vene albastre, ten rozaliu)</option>
-                <option value="cald">Cald (vene verzi, ten auriu)</option>
-                <option value="neutru">Neutru</option>
-            </select>
+    <!-- Rezultat final -->
+    <div id="result">
+        <img id="resImg" class="result-img" src="" alt="Look">
+        <h2 id="resTitle"></h2>
+        
+        <div class="result-section-title">✨ Profil Biometric & Stil Personal</div>
+        <p id="resDesc"></p>
 
-            <h3 style="margin-top: 25px; margin-bottom: 5px;">2. Astrologie</h3>
-            <label>Zodia Ta:</label>
-            <select id="zodiac">
-                <option value="foc">Berbec, Leu, Săgetător (Foc)</option>
-                <option value="pamant">Taur, Fecioară, Capricorn (Pământ)</option>
-                <option value="aer">Gemeni, Balanță, Vărsător (Aer)</option>
-                <option value="apa">Rac, Scorpion, Pești (Apă)</option>
-            </select>
+        <div class="result-section-title">🔮 Horoscop Personalizat (Generat din Test & Temperament)</div>
+        <p id="resHoroscope"></p>
 
-            <button class="btn" onclick="generateLook()">Generează Look-ul Magic</button>
-        </div>
+        <div class="result-section-title">💄 Machiaj & Îngrijire Personalizată</div>
+        <ul id="resMakeup"></ul>
 
-        <!-- SCREEN 2: LOADING -->
-        <div id="screen-loading" class="screen">
-            <div class="loader">
-                <h2 style="color: var(--accent);">🔮</h2>
-                <p>Se analizează geometria facială...</p>
-                <p>Se aliniază culorile cu astrele...</p>
-            </div>
-        </div>
-
-        <!-- SCREEN 3: REZULTATE -->
-        <div id="screen-results" class="screen">
-            <div class="ar-preview">
-                <div class="ar-overlay">🔴 AR Live Preview</div>
-            </div>
-
-            <div class="result-card">
-                <h3>📐 Filtrul de Bază (Fizionomie)</h3>
-                <p id="res-bio">Aici apare analiza biometrică.</p>
-            </div>
-
-            <div class="result-card">
-                <h3>✨ Filtrul de Personalitate (Zodie)</h3>
-                <p id="res-astro">Aici apare influența zodiei.</p>
-            </div>
-
-            <div class="result-card" style="border-left-color: #ff8c00;">
-                <h3>💇‍♀️ Recomandarea Finală (AR)</h3>
-                <p id="res-final">Sinteza coafurii și a machiajului.</p>
-            </div>
-
-            <button class="btn" onclick="resetApp()">Încearcă alt Look</button>
-        </div>
+        <div class="result-section-title">🥗 Recomandări Nutriție & Corp (Metabolism)</div>
+        <ul id="resBodyAdvice"></ul>
     </div>
 </div>
 
 <script>
-    // Baza de date a algoritmului (Mock Data)
-    const logicDB = {
-        face: {
-            rotunda: "Coafuri cu volum în creștet și șuvițe laterale pentru a crea iluzia de alungire. Conturare accentuată pe pomeți.",
-            patrata: "Bucle lejere și tunsori asimetrice pentru a îndulci linia maxilarului. Machiaj luminos în centrul feței.",
-            ovala: "Orice tunsoare funcționează. Machiaj echilibrat care să mențină simetria naturală."
-        },
-        tone: {
-            rece: "Nuanțe de păr cenușii, platinate sau negru intens. Machiaj cu blush roz și ruj în tonuri de fructe de pădure.",
-            cald: "Nuanțe de păr miere, caramel sau cupru. Machiaj cu bronzer cald și ruj piersică/cărămiziu.",
-            neutru: "Ești norocoasă, poți purta atât tonuri aurii, cât și argintii, atât culori reci, cât și calde."
-        },
-        zodiac: {
-            foc: "🔥 Element Foc: Adăugăm o notă dramatică! O culoare vibrantă, volum statement și un eyeliner cat-eye îndrăzneț pentru atitudinea ta de lider.",
-            pamant: "🌿 Element Pământ: Rafinament și stabilitate. Alegem un look 'Old Money', păr mătăsos, culori naturale și un machiaj 'no-makeup' impecabil.",
-            aer: "💨 Element Aer: Modern și schimbător. Propunem o tunsoare texturată, ușor de coafat, cu șuvițe luminoase și farduri în culori pastelate/metalice.",
-            apa: "💧 Element Apă: Mister și senzualitate. Păr fluid, bucle tip 'mermaid', machiaj smokey-eyes estompat și un luciu de buze hidratant."
-        }
+    // Generare dinamică a celor 30 de întrebări de temperament și stare mood
+    const questionsList = [
+        "1. Cum reacționezi de obicei când te confrunți cu o schimbare neașteptată de plan?",
+        "2. Ce tip de energie resimți cel mai des în prima parte a zilei?",
+        "3. Care mediu exterior te relaxează instantaneu cel mai mult?",
+        "4. Cum îți alegi hainele dimineața?",
+        "5. Ce element din natura înconjurătoare te atrage subconștient?",
+        "6. Cum gestionezi un conflict direct sau o discuție în contradictoriu?",
+        "7. Ce tip de sunet sau muzică rezonează cel mai bine cu starea ta interioară?",
+        "8. Cum preferi să-ți petreci timpul liber la sfârșitul săptămânii?",
+        "9. Ce valoare personală consideri că te definește cel mai puternic?",
+        "10. Cum reacționezi când cineva îți cere ajutorul într-un moment aglomerat?",
+        "11. Ce textură sau material vestimentar îți oferă cea mai mare siguranță?",
+        "12. Cum descrii ritmul tău intern de viață în acest moment?",
+        "13. Ce tip de lumină preferi în locuința ta?",
+        "14. Cum te raportezi la riscuri și decizii majore de viitor?",
+        "15. Ce emoție predominantă ai experimentat în ultimele zile?",
+        "16. Cum reacționezi în fața unui eșec sau a unei obstrucții temporare?",
+        "17. Ce tip de aromă sau parfum îți trezește cele mai vii amintiri?",
+        "18. Care este atitudinea ta față de regulile stricte impuse de alții?",
+        "19. Cum interacționezi cu persoanele necunoscute într-un grup?",
+        "20. Ce fel de activitate fizică te eliberează cel mai bine de stres?",
+        "21. Cum percepi trecerea timpului în viața de zi cu zi?",
+        "22. Ce culoare crezi că descrie cel mai bine profunzimea ta interioară?",
+        "23. Cum te simți atunci când ești pus în centrul atenției?",
+        "24. Ce tip de lectură sau conținut vizual captează imediat interesul tău?",
+        "25. Cum îți reîncarci rezervele de energie după o zi extenuantă?",
+        "26. Ce importanță acorzi intuiției comparativ cu logica pură?",
+        "27. Cum reacționezi la temperaturile scăzute sau la iarnă?",
+        "28. Ce gând sau vis recurent te motivează să mergi mai departe?",
+        "29. Cum definești succesul personal în etapa actuală?",
+        "30. Ce mesaj îți transmiți ție însuți/însăți în momentele de incertitudine?"
+    ];
+
+    const optionSets = [
+        ["A. Analizez logic rapid și mă adaptez", "B. Simt un impuls puternic de moment", "C. Analizez emoțional impactul", "D. Prefer să mențin controlul calm"],
+        ["A. Explozie de energie și inițiativă", "B. Calmă, dar orientată spre acțiune", "C. Visătoare, cu conectare lentă", "D. Pragmatică și organizată"],
+        ["A. Vântul puternic și spațiile deschise", "B. Un foc aprins sau o seară urbană dinamică", "C. O pădure verde și liniștită", "D. O apă curgătoare sau marea adâncă"],
+        ["A. În funcție de starea de spirit din acea secundă", "B. Aleg piese statement care să iasă în evidență", "C. Confort absolut și texturi naturale", "D. Elegant, curat și bine pus la punct"],
+        ["A. Focul și fulgerele", "B. Pământul solid și munții", "C. Aerul liber și înălțimile", "D. Oceanele și profunzimile acvatice"],
+        ["A. Răspund ferm și direct pe loc", "B. Îmi aprind rapid ambiția și ripostez", "C. Evit conflictul și caut armonia", "D. Analizez rece și pun punct argumentat"],
+        ["A. Ritmuri electronice / experimentale", "B. Rock energic sau chitare puternice", "C. Sunete acustice / ambientale", "D. Melodii line, profunde / clasice"],
+        ["A. Călătorii, descoperiri și noutate absolută", "B. Evenimente sociale, socializare intensă", "C. Natură, citit, relaxare acasă", "D. Planificare, organizare, proiecte personale"],
+        ["A. Independența și libertatea absolută", "B. Pasiunea și curajul", "C. Empatia și armonia interioară", "D. Stabilitatea și integritatea"],
+        ["A. Sar imediat să ajut cu entuziasm", "B. Ofer soluții practice imediate", "C. Ascult empatic și ofer sprijin emoțional", "D. Evaluez dacă am timp și resurse"],
+        ["A. Piele, metal și accesorii lucioase", "B. Catifea, mătase sau bumbac greu", "C. In, lână fină sau materiale organice", "D. Țesături structurate, linii curate"],
+        ["A. Accelerat, mereu cu un pas înainte", "B. Intens, cu valuri de pasiune", "C. Lin, curgător și flexibil", "D. Stabil, metodic și predictibil"],
+        ["A. Lumini colorate, neon sau futuriste", "B. Lumină caldă, intensă de lampă", "C. Lumină naturală de soare direct", "D. Lumină difuză, discretă și relaxantă"],
+        ["A. Îmi plac riscurile asumate și noutatea", "B. Acționez curajos ghidat de instinct", "C. Ezit dacă nu simt siguranță emoțională", "D. Calculez fiecare pas în detaliu"],
+        ["A. Curiozitate și entuziasm", "B. Nerăbdare sau efervescență", "C. Nostalgie sau introspecție", "D. Echilibru și calm interior"],
+        ["A. Inovez și caut altă cale imediat", "B. Mă ambiționez și lupt mai tare", "C. Iau o pauză și îmi reglez energia", "D. Îmi ajustez strategia metodic"],
+        ["A. Parfumuri fresh, citrice sau ozonice", "B. Note lemnoase, condimentate, intense", "C. Flori de câmp, ierburi aromatice", "D. Vanilie, mosc, note calde și senzuale"],
+        ["A. Le contest și îmi creezpropriile reguli", "B. Le accept doar dacă au sens pentru mine", "C. Le respect pentru a evita tensiunile", "D. Consider că regulile sunt esențiale"],
+        ["A. Sunt spontan(ă) și atrag atenția", "B. Preiau conducerea sau ghidez conversația", "C. Ascult mai mult la început", "D. Analizez interlocutorul cu atenție"],
+        ["A. Alergare, mișcare dinamică în aer liber", "B. Fitness intens sau antrenamente de forță", "C. Yoga, stretching, plimbări lungi", "D. Rutine fixe de întreținere corporală"],
+        ["A. Mi se pare că zboară incredibil de repede", "B. Este intens, trăit la maximum în prezent", "C. Este elastic, curge natural", "D. Este strict cronometrat și organizat"],
+        ["A. Argintiu metalic sau nuanțe electrice", "B. Roșu aprins sau negru profund", "C. Verde pământiu sau tonuri calde", "D. Albastru marin sau nuanțe neutre"],
+        ["A. Mă simt stimulat(ă) și în elementul meu", "B. Radiez carismă și energie", "C. Prefer discreția și spațiul personal", "D. Gestionez situația cu profesionalism"],
+        ["A. SF, tehnologie, inovație, arte vizuale", "B. Acțiune, biografii ale unor rebeli", "C. Natură, filosofie, spiritualitate", "D. Istorie, economie, dezvoltare personală"],
+        ["A. Schimbând complet activitatea sau mediul", "B. Făcând ceva pasional sau creativ", "C. Retrăgându-mă în liniște absolută", "D. Făcând ordine și organizându-mi spațiul"],
+        ["A. Mă bizui în totalitate pe intuiție", "B. Ascult instinctul combinat cu acțiunea", "C. Ascult vocea interioară profundă", "D. Mă bazez preponderent pe logică"],
+        ["A. Mă mobilizează și îmi dă claritate", "B. Îmi stimulează energia interioară", "C. Îmi activează dorința de confort și căldură", "D. Mă adaptez ușor prin vestimentație adecvată"],
+        ["A. Că voi cuceri noi orizonturi", "B. Că voi reuși să schimb ceva major", "C. Că voi trăi în pace și armonie", "D. Că voi construi ceva durabil"],
+        ["A. Libertatea de a crea și a fi unic(ă)", "B. Succesul, impactul și recunoașterea", "C. Echilibrul sufletesc și iubirea", "D. Siguranța, realizarea profesională și ordinea"],
+        ["A. „Totul este posibil, îndrăznește!”", "B. „Sunt de neoprit!”", "C. „Ai răbdare, totul se așază.”", "D. „Planul funcționează exact cum trebuie.”"]
+    ];
+
+    const styleDatabase = {
+        "rose-gold": { title: "Rose Gold Classic & Elegance", img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500", makeup: ["Ruj nude-trandafiriu cremos.", "Iluminator soft rose-gold pe pomeți.", "Farduri în tonuri de șampanie și cupru fin."] },
+        punk: { title: "Punk Alternative & Rebel", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500", makeup: ["Eyeliner negru grafic dramatic.", "Ruj negru mat sau vișiniu închis.", "Ten uniform mat cu accent pe pomeți conturați."] },
+        rock: { title: "Rock & Roll Edgy", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500", makeup: ["Smokey eyes negru intens estompat.", "Mascara cu volum maxim.", "Ruj roșu sângeriu sau nude neutru."] },
+        boho: { title: "Boho Chic & Natural", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500", makeup: ["Fard de obraz piersiciu natural.", "Balsam de buze hidratant nuanțator.", "Sprâncene naturale fixate lejer."] },
+        cyberpunk: { title: "Cyberpunk Futuristic Neon", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500", makeup: ["Eyeliner neon albastru/roz UV.", "Iluminator holographic irizant.", "Gloss metalic strălucitor."] },
+        glam: { title: "Glamour Luxury & Red Carpet", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500", makeup: ["Ruj roșu clasic impecabil.", "Gene false lungi și bogate.", "Ten cu luminozitate de tip glass-skin."] },
+        minimalist: { title: "Minimalist Clean Skin", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500", makeup: ["BB Cream ușor / Skin Tint.", "Gel transparent pentru sprâncene.", "Ulei hidratant pentru buze."] }
     };
 
-    function generateLook() {
-        // Preia valorile selectate
-        const face = document.getElementById('face-shape').value;
-        const tone = document.getElementById('skin-tone').value;
-        const zodiac = document.getElementById('zodiac').value;
-
-        // Schimbă ecranul spre Loading
-        document.getElementById('screen-input').classList.remove('active');
-        document.getElementById('screen-loading').classList.add('active');
-
-        // Simulează timpul de procesare algoritm (2 secunde)
-        setTimeout(() => {
-            // Populează rezultatele
-            document.getElementById('res-bio').innerHTML = `<strong>Formă & Culoare:</strong> ${logicDB.face[face]} ${logicDB.tone[tone]}`;
-            document.getElementById('res-astro').innerHTML = logicDB.zodiac[zodiac];
-            
-            // Construiește fraza finală
-            let finalVerdict = "Am proiectat un look ";
-            if(zodiac === 'foc') finalVerdict += "îndrăzneț și voluminos, ";
-            if(zodiac === 'pamant') finalVerdict += "elegant și natural, ";
-            if(zodiac === 'aer') finalVerdict += "modern și texturat, ";
-            if(zodiac === 'apa') finalVerdict += "fluid și seducător, ";
-            finalVerdict += "adaptat perfect proporțiilor tale faciale.";
-            
-            document.getElementById('res-final').innerHTML = `<strong>Verdict AR:</strong> ${finalVerdict}`;
-
-            // Afișează ecranul de rezultate
-            document.getElementById('screen-loading').classList.remove('active');
-            document.getElementById('screen-results').classList.add('active');
-        }, 2000);
+    function updateThemePreview() {
+        const styleVal = document.getElementById('style').value;
+        document.getElementById('app-body').className = "theme-" + styleVal;
     }
 
-    function resetApp() {
-        document.getElementById('screen-results').classList.remove('active');
-        document.getElementById('screen-input').classList.add('active');
+    function startQuizPhase() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = "";
+        
+        for(let i=0; i<questionsList.length; i++) {
+            let card = document.createElement('div');
+            card.className = "question-card";
+            
+            let title = document.createElement('div');
+            title.className = "question-title";
+            title.innerText = questionsList[i];
+            card.appendChild(title);
+            
+            let optsGroup = document.createElement('div');
+            optsGroup.className = "options-group";
+            
+            for(let j=0; j<4; j++) {
+                let lbl = document.createElement('label');
+                lbl.className = "option-label";
+                let radio = document.createElement('input');
+                radio.type = "radio";
+                radio.name = "q_" + i;
+                radio.value = j; // 0=A(Foc), 1=B(Aer/Foc), 2=C(Apă), 3=D(Pământ)
+                if(j === 0) radio.checked = true; // implicit primul
+                
+                lbl.appendChild(radio);
+                lbl.appendChild(document.createTextNode(optionSets[i][j]));
+                optsGroup.appendChild(lbl);
+            }
+            card.appendChild(optsGroup);
+            container.appendChild(card);
+        }
+
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generateFinalAnalysis() {
+        const style = document.getElementById('style').value;
+        const bodyType = document.getElementById('bodyType').value;
+        const metabolism = document.getElementById('metabolism').value;
+        
+        // Calculăm scorurile din test pentru a determina elementul dominant astrologic/temperament
+        let scores = [0, 0, 0, 0]; // 0: Foc (Berbec/Leu/Săgetător), 1: Aer (Gemeni/Balanță/Vărsător), 2: Apă (Rac/Scorpion/Pești), 3: Pământ (Taur/Fecioară/Capricorn)
+        
+        for(let i=0; i<questionsList.length; i++) {
+            let radios = document.getElementsByName('q_' + i);
+            for(let r of radios) {
+                if(r.checked) {
+                    scores[parseInt(r.value)]++;
+                }
+            }
+        }
+
+        let maxScoreIndex = scores.indexOf(Math.max(...scores));
+        let zodiacElements = ["Foc (Dinamic, Pasionat, Lider)", "Aer (Inovator, Independent, Liber)", "Apă (Empatic, Profund, Intuitiv)", "Pământ (Pragmatic, Stabil, Metodic)"];
+        let detectedElement = zodiacElements[maxScoreIndex];
+
+        // Setează datele în UI
+        const currentStyleData = styleDatabase[style] || styleDatabase["rose-gold"];
+        document.getElementById('resImg').src = currentStyleData.img;
+        document.getElementById('resTitle').innerText = currentStyleData.title;
+
+        document.getElementById('resDesc').innerText = `Pe baza selecțiilor tale biometrice și a stilului estetic ales, profilul tău reflectă o armonie între eleganța metalică și atitudinea modernă. Tipul tău corporal (${document.getElementById('bodyType').options[document.getElementById('bodyType').selectedIndex].text}) se pliază perfect pe linii vestimentare alese inteligent.`;
+
+        document.getElementById('resHoroscope').innerText = `În urma analizei celor 30 de puncte de control din testul de temperament și stare mood, s-a detectat un profil dominant de tip **${detectedElement}**. Această structură interioară îți oferă un avantaj major în luarea deciziilor intuitive și în adaptarea rapidă la energiile cotidiene. Starea ta actuală cere expansiune și claritate emoțională.`;
+
+        // Machiaj
+        let makeupUl = document.getElementById('resMakeup');
+        makeupUl.innerHTML = "";
+        currentStyleData.makeup.forEach(m => {
+            let li = document.createElement('li');
+            li.innerText = m;
+            makeupUl.appendChild(li);
+        });
+
+        // Nutriție și Metabolism
+        let bodyAdviceUl = document.getElementById('resBodyAdvice');
+        bodyAdviceUl.innerHTML = "";
+        
+        let metabolismTexts = {
+            fast: "Metabolismul rapid necesită un aport caloric bogat în proteine de calitate și carbocomplexi sănătoși pentru a susține nivelul ridicat de energie.",
+            slow: "Metabolismul lent beneficiază de mese frecvente, bogate în fibre, hidratare intensă și control echilibrat al grăsimilor saturate.",
+            mixed: "Metabolismul mixt răspunde excelent la o dietă flexibilă, alternând zilele cu densitate calorică moderată cu antrenamente cardiovasculare."
+        };
+
+        let li1 = document.createElement('li');
+        li1.innerText = metabolismTexts[metabolism];
+        bodyAdviceUl.appendChild(li1);
+
+        let li2 = document.createElement('li');
+        li2.innerText = `Recomandare vestimentară pentru silueta ta (${document.getElementById('bodyType').options[document.getElementById('bodyType').selectedIndex].text}): Folosește croieli care subliniază linia naturală a taliei și echillibrează proporțiile vizuale.`;
+        bodyAdviceUl.appendChild(li2);
+
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 
