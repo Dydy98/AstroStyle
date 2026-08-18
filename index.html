@@ -11,6 +11,8 @@
         --rose-gold-light: #f4eae6;
         --rose-gold-glow: #e8b4b8;
         --champagne: #d9c08c;
+        --beige: #f5ebe0;
+        --beige-soft: #faf6f1;
         --silver: #c7c7cf;
         --text-dark: #2a1f22;
         --text-soft: #6a5a5e;
@@ -19,6 +21,11 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    /* Cursor fundiță drăguță cu fade bej */
+    html, body, button, .bow-btn, .quiz-opt-btn, .star-node, .nav-sub-btn, .continue-btn, .action-btn, .copy-btn {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23f5ebe0"/><stop offset="100%" stop-color="%23b76e79"/></linearGradient></defs><path fill="url(%23g)" d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2.2" fill="%23f5ebe0" opacity="0.9"/></svg>') 18 18, auto !important;
+    }
 
     body {
         background: radial-gradient(ellipse at top, #241a2c 0%, #140e19 55%, #0d090f 100%);
@@ -64,7 +71,6 @@
         background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
     }
 
-    /* ============ CONSTELAȚIA DE TRENDURI ============ */
     .constellation-title {
         text-align: center;
         font-family: 'Playfair Display', serif;
@@ -113,7 +119,6 @@
     .star-node {
         position: absolute;
         transform: translate(-50%, -50%);
-        cursor: pointer;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -174,7 +179,6 @@
         font-weight: 600;
     }
 
-    /* ============ SECTION LABELS ============ */
     .section-label {
         font-weight: 600;
         font-size: 0.92rem;
@@ -187,7 +191,6 @@
     }
     .section-label .mark { color: var(--rose-gold); font-size: 0.85rem; }
 
-    /* ============ BOW-STYLE PREMIUM BUTTONS ============ */
     .bow-options-grid {
         display: flex;
         flex-wrap: wrap;
@@ -205,7 +208,6 @@
         border-radius: 16px;
         font-size: 0.85rem;
         font-weight: 600;
-        cursor: pointer;
         transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, transform 0.15s ease, border-color 0.35s ease;
         box-shadow: 0 3px 10px rgba(0,0,0,0.06);
         display: inline-flex;
@@ -249,7 +251,6 @@
     #skinColorGrid .bow-btn  { --accent1:#d98a7a; --accent2:#a75647; --tint:#faeae6; --accent-shadow:rgba(217,138,122,0.4); }
     #skinTypeGrid .bow-btn   { --accent1:#8e6a8f; --accent2:#5e4560; --tint:#f0e7f1; --accent-shadow:rgba(142,106,143,0.4); }
 
-    /* ============ ACTION BUTTON ============ */
     .action-btn {
         width: 100%;
         padding: 16px;
@@ -259,7 +260,6 @@
         font-size: 1.02rem;
         font-weight: 700;
         border-radius: 18px;
-        cursor: pointer;
         margin-top: 26px;
         box-shadow: 0 10px 22px rgba(0,0,0,0.18);
         transition: all 0.3s ease;
@@ -269,21 +269,12 @@
     .action-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(183, 110, 121, 0.4); }
     .action-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    .action-btn-ghost {
-        background: transparent;
-        border: 1.5px solid var(--rose-gold);
-        color: var(--rose-gold);
-        box-shadow: none;
-    }
-
-    /* ============ FADE TRANSITIONS ============ */
     .fading-out { animation: fadeOutSoft 0.28s ease forwards; }
     .fading-in { opacity: 0; }
     .fading-in.fade-visible { animation: fadeInSoft 0.4s ease forwards; }
     @keyframes fadeOutSoft { from { opacity: 1; } to { opacity: 0; } }
     @keyframes fadeInSoft { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ============ QUIZ — O SINGURĂ ÎNTREBARE PE ECRAN ============ */
     #quiz-wrapper { display: none; margin-top: 20px; }
 
     .stage-badge {
@@ -336,11 +327,21 @@
     }
 
     .question-card-single {
-        background: #ffffff;
+        background: var(--beige-soft);
         padding: 26px;
         border-radius: 22px;
-        border: 1px solid var(--rose-gold-glow);
+        border: 1.5px solid rgba(183,110,121,0.35);
         box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+        position: relative;
+    }
+
+    .question-card-single::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        background: linear-gradient(to bottom, transparent 65%, rgba(245,235,224,0.55));
+        pointer-events: none;
     }
 
     @keyframes fadeIn {
@@ -354,24 +355,27 @@
         margin-bottom: 20px;
         color: var(--text-dark);
         line-height: 1.4;
+        position: relative;
+        z-index: 2;
     }
 
     .quiz-options-single {
         display: flex;
         flex-direction: column;
         gap: 11px;
+        position: relative;
+        z-index: 2;
     }
 
     .quiz-opt-btn {
         padding: 14px 18px;
-        background: var(--rose-gold-light);
+        background: #fff;
         border: 1.5px solid var(--rose-gold-glow);
         border-radius: 14px;
         text-align: left;
         font-size: 0.92rem;
         font-weight: 500;
         color: var(--text-dark);
-        cursor: pointer;
         transition: all 0.22s ease;
         display: flex;
         align-items: center;
@@ -379,9 +383,8 @@
     }
 
     .quiz-opt-btn:hover {
-        background: var(--rose-gold);
-        color: #fff;
-        border-color: var(--champagne);
+        background: #fdf0f0;
+        border-color: var(--rose-gold);
         transform: translateX(4px);
     }
 
@@ -395,8 +398,6 @@
 
     .quiz-opt-btn.multi .opt-indicator { border-radius: 6px; }
 
-    .quiz-opt-btn:hover .opt-indicator { border-color: #fff; }
-
     .quiz-opt-btn.picked {
         background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
         color: #fff;
@@ -408,41 +409,53 @@
         box-shadow: inset 0 0 0 4px var(--rose-gold);
     }
 
+    /* Butoane jos — mai mici, centrate, stil bej */
     .quiz-nav-btns {
         display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        margin-top: 22px;
     }
 
     .nav-sub-btn {
-        background: transparent;
-        border: 1px solid var(--rose-gold);
+        background: var(--beige);
+        border: 1.5px solid rgba(183,110,121,0.45);
         color: var(--rose-gold);
-        padding: 9px 16px;
+        padding: 8px 16px;
         border-radius: 12px;
-        font-size: 0.83rem;
-        cursor: pointer;
+        font-size: 0.8rem;
         font-weight: 600;
         transition: all 0.25s ease;
+        min-width: 100px;
     }
-    .nav-sub-btn:hover { background: var(--rose-gold); color: #fff; }
+    .nav-sub-btn:hover {
+        background: #efe4d8;
+        border-color: var(--rose-gold);
+    }
 
     .continue-btn {
-        flex: 1;
-        background: linear-gradient(135deg, var(--rose-gold), var(--champagne));
+        background: linear-gradient(135deg, #e8d5c4 0%, var(--rose-gold) 55%, #8a4a54 100%);
         border: none;
         color: #241820;
-        padding: 9px 16px;
+        padding: 8px 18px;
         border-radius: 12px;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         font-weight: 700;
-        cursor: pointer;
         transition: all 0.25s ease;
+        min-width: 110px;
+        box-shadow: 0 4px 12px rgba(183,110,121,0.25);
     }
-    .continue-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .continue-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+    .continue-btn:not(:disabled):hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+    }
 
-    /* ============ REZULTAT FINAL ============ */
     #result-card {
         display: none;
         margin-top: 30px;
@@ -538,7 +551,6 @@
         border-radius: 12px;
         font-size: 0.8rem;
         font-weight: 600;
-        cursor: pointer;
         transition: all 0.25s ease;
     }
     .copy-btn:hover { background: var(--rose-gold); color: #fff; }
@@ -589,7 +601,6 @@
     <p class="subtitle">Constelația Stilului · Profil Biometric · Parfum & Flori · Test de Bunăstare Emoțională</p>
     <div class="hairline"></div>
 
-    <!-- ============ SETUP ============ -->
     <div id="setup-section">
         <div class="constellation-title">✦ Alege trendul din Constelația Cosmică ✦</div>
 
@@ -641,7 +652,6 @@
         <button class="action-btn" onclick="startQuiz()">Începe Testul Complet (47 Întrebări) ➔</button>
     </div>
 
-    <!-- ============ QUIZ ============ -->
     <div id="quiz-wrapper">
         <div class="stage-badge" id="stageBadge">Profil de Stil</div>
         <div class="quiz-progress-bar-container">
@@ -656,13 +666,13 @@
             <div class="quiz-options-single" id="qOptions"></div>
         </div>
 
+        <!-- Butoane centrate, mici, stil bej -->
         <div class="quiz-nav-btns">
-            <button class="nav-sub-btn" onclick="prevQuestion()">⬅ Anterioară</button>
-            <button class="continue-btn" id="continueBtn" style="display:none;" onclick="continueFromMulti()" disabled>Continuă ➔</button>
+            <button class="nav-sub-btn" onclick="prevQuestion()">← Anterioară</button>
+            <button class="continue-btn" id="continueBtn" disabled onclick="continueQuestion()">Continuă →</button>
         </div>
     </div>
 
-    <!-- ============ REZULTATE ============ -->
     <div id="result-card">
         <img id="resImg" class="result-img" src="" alt="Look">
         <h2 id="resTitle" style="font-family:'Playfair Display',serif; color:var(--rose-gold); text-align:center;"></h2>
@@ -720,9 +730,6 @@
 </div>
 
 <script>
-    /* =====================================================
-       DATE STILURI + PARFUM + FLORI + CULORI PLANETE
-    ===================================================== */
     const trendsData = {
         "rose-gold": {
             name: "Rose Gold", x: 50, y: 50,
@@ -767,7 +774,7 @@
             makeup: ["Eyeliner neon UV", "Iluminator holografic", "Gloss metalic"],
             perfumeFamily: "Ozonic-metalic, futurist",
             perfumeDesc: "Note reci de mentă, ambră gri și mosc alb — un parfum abstract, aproape sintetic, ca un semnal din viitor.",
-            flowerSignature: "Orhidee albastră", flowerExotic: "Strelitzia — pasărea paradisului", flowerWild: "—  (variantă de seră recomandată în loc de câmp)", flowerSpecial: "Antorium violet electric"
+            flowerSignature: "Orhidee albastră", flowerExotic: "Strelitzia — pasărea paradisului", flowerWild: "—  (variantă de seră recomandată în loc de câmp)", flowerSpecial: "Anturium violet electric"
         },
         "glam": {
             name: "Glamour", x: 50, y: 18,
@@ -796,7 +803,6 @@
     let selectedSkinColor = "fair";
     let selectedSkinType = "normal";
 
-    /* ============ CONSTELAȚIE ============ */
     function initConstellation() {
         const box = document.getElementById('constellationBox');
         const canvas = document.getElementById('constellationCanvas');
@@ -847,7 +853,6 @@
         });
     }
 
-    /* ============ BUTOANE BOW-STYLE ============ */
     function setupBowGrids() {
         const setupGrid = (gridId, callback) => {
             const grid = document.getElementById(gridId);
@@ -867,10 +872,6 @@
         setupGrid('skinTypeGrid', val => selectedSkinType = val);
     }
 
-    /* =====================================================
-       CHESTIONAR 1: PROFIL DE STIL & MOOD — 30 întrebări
-       Multi-select, 5 opțiuni (al 5-lea element: Eter)
-    ===================================================== */
     const moodQuestions = [
         { q: "Cum reacționezi de obicei când te confrunți cu o schimbare neașteptată de plan?", o: ["Analizez logic și mă adaptez", "Simt un impuls puternic de moment", "Analizez emoțional impactul", "Prefer să mențin controlul calm", "Rămân detașat(ă) și las lucrurile să curgă natural"] },
         { q: "Ce tip de energie resimți cel mai des în prima parte a zilei?", o: ["Explozie de energie și inițiativă", "Calmă, dar orientată spre acțiune", "Visătoare, cu conectare lentă", "Pragmatică și organizată", "O energie liniștită, meditativă, centrată interior"] },
@@ -903,12 +904,8 @@
         { q: "Cum definești succesul personal în etapa actuală?", o: ["Libertatea de a crea și a fi unic(ă)", "Succesul, impactul și recunoașterea", "Echilibrul sufletesc și iubirea", "Siguranța, realizarea și ordinea", "Armonia interioară și evoluția spirituală"] },
         { q: "Ce mesaj îți transmiți ție însuți/însăți în momentele de incertitudine?", o: ["„Totul este posibil, îndrăznește!”", "„Sunt de neoprit!”", "„Ai răbdare, totul se așază.”", "„Planul funcționează exact cum trebuie.”", "„Totul se întâmplă exact cum trebuie să se întâmple.”"] }
     ];
-    // index opțiune -> element: 0 Foc, 1 Aer... de fapt ordinea narativă e liberă; scorarea foloseşte indexul opţiunii ca atare
     const zodiacElements = ["Foc (Dinamic, Pasionat)", "Aer (Inovator, Liber)", "Apă (Empatic, Intuitiv)", "Pământ (Pragmatic, Stabil)", "Eter (Spiritual, Intuitiv-Transcendent)"];
 
-    /* =====================================================
-       CHESTIONAR 2: GAD-7 — 7 itemi, scală 0-3, single-select
-    ===================================================== */
     const gad7Items = [
         "Te-ai simțit agitat(ă), tensionat(ă) sau „pe muchie de cuțit”?",
         "Ai avut dificultăți în a opri sau controla îngrijorările?",
@@ -920,10 +917,6 @@
     ];
     const gad7Options = ["Deloc", "Câteva zile", "Mai mult de jumătate din zile", "Aproape în fiecare zi"];
 
-    /* =====================================================
-       CHESTIONAR 3: RSES — 10 afirmații, scorare inversă corectă
-       itemi negativi (index 0-based): 2, 4, 7, 8, 9
-    ===================================================== */
     const rsesItems = [
         "Consider că sunt o persoană valoroasă, cel puțin la fel ca ceilalți.",
         "Simt că am o serie de calități bune.",
@@ -939,17 +932,14 @@
     const rsesReverseIdx = [2, 4, 7, 8, 9];
     const rsesOptions = ["Dezacord puternic", "Dezacord", "Acord", "Acord puternic"];
 
-    /* =====================================================
-       CONSTRUIRE LISTĂ UNIFICATĂ DE ÎNTREBĂRI
-    ===================================================== */
     let allQuestions = [];
     moodQuestions.forEach(item => allQuestions.push({ section: 'mood', text: item.q, options: item.o, type: 'multi' }));
     gad7Items.forEach(text => allQuestions.push({ section: 'gad7', text: text, options: gad7Options, type: 'single' }));
     rsesItems.forEach((text, i) => allQuestions.push({ section: 'rses', text: text, options: rsesOptions, type: 'single', reverse: rsesReverseIdx.includes(i) }));
 
-    const TOTAL_Q = allQuestions.length; // 47
+    const TOTAL_Q = allQuestions.length;
     let currentQIndex = 0;
-    let userAnswers = new Array(TOTAL_Q).fill(null); // multi: array de indici | single: index numeric
+    let userAnswers = new Array(TOTAL_Q).fill(null);
 
     function stageInfo(index) {
         if (index < 30) return { label: 'Profil de Stil & Mood', note: null };
@@ -1019,8 +1009,10 @@
 
         const savedAnswer = userAnswers[currentQIndex];
 
+        // Continuă apare pe TOATE întrebările
+        continueBtn.style.display = 'inline-block';
+
         if (q.type === 'multi') {
-            continueBtn.style.display = 'flex';
             const selectedSet = new Set(Array.isArray(savedAnswer) ? savedAnswer : []);
             q.options.forEach((optText, optIdx) => {
                 const btn = document.createElement('div');
@@ -1031,14 +1023,19 @@
             });
             continueBtn.disabled = selectedSet.size === 0;
         } else {
-            continueBtn.style.display = 'none';
             q.options.forEach((optText, optIdx) => {
                 const btn = document.createElement('div');
                 btn.className = 'quiz-opt-btn' + (savedAnswer === optIdx ? ' picked' : '');
                 btn.innerHTML = `<span class="opt-indicator"></span><span>${optText}</span>`;
-                btn.onclick = () => selectSingleOption(optIdx);
+                btn.onclick = () => {
+                    userAnswers[currentQIndex] = optIdx;
+                    document.querySelectorAll('.quiz-opt-btn').forEach(b => b.classList.remove('picked'));
+                    btn.classList.add('picked');
+                    continueBtn.disabled = false;
+                };
                 qOptions.appendChild(btn);
             });
+            continueBtn.disabled = (typeof savedAnswer !== 'number');
         }
 
         const card = document.getElementById('questionCard');
@@ -1060,14 +1057,14 @@
         document.getElementById('continueBtn').disabled = arr.length === 0;
     }
 
-    function continueFromMulti() {
-        const arr = userAnswers[currentQIndex];
-        if (!arr || arr.length === 0) return;
-        advanceQuestion();
-    }
-
-    function selectSingleOption(optIdx) {
-        userAnswers[currentQIndex] = optIdx;
+    function continueQuestion() {
+        const q = allQuestions[currentQIndex];
+        if (q.type === 'multi') {
+            const arr = userAnswers[currentQIndex];
+            if (!arr || arr.length === 0) return;
+        } else {
+            if (typeof userAnswers[currentQIndex] !== 'number') return;
+        }
         advanceQuestion();
     }
 
@@ -1091,13 +1088,9 @@
         }
     }
 
-    /* =====================================================
-       SCORARE GAD-7
-    ===================================================== */
     function computeGAD7() {
         let total = 0;
         for (let i = 30; i < 37; i++) {
-            const v = allQuestions[i];
             const ans = userAnswers[i];
             total += (typeof ans === 'number') ? ans : 0;
         }
@@ -1109,9 +1102,6 @@
         return { total, band, label, color, desc };
     }
 
-    /* =====================================================
-       SCORARE RSES (cu scorare inversă pt itemii negativi)
-    ===================================================== */
     function computeRSES() {
         let total = 0;
         for (let i = 37; i < 47; i++) {
@@ -1128,15 +1118,11 @@
         return { total, band, label, color, desc };
     }
 
-    /* =====================================================
-       GENERARE REZULTAT FINAL
-    ===================================================== */
     function generateFinalAnalysis() {
         const quizEl = document.getElementById('quiz-wrapper');
         const resultEl = document.getElementById('result-card');
         quizEl.style.display = 'none';
 
-        // Scor elemente (multi-select, 0..29)
         let scores = [0, 0, 0, 0, 0];
         for (let i = 0; i < 30; i++) {
             const arr = userAnswers[i];
@@ -1152,17 +1138,14 @@
 
         document.getElementById('resHoroscope').innerText = `Din cele 30 de răspunsuri (selecții multiple), modul tău predominant aparține elementului ${zodiacElements[maxIndex]}. Starea ta emoțională indică o nevoie de expansiune creativă și încredere în instinctul propriu.`;
 
-        // Parfum
         document.getElementById('resPerfumeFamily').innerText = styleData.perfumeFamily;
         document.getElementById('resPerfumeDesc').innerText = styleData.perfumeDesc;
 
-        // Flori
         document.getElementById('resFlowerSignature').innerText = styleData.flowerSignature;
         document.getElementById('resFlowerExotic').innerText = styleData.flowerExotic;
         document.getElementById('resFlowerWild').innerText = styleData.flowerWild;
         document.getElementById('resFlowerSpecial').innerText = styleData.flowerSpecial;
 
-        // Machiaj
         let makeupUl = document.getElementById('resMakeup');
         makeupUl.innerHTML = '';
         styleData.makeup.forEach(m => {
@@ -1171,7 +1154,6 @@
             makeupUl.appendChild(li);
         });
 
-        // Corp / nutriție
         let bodyUl = document.getElementById('resBodyAdvice');
         bodyUl.innerHTML = '';
         let li1 = document.createElement('li');
@@ -1181,7 +1163,6 @@
         bodyUl.appendChild(li1);
         bodyUl.appendChild(li2);
 
-        // GAD-7
         const gad7 = computeGAD7();
         document.getElementById('gad7Score').innerText = gad7.total;
         const gad7Tag = document.getElementById('gad7BandTag');
@@ -1189,7 +1170,6 @@
         gad7Tag.style.background = gad7.color;
         document.getElementById('gad7BandDesc').innerText = gad7.desc;
 
-        // RSES
         const rses = computeRSES();
         document.getElementById('rsesScore').innerText = rses.total;
         const rsesTag = document.getElementById('rsesBandTag');
