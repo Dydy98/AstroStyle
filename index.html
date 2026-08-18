@@ -3,1218 +3,685 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AstroBeauty — Constelația Stilului, Parfum & Bunăstare</title>
+<title>AstroBeauty AI — Stil, GAD-7 & Feedback</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --rose-gold: #b76e79;
-        --rose-gold-light: #f4eae6;
-        --rose-gold-glow: #e8b4b8;
-        --champagne: #d9c08c;
-        --beige: #f5ebe0;
-        --beige-soft: #faf6f1;
-        --silver: #c7c7cf;
-        --text-dark: #2a1f22;
-        --text-soft: #6a5a5e;
-        --card-bg: rgba(255, 255, 255, 0.92);
-        --border-glow: rgba(183, 110, 121, 0.4);
-    }
+:root {
+    --rose-gold: #b76e79;
+    --rose-gold-light: #f4eae6;
+    --rose-gold-glow: #e8b4b8;
+    --champagne: #d9c08c;
+    --beige: #f5ebe0;
+    --text-dark: #2a1f22;
+    --text-soft: #6a5a5e;
+    --card-bg: rgba(255,255,255,0.94);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+/* Cursor fundiță */
+html, body, button, .bow-btn, .quiz-opt-btn, .star-node {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path fill="%23e53935" d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2.3" fill="%23ff8a80"/></svg>') 18 18, auto !important;
+}
 
-    /* Cursor fundiță drăguță cu fade bej */
-    html, body, button, .bow-btn, .quiz-opt-btn, .star-node, .nav-sub-btn, .continue-btn, .action-btn, .copy-btn {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23f5ebe0"/><stop offset="100%" stop-color="%23b76e79"/></linearGradient></defs><path fill="url(%23g)" d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2.2" fill="%23f5ebe0" opacity="0.9"/></svg>') 18 18, auto !important;
-    }
+body {
+    background: radial-gradient(ellipse at top, #241a2c 0%, #140e19 60%, #0d090f 100%);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 20px 12px 50px;
+}
 
-    body {
-        background: radial-gradient(ellipse at top, #241a2c 0%, #140e19 55%, #0d090f 100%);
-        color: var(--text-dark);
-        min-height: 100vh;
-        padding: 24px 12px 60px;
-        overflow-x: hidden;
-    }
+.main-container {
+    max-width: 780px;
+    margin: auto;
+    background: var(--card-bg);
+    padding: 32px 28px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+    border: 1.5px solid rgba(183,110,121,0.5);
+}
 
-    .main-container {
-        max-width: 800px;
-        margin: auto;
-        background: var(--card-bg);
-        padding: 34px 30px;
-        border-radius: 30px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 30px var(--border-glow);
-        border: 1px solid rgba(183,110,121,0.55);
-        backdrop-filter: blur(18px);
-    }
+h1 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    color: var(--rose-gold);
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+}
+.subtitle { text-align: center; font-size: 0.88rem; color: var(--text-soft); margin-bottom: 18px; }
 
-    h1 {
-        text-align: center;
-        color: var(--rose-gold);
-        font-family: 'Playfair Display', serif;
-        font-size: 2.4rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        margin-bottom: 6px;
-    }
+.section-label {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin: 18px 0 9px;
+    color: var(--text-dark);
+}
+.bow-options-grid { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 6px; }
 
-    .subtitle {
-        text-align: center;
-        font-size: 0.88rem;
-        color: var(--text-soft);
-        margin-bottom: 8px;
-        letter-spacing: 0.3px;
-    }
+.bow-btn {
+    background: linear-gradient(135deg, #fff, #f4eae6);
+    border: 1.5px solid var(--rose-gold);
+    color: var(--text-dark);
+    padding: 9px 16px;
+    border-radius: 50px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: 0.25s;
+    user-select: none;
+}
+.bow-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(183,110,121,0.25); }
+.bow-btn.selected {
+    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
+    color: #fff;
+    border-color: transparent;
+}
 
-    .hairline {
-        width: 90px;
-        height: 1px;
-        margin: 14px auto 26px;
-        background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
-    }
+.action-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--rose-gold), var(--champagne));
+    border: none;
+    color: #241820;
+    font-size: 1.02rem;
+    font-weight: 700;
+    border-radius: 18px;
+    margin-top: 22px;
+    transition: 0.3s;
+}
+.action-btn:hover { transform: translateY(-2px); }
+.action-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
-    .constellation-title {
-        text-align: center;
-        font-family: 'Playfair Display', serif;
-        font-weight: 600;
-        font-size: 1.05rem;
-        color: var(--text-dark);
-        margin-bottom: 14px;
-        letter-spacing: 0.3px;
-    }
+/* GDPR + Login */
+.gdpr-box {
+    background: #fdf6f0;
+    border: 1.5px solid rgba(183,110,121,0.35);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 18px;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-soft);
+}
+.consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+}
+.consent-row input { margin-top: 3px; transform: scale(1.15); }
+.email-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--rose-gold-glow);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    margin-top: 8px;
+}
 
-    .constellation-box {
-        position: relative;
-        width: 100%;
-        height: 340px;
-        background: radial-gradient(circle at 50% 40%, #2c1e34 0%, #150c1a 70%, #0c0710 100%);
-        border-radius: 22px;
-        border: 1px solid rgba(199,199,207,0.35);
-        overflow: hidden;
-        margin-bottom: 32px;
-        box-shadow: inset 0 0 30px rgba(183, 110, 121, 0.25);
-    }
+/* Constelație simplificată */
+.constellation-box {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background: radial-gradient(circle at 50% 40%, #2c1e34 0%, #150c1a 100%);
+    border-radius: 20px;
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+.star-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+}
+.star-point {
+    width: 16px; height: 16px;
+    background: #c0c0c0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 14px var(--rose-gold);
+    transition: 0.3s;
+}
+.star-label { color: #fff; font-size: 0.72rem; margin-top: 5px; font-weight: 600; text-shadow: 0 0 5px #000; }
+.star-node.active .star-point, .star-node:hover .star-point {
+    background: var(--rose-gold);
+    transform: scale(1.45);
+}
 
-    .constellation-box::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-            radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5), transparent),
-            radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.4), transparent),
-            radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,0.6), transparent),
-            radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.4), transparent),
-            radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.5), transparent),
-            radial-gradient(1.5px 1.5px at 95% 60%, rgba(255,255,255,0.4), transparent),
-            radial-gradient(1px 1px at 40% 90%, rgba(255,255,255,0.35), transparent);
-        background-repeat: no-repeat;
-        pointer-events: none;
-    }
+/* Quiz */
+#quiz-wrapper, #feedback-wrapper, #result-card, #setup-section { display: none; }
+#landing-section { display: block; }
 
-    #constellationCanvas {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-    }
+.quiz-progress-bar-container {
+    height: 8px;
+    background: #e8e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.quiz-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--rose-gold), var(--champagne));
+    transition: 0.35s;
+}
+.quiz-status { text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--rose-gold); margin-bottom: 14px; }
 
-    .star-node {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 10;
-    }
+.question-card {
+    background: #fdf8f4;
+    padding: 24px 20px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(183,110,121,0.35);
+    margin-bottom: 18px;
+}
+.question-text { font-size: 1.08rem; font-weight: 600; margin-bottom: 16px; line-height: 1.4; }
 
-    .planet-body {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 32% 28%, var(--planet-c1), var(--planet-c2) 78%);
-        opacity: 0.72;
-        position: relative;
-        box-shadow: 0 0 12px 2px var(--planet-glow), inset -5px -5px 10px rgba(0,0,0,0.35);
-        transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-    }
+.quiz-opt-btn {
+    padding: 13px 16px;
+    background: #fff;
+    border: 1.5px solid var(--rose-gold-glow);
+    border-radius: 14px;
+    margin-bottom: 9px;
+    font-size: 0.94rem;
+    transition: 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.quiz-opt-btn:hover { background: #fdf0f0; }
+.quiz-opt-btn.selected {
+    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
+    color: #fff;
+    border-color: transparent;
+}
 
-    .sparkle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: 0 0 4px 1px #fff;
-        animation: twinkle 2.6s ease-in-out infinite;
-    }
-    .sparkle.s1 { top: 12%; left: 62%; animation-delay: 0s; }
-    .sparkle.s2 { top: 58%; left: 18%; animation-delay: 0.9s; }
-    .sparkle.s3 { top: 38%; left: 42%; animation-delay: 1.7s; }
+.nav-btns {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+.nav-btn {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    border: 1.5px solid var(--rose-gold);
+    background: #f5ebe0;
+    color: var(--rose-gold);
+    transition: 0.2s;
+}
+.nav-btn.primary {
+    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
+    color: #fff;
+    border: none;
+}
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    @keyframes twinkle {
-        0%, 100% { opacity: 0.15; transform: scale(0.6); }
-        50% { opacity: 1; transform: scale(1.25); }
-    }
+/* Results */
+.score-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #fff;
+    margin-top: 6px;
+}
+.minimal { background: #2e7d32; }
+.mild { background: #f9a825; color: #222; }
+.moderate { background: #ef6c00; }
+.severe { background: #c62828; }
 
-    .star-label {
-        color: #f2eef0;
-        font-size: 0.72rem;
-        margin-top: 7px;
-        font-weight: 500;
-        text-shadow: 0 0 6px #000;
-        white-space: nowrap;
-        opacity: 0.85;
-        transition: all 0.3s ease;
-    }
-
-    .star-node:hover .planet-body,
-    .star-node.active .planet-body {
-        opacity: 1;
-        transform: scale(1.4);
-        box-shadow: 0 0 18px 5px var(--planet-glow), 0 0 34px 10px var(--planet-glow), inset -5px -5px 10px rgba(0,0,0,0.35);
-    }
-
-    .star-node.active .star-label {
-        color: var(--rose-gold-glow);
-        font-size: 0.8rem;
-        opacity: 1;
-        font-weight: 600;
-    }
-
-    .section-label {
-        font-weight: 600;
-        font-size: 0.92rem;
-        margin: 22px 0 10px 0;
-        color: var(--text-dark);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        letter-spacing: 0.2px;
-    }
-    .section-label .mark { color: var(--rose-gold); font-size: 0.85rem; }
-
-    .bow-options-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 6px;
-    }
-
-    .bow-btn {
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, #ffffff 0%, var(--tint, #f4eae6) 100%);
-        border: 1.5px solid var(--accent1, var(--rose-gold));
-        color: var(--text-dark);
-        padding: 11px 20px;
-        border-radius: 16px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, transform 0.15s ease, border-color 0.35s ease;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-        display: inline-flex;
-        align-items: center;
-        user-select: none;
-        letter-spacing: 0.15px;
-    }
-
-    .bow-btn::after {
-        content: '';
-        position: absolute;
-        top: 0; left: 0;
-        width: 16px; height: 16px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.85), transparent 70%);
-        clip-path: polygon(0 0, 100% 0, 0 100%);
-        opacity: 0.6;
-        transition: opacity 0.35s ease;
-    }
-
-    .bow-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-    }
-
-    .bow-btn:active {
-        transform: translateY(0) scale(0.97);
-    }
-
-    .bow-btn.selected {
-        background: linear-gradient(135deg, var(--accent1, var(--rose-gold)) 0%, var(--accent2, #8a4a54) 100%);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 6px 18px var(--accent-shadow, rgba(183,110,121,0.45));
-    }
-
-    .bow-btn.selected::after { opacity: 0.25; }
-
-    #bodyTypeGrid .bow-btn   { --accent1:#b76e79; --accent2:#8a4a54; --tint:#f6e9ea; --accent-shadow:rgba(183,110,121,0.45); }
-    #metabolismGrid .bow-btn { --accent1:#c9a227; --accent2:#8f7115; --tint:#f8f0da; --accent-shadow:rgba(201,162,39,0.4); }
-    #raceGrid .bow-btn       { --accent1:#b5651d; --accent2:#7a4412; --tint:#f5e6d8; --accent-shadow:rgba(181,101,29,0.4); }
-    #skinColorGrid .bow-btn  { --accent1:#d98a7a; --accent2:#a75647; --tint:#faeae6; --accent-shadow:rgba(217,138,122,0.4); }
-    #skinTypeGrid .bow-btn   { --accent1:#8e6a8f; --accent2:#5e4560; --tint:#f0e7f1; --accent-shadow:rgba(142,106,143,0.4); }
-
-    .action-btn {
-        width: 100%;
-        padding: 16px;
-        background: linear-gradient(135deg, var(--rose-gold) 0%, var(--champagne) 100%);
-        border: none;
-        color: #241820;
-        font-size: 1.02rem;
-        font-weight: 700;
-        border-radius: 18px;
-        margin-top: 26px;
-        box-shadow: 0 10px 22px rgba(0,0,0,0.18);
-        transition: all 0.3s ease;
-        letter-spacing: 0.3px;
-    }
-
-    .action-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(183, 110, 121, 0.4); }
-    .action-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-
-    .fading-out { animation: fadeOutSoft 0.28s ease forwards; }
-    .fading-in { opacity: 0; }
-    .fading-in.fade-visible { animation: fadeInSoft 0.4s ease forwards; }
-    @keyframes fadeOutSoft { from { opacity: 1; } to { opacity: 0; } }
-    @keyframes fadeInSoft { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    #quiz-wrapper { display: none; margin-top: 20px; }
-
-    .stage-badge {
-        display: inline-block;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.6px;
-        text-transform: uppercase;
-        color: #fff;
-        background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
-        padding: 5px 14px;
-        border-radius: 20px;
-        margin-bottom: 12px;
-    }
-
-    .stage-note {
-        font-size: 0.8rem;
-        color: var(--text-soft);
-        background: var(--rose-gold-light);
-        border: 1px solid var(--rose-gold-glow);
-        border-radius: 12px;
-        padding: 10px 14px;
-        margin-bottom: 14px;
-        line-height: 1.4;
-        display: none;
-    }
-
-    .quiz-progress-bar-container {
-        width: 100%;
-        height: 8px;
-        background: #e6e0e2;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-    .quiz-progress-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, var(--rose-gold), var(--champagne));
-        transition: width 0.35s ease;
-    }
-
-    .quiz-status {
-        text-align: right;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--rose-gold);
-        margin-bottom: 16px;
-    }
-
-    .question-card-single {
-        background: var(--beige-soft);
-        padding: 26px;
-        border-radius: 22px;
-        border: 1.5px solid rgba(183,110,121,0.35);
-        box-shadow: 0 12px 28px rgba(0,0,0,0.06);
-        position: relative;
-    }
-
-    .question-card-single::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 22px;
-        background: linear-gradient(to bottom, transparent 65%, rgba(245,235,224,0.55));
-        pointer-events: none;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .question-text {
-        font-size: 1.08rem;
-        font-weight: 600;
-        margin-bottom: 20px;
-        color: var(--text-dark);
-        line-height: 1.4;
-        position: relative;
-        z-index: 2;
-    }
-
-    .quiz-options-single {
-        display: flex;
-        flex-direction: column;
-        gap: 11px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .quiz-opt-btn {
-        padding: 14px 18px;
-        background: #fff;
-        border: 1.5px solid var(--rose-gold-glow);
-        border-radius: 14px;
-        text-align: left;
-        font-size: 0.92rem;
-        font-weight: 500;
-        color: var(--text-dark);
-        transition: all 0.22s ease;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .quiz-opt-btn:hover {
-        background: #fdf0f0;
-        border-color: var(--rose-gold);
-        transform: translateX(4px);
-    }
-
-    .opt-indicator {
-        flex-shrink: 0;
-        width: 18px; height: 18px;
-        border-radius: 50%;
-        border: 2px solid var(--rose-gold);
-        transition: all 0.2s ease;
-    }
-
-    .quiz-opt-btn.multi .opt-indicator { border-radius: 6px; }
-
-    .quiz-opt-btn.picked {
-        background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
-        color: #fff;
-        border-color: transparent;
-    }
-    .quiz-opt-btn.picked .opt-indicator {
-        background: #fff;
-        border-color: #fff;
-        box-shadow: inset 0 0 0 4px var(--rose-gold);
-    }
-
-    /* Butoane jos — mai mici, centrate, stil bej */
-    .quiz-nav-btns {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 14px;
-        margin-top: 22px;
-    }
-
-    .nav-sub-btn {
-        background: var(--beige);
-        border: 1.5px solid rgba(183,110,121,0.45);
-        color: var(--rose-gold);
-        padding: 8px 16px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        transition: all 0.25s ease;
-        min-width: 100px;
-    }
-    .nav-sub-btn:hover {
-        background: #efe4d8;
-        border-color: var(--rose-gold);
-    }
-
-    .continue-btn {
-        background: linear-gradient(135deg, #e8d5c4 0%, var(--rose-gold) 55%, #8a4a54 100%);
-        border: none;
-        color: #241820;
-        padding: 8px 18px;
-        border-radius: 12px;
-        font-size: 0.82rem;
-        font-weight: 700;
-        transition: all 0.25s ease;
-        min-width: 110px;
-        box-shadow: 0 4px 12px rgba(183,110,121,0.25);
-    }
-    .continue-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
-    .continue-btn:not(:disabled):hover {
-        filter: brightness(1.08);
-        transform: translateY(-1px);
-    }
-
-    #result-card {
-        display: none;
-        margin-top: 30px;
-        padding: 26px;
-        background: #fff;
-        border-radius: 24px;
-        border: 1px solid var(--rose-gold);
-        box-shadow: 0 14px 34px rgba(0,0,0,0.1);
-    }
-
-    .result-img {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        border-radius: 18px;
-        margin-bottom: 20px;
-        border: 1px solid var(--silver);
-    }
-
-    .res-sec-title {
-        font-family: 'Playfair Display', serif;
-        color: var(--rose-gold);
-        font-size: 1.12rem;
-        font-weight: 700;
-        margin-top: 22px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid var(--rose-gold-glow);
-        padding-bottom: 5px;
-        letter-spacing: 0.2px;
-    }
-
-    ul { padding-left: 20px; font-size: 0.9rem; line-height: 1.6; }
-    ul li { margin-bottom: 6px; }
-    p.res-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-dark); }
-
-    .info-box {
-        background: var(--rose-gold-light);
-        border: 1px solid var(--rose-gold-glow);
-        border-radius: 14px;
-        padding: 14px 16px;
-        margin-top: 8px;
-    }
-
-    .score-row {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-        margin-bottom: 6px;
-    }
-    .score-number {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.9rem;
-        font-weight: 700;
-        color: var(--rose-gold);
-    }
-    .score-max { font-size: 0.85rem; color: var(--text-soft); }
-    .band-tag {
-        display: inline-block;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 20px;
-        color: #fff;
-        margin-bottom: 8px;
-    }
-    .disclaimer {
-        font-size: 0.76rem;
-        color: var(--text-soft);
-        margin-top: 8px;
-        line-height: 1.5;
-        font-style: italic;
-    }
-
-    .partner-note {
-        margin-top: 10px;
-        font-size: 0.82rem;
-        color: var(--text-soft);
-        background: #faf5f3;
-        border-left: 3px solid var(--rose-gold);
-        padding: 10px 14px;
-        border-radius: 0 10px 10px 0;
-        line-height: 1.5;
-    }
-
-    .copy-btn {
-        margin-top: 10px;
-        background: #fff;
-        border: 1.5px solid var(--rose-gold);
-        color: var(--rose-gold);
-        padding: 8px 16px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        transition: all 0.25s ease;
-    }
-    .copy-btn:hover { background: var(--rose-gold); color: #fff; }
-    .copy-btn.copied { background: #4a8a5f; border-color: #4a8a5f; color: #fff; }
-
-    .flower-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 8px;
-    }
-    .flower-item {
-        background: var(--rose-gold-light);
-        border-radius: 14px;
-        padding: 12px 14px;
-        border: 1px solid var(--rose-gold-glow);
-    }
-    .flower-item .flower-tag {
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-        color: var(--rose-gold);
-        margin-bottom: 4px;
-        display: block;
-    }
-    .flower-item .flower-name { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); }
-
-    footer.app-footer {
-        text-align: center;
-        margin-top: 22px;
-        font-size: 0.72rem;
-        letter-spacing: 0.6px;
-        color: var(--text-soft);
-        text-transform: uppercase;
-    }
-
-    @media (max-width: 480px) {
-        .flower-grid { grid-template-columns: 1fr; }
-        h1 { font-size: 1.9rem; }
-    }
+.res-sec { margin-top: 18px; }
+.res-sec h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--rose-gold);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--rose-gold-glow);
+    padding-bottom: 4px;
+}
+.disclaimer { font-size: 0.78rem; color: var(--text-soft); font-style: italic; margin-top: 8px; line-height: 1.45; }
 </style>
 </head>
 <body>
+<div class="main-container">
 
-<div class="main-container" id="mainContainer">
-    <h1>AstroBeauty AI</h1>
-    <p class="subtitle">Constelația Stilului · Profil Biometric · Parfum & Flori · Test de Bunăstare Emoțională</p>
-    <div class="hairline"></div>
+    <!-- ========== 1. LANDING + GDPR + CONSENT ========== -->
+    <div id="landing-section">
+        <h1>AstroBeauty AI</h1>
+        <p class="subtitle">Stil personalizat • Test GAD-7 • Feedback pentru îmbunătățire</p>
 
+        <div class="gdpr-box">
+            <strong>Disclaimer GDPR & Confidențialitate</strong><br><br>
+            Datele introduse (email, preferințe de stil, răspunsuri la test) sunt folosite exclusiv pentru generarea rezultatelor personalizate și, doar cu acordul tău, pentru îmbunătățirea aplicației. 
+            Nu vindem datele către terți. Poți solicita ștergerea datelor oricând. 
+            Continuând, confirmi că ai peste 16 ani și ești de acord cu prelucrarea datelor conform GDPR.
+        </div>
+
+        <div class="section-label">Email (opțional – pentru salvare rezultat)</div>
+        <input type="email" id="userEmail" class="email-input" placeholder="adresa@email.com">
+
+        <div class="consent-row">
+            <input type="checkbox" id="consentData">
+            <label for="consentData">Sunt de acord ca datele și feedback-ul meu să fie folosite pentru a îmbunătăți aplicația AstroBeauty (anonimizat).</label>
+        </div>
+
+        <div class="consent-row">
+            <input type="checkbox" id="consentGDPR">
+            <label for="consentGDPR">Am citit și sunt de acord cu prelucrarea datelor conform GDPR.</label>
+        </div>
+
+        <button class="action-btn" id="startBtn" disabled onclick="goToSetup()">Continuă către Profilul de Stil →</button>
+    </div>
+
+    <!-- ========== 2. SETUP (Stil + Corp + Unghii + Picioare) ========== -->
     <div id="setup-section">
-        <div class="constellation-title">✦ Alege trendul din Constelația Cosmică ✦</div>
+        <h1>AstroBeauty AI</h1>
+        <p class="subtitle">Alege stilul și caracteristicile tale</p>
 
-        <div class="constellation-box" id="constellationBox">
-            <canvas id="constellationCanvas"></canvas>
-        </div>
+        <div class="section-label">✦ Trend din Constelație</div>
+        <div class="constellation-box" id="constellationBox"></div>
 
-        <div class="section-label"><span class="mark">✧</span> Tip de Corp / Siluetă</div>
-        <div class="bow-options-grid" id="bodyTypeGrid">
+        <div class="section-label">Tip de Corp</div>
+        <div class="bow-options-grid" id="bodyGrid">
             <div class="bow-btn selected" data-val="hourglass">Clepsidră</div>
-            <div class="bow-btn" data-val="ectomorph">Ectomorf (Subțire)</div>
-            <div class="bow-btn" data-val="endomorph">Endomorf (Plin)</div>
-            <div class="bow-btn" data-val="mesomorph">Mezomorf (Atletic)</div>
-            <div class="bow-btn" data-val="rectangle">Pătrat / Dreptunghi</div>
+            <div class="bow-btn" data-val="pear">Pară</div>
+            <div class="bow-btn" data-val="apple">Măr</div>
+            <div class="bow-btn" data-val="rectangle">Dreptunghi</div>
+            <div class="bow-btn" data-val="athletic">Atletic</div>
         </div>
 
-        <div class="section-label"><span class="mark">✧</span> Tip Metabolism</div>
-        <div class="bow-options-grid" id="metabolismGrid">
-            <div class="bow-btn selected" data-val="fast">Rapid (Ardere accelerată)</div>
-            <div class="bow-btn" data-val="slow">Lent (Stocare eficientă)</div>
-            <div class="bow-btn" data-val="mixed">Mixt / Echilibrat</div>
+        <div class="section-label">Formă Unghii</div>
+        <div class="bow-options-grid" id="nailGrid">
+            <div class="bow-btn selected" data-val="almond">Migdală</div>
+            <div class="bow-btn" data-val="oval">Oval</div>
+            <div class="bow-btn" data-val="square">Pătrat</div>
+            <div class="bow-btn" data-val="coffin">Coffin / Balerina</div>
+            <div class="bow-btn" data-val="stiletto">Stiletto</div>
         </div>
 
-        <div class="section-label"><span class="mark">✧</span> Rasă / Etnie</div>
-        <div class="bow-options-grid" id="raceGrid">
-            <div class="bow-btn selected" data-val="caucasian">Caucazian</div>
-            <div class="bow-btn" data-val="asian">Asiatic</div>
-            <div class="bow-btn" data-val="black">African / Black</div>
-            <div class="bow-btn" data-val="latino">Latino</div>
-            <div class="bow-btn" data-val="mixed">Mixtă</div>
+        <div class="section-label">Formă Degete Mâini</div>
+        <div class="bow-options-grid" id="fingerGrid">
+            <div class="bow-btn selected" data-val="long">Lungi & subțiri</div>
+            <div class="bow-btn" data-val="short">Scurte</div>
+            <div class="bow-btn" data-val="tapered">Îngustate</div>
+            <div class="bow-btn" data-val="wide">Late</div>
         </div>
 
-        <div class="section-label"><span class="mark">✧</span> Nuanță Piele</div>
-        <div class="bow-options-grid" id="skinColorGrid">
-            <div class="bow-btn selected" data-val="fair">Porțelan / Foarte deschisă</div>
-            <div class="bow-btn" data-val="light">Deschisă</div>
-            <div class="bow-btn" data-val="tan">Măslinie / Bronzată</div>
-            <div class="bow-btn" data-val="deep">Profundă / Închisă</div>
+        <div class="section-label">Formă Picioare</div>
+        <div class="bow-options-grid" id="footGrid">
+            <div class="bow-btn selected" data-val="egyptian">Egiptean</div>
+            <div class="bow-btn" data-val="greek">Grec</div>
+            <div class="bow-btn" data-val="roman">Roman</div>
+            <div class="bow-btn" data-val="germanic">Germanic</div>
+            <div class="bow-btn" data-val="celtic">Celtic</div>
         </div>
 
-        <div class="section-label"><span class="mark">✧</span> Tip Ten</div>
-        <div class="bow-options-grid" id="skinTypeGrid">
+        <div class="section-label">Formă Degete de la Picioare</div>
+        <div class="bow-options-grid" id="toeGrid">
+            <div class="bow-btn selected" data-val="egyptian">Egiptean (deget mare dominant)</div>
+            <div class="bow-btn" data-val="greek">Grec (al 2-lea deget mai lung)</div>
+            <div class="bow-btn" data-val="roman">Roman (primele 3 egale)</div>
+            <div class="bow-btn" data-val="square">Pătrat</div>
+        </div>
+
+        <div class="section-label">Tip Ten</div>
+        <div class="bow-options-grid" id="skinGrid">
             <div class="bow-btn selected" data-val="normal">Normal</div>
-            <div class="bow-btn" data-val="oily">Gras / Sebum</div>
+            <div class="bow-btn" data-val="oily">Gras</div>
             <div class="bow-btn" data-val="dry">Uscat</div>
             <div class="bow-btn" data-val="combination">Mixt</div>
         </div>
 
-        <button class="action-btn" onclick="startQuiz()">Începe Testul Complet (47 Întrebări) ➔</button>
+        <button class="action-btn" onclick="startGAD7()">Începe Testul GAD-7 (7 întrebări) →</button>
     </div>
 
+    <!-- ========== 3. QUIZ GAD-7 ========== -->
     <div id="quiz-wrapper">
-        <div class="stage-badge" id="stageBadge">Profil de Stil</div>
-        <div class="quiz-progress-bar-container">
-            <div class="quiz-progress-fill" id="progressFill"></div>
-        </div>
-        <div class="quiz-status" id="quizStatus">Întrebarea 1 din 47</div>
+        <div class="quiz-progress-bar-container"><div class="quiz-progress-fill" id="progressFill"></div></div>
+        <div class="quiz-status" id="quizStatus">Întrebarea 1 din 7</div>
 
-        <div class="stage-note" id="stageNote"></div>
-
-        <div class="question-card-single" id="questionCard">
-            <div class="question-text" id="qText">Se încarcă întrebarea...</div>
-            <div class="quiz-options-single" id="qOptions"></div>
+        <div class="question-card">
+            <div class="question-text" id="qText"></div>
+            <div id="qOptions"></div>
         </div>
 
-        <!-- Butoane centrate, mici, stil bej -->
-        <div class="quiz-nav-btns">
-            <button class="nav-sub-btn" onclick="prevQuestion()">← Anterioară</button>
-            <button class="continue-btn" id="continueBtn" disabled onclick="continueQuestion()">Continuă →</button>
+        <div class="nav-btns">
+            <button class="nav-btn" onclick="prevQ()">← Înapoi</button>
+            <button class="nav-btn primary" id="continueBtn" disabled onclick="nextQ()">Continuă →</button>
         </div>
     </div>
 
+    <!-- ========== 4. REZULTATE ========== -->
     <div id="result-card">
-        <img id="resImg" class="result-img" src="" alt="Look">
-        <h2 id="resTitle" style="font-family:'Playfair Display',serif; color:var(--rose-gold); text-align:center;"></h2>
+        <h1 style="font-size:1.8rem; margin-bottom:12px;" id="resTitle">Rezultatul tău</h1>
 
-        <div class="res-sec-title">✦ Profil Biometric & Stil Personal</div>
-        <p class="res-text" id="resDesc"></p>
-
-        <div class="res-sec-title">✦ Horoscopul Stării (generat din test)</div>
-        <p class="res-text" id="resHoroscope"></p>
-
-        <div class="res-sec-title">✦ Recomandare de Parfum</div>
-        <div class="info-box">
-            <div class="flower-tag" style="font-size:0.72rem;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:var(--rose-gold);">Familie Olfactivă</div>
-            <p class="res-text" id="resPerfumeFamily" style="font-weight:600; margin: 4px 0 6px;"></p>
-            <p class="res-text" id="resPerfumeDesc"></p>
+        <div class="res-sec">
+            <h3>🧠 Anxietate (GAD-7)</h3>
+            <p id="gadScore"></p>
+            <div class="score-badge" id="gadBadge"></div>
+            <p class="disclaimer">Acest test este un instrument de auto-evaluare și nu înlocuiește un diagnostic medical. Dacă scorul este ridicat, consultă un specialist.</p>
         </div>
 
-        <div class="res-sec-title">✦ Recomandare de Flori</div>
-        <p class="res-text" style="margin-bottom:6px;">Potrivite pentru stilul tău — semnătură, exotice și de câmp:</p>
-        <div class="flower-grid">
-            <div class="flower-item"><span class="flower-tag">Semnătură</span><span class="flower-name" id="resFlowerSignature"></span></div>
-            <div class="flower-item"><span class="flower-tag">Exotică</span><span class="flower-name" id="resFlowerExotic"></span></div>
-            <div class="flower-item"><span class="flower-tag">De câmp</span><span class="flower-name" id="resFlowerWild"></span></div>
-            <div class="flower-item"><span class="flower-tag">Ocazie specială</span><span class="flower-name" id="resFlowerSpecial"></span></div>
-        </div>
-        <div class="partner-note">💐 Această secțiune este gândită și pentru partenerul tău — soț sau iubit — ca să știe exact ce flori ți se potrivesc, fără presupuneri.</div>
-        <button class="copy-btn" id="copyFlowerBtn" onclick="copyFlowerRec()">Copiază recomandarea pentru partener</button>
-
-        <div class="res-sec-title">✦ Recomandări Machiaj & Îngrijire</div>
-        <ul id="resMakeup"></ul>
-
-        <div class="res-sec-title">✦ Ghid Nutriție & Corp</div>
-        <ul id="resBodyAdvice"></ul>
-
-        <div class="res-sec-title">✦ Test de Bunăstare Emoțională — GAD-7</div>
-        <div class="info-box">
-            <div class="score-row"><span class="score-number" id="gad7Score">0</span><span class="score-max">/ 21 puncte</span></div>
-            <span class="band-tag" id="gad7BandTag">—</span>
-            <p class="res-text" id="gad7BandDesc"></p>
-            <p class="disclaimer">Acest chestionar este un instrument de auto-evaluare bazat pe modelul GAD-7 și nu reprezintă un diagnostic medical. Dacă scorul este ridicat sau resimți disconfort persistent, discută cu un psiholog sau un medic specialist.</p>
+        <div class="res-sec">
+            <h3>✨ Stil & Profil</h3>
+            <p id="resStyle"></p>
         </div>
 
-        <div class="res-sec-title">✦ Stimă de Sine — Scala Rosenberg (RSES)</div>
-        <div class="info-box">
-            <div class="score-row"><span class="score-number" id="rsesScore">0</span><span class="score-max">/ 30 puncte</span></div>
-            <span class="band-tag" id="rsesBandTag">—</span>
-            <p class="res-text" id="rsesBandDesc"></p>
-            <p class="disclaimer">Rezultatul are scop informativ și nu înlocuiește o evaluare psihologică de specialitate.</p>
+        <div class="res-sec">
+            <h3>💅 Recomandare Unghii personalizată</h3>
+            <p id="resNails"></p>
         </div>
 
-        <button class="action-btn" onclick="location.reload()" style="margin-top:24px;">↺ Reia Analiza</button>
+        <div class="res-sec">
+            <h3>🦶 Formă picioare & recomandare</h3>
+            <p id="resFeet"></p>
+        </div>
+
+        <button class="action-btn" onclick="goToFeedback()">Continuă către Feedback (5 întrebări) →</button>
     </div>
 
-    <footer class="app-footer">AstroBeauty AI — Ediție Timeless</footer>
+    <!-- ========== 5. FEEDBACK STANDARDIZAT ========== -->
+    <div id="feedback-wrapper">
+        <h1 style="font-size:1.7rem;">Feedback pentru îmbunătățire</h1>
+        <p class="subtitle">5 întrebări scurte – ne ajuți să facem aplicația mai bună</p>
+
+        <div class="quiz-progress-bar-container"><div class="quiz-progress-fill" id="fbProgress"></div></div>
+        <div class="quiz-status" id="fbStatus">Întrebarea 1 din 5</div>
+
+        <div class="question-card">
+            <div class="question-text" id="fbText"></div>
+            <div id="fbOptions"></div>
+        </div>
+
+        <div class="nav-btns">
+            <button class="nav-btn" onclick="prevFb()">← Înapoi</button>
+            <button class="nav-btn primary" id="fbContinue" disabled onclick="nextFb()">Continuă →</button>
+        </div>
+    </div>
+
+    <!-- Final -->
+    <div id="final-section" style="display:none; text-align:center; padding:30px 10px;">
+        <h1 style="font-size:1.8rem;">Mulțumim! 💕</h1>
+        <p style="margin:16px 0; color:var(--text-soft);">Feedback-ul tău ne ajută să îmbunătățim AstroBeauty.</p>
+        <button class="action-btn" onclick="location.reload()">Reîncepe analiza</button>
+    </div>
 </div>
 
 <script>
-    const trendsData = {
-        "rose-gold": {
-            name: "Rose Gold", x: 50, y: 50,
-            c1: "#ffd9e0", c2: "#b76e79", glow: "#e8b4b8",
-            img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500",
-            makeup: ["Ruj nude-trandafiriu cremos", "Iluminator soft rose-gold pe pomeți", "Farduri în tonuri de șampanie"],
-            perfumeFamily: "Floral-dulce, cald",
-            perfumeDesc: "Note pudrate de trandafir, vanilie caldă și un strop de fructe roz — un parfum senzual, delicat, feminin fără efort.",
-            flowerSignature: "Trandafiri roz pal", flowerExotic: "Frezii exotice parfumate", flowerWild: "Margarete roz de câmp", flowerSpecial: "Bujori roz în ediție limitată"
-        },
-        "punk": {
-            name: "Punk", x: 20, y: 25,
-            c1: "#ff8fd6", c2: "#1a1a1a", glow: "#ff2d78",
-            img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500",
-            makeup: ["Eyeliner negru grafic", "Ruj negru mat sau vișiniu", "Ten uniform mat"],
-            perfumeFamily: "Lemnos-picant, intens",
-            perfumeDesc: "Piele, piper negru și tutun ușor — un parfum îndrăzneț, cu caracter, care nu cere permisiunea nimănui.",
-            flowerSignature: "Orhidee neagră", flowerExotic: "Protea (floare exotică sud-africană)", flowerWild: "Mac roșu sălbatic de câmp", flowerSpecial: "Trandafiri negri-vișinii statement"
-        },
-        "rock": {
-            name: "Rock", x: 80, y: 25,
-            c1: "#ff8080", c2: "#4a0000", glow: "#c81e3a",
-            img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500",
-            makeup: ["Smokey eyes negru intens", "Mascara volum maxim", "Ruj roșu sângeriu"],
-            perfumeFamily: "Oriental-ambrat, intens",
-            perfumeDesc: "Chihlimbar, lemn de santal și mosc — o amprentă olfactivă puternică, memorabilă, cu multă personalitate.",
-            flowerSignature: "Trandafiri roșu-vișiniu", flowerExotic: "Anturium roșu exotic", flowerWild: "Maci de câmp în buchet liber", flowerSpecial: "Gerbera roșu-aprins"
-        },
-        "boho": {
-            name: "Boho Chic", x: 15, y: 75,
-            c1: "#f0dca0", c2: "#7a5c3e", glow: "#c9a06b",
-            img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500",
-            makeup: ["Fard de obraz piersiciu", "Balsam de buze hidratant", "Sprâncene naturale"],
-            perfumeFamily: "Floral-verde, natural",
-            perfumeDesc: "Iasomie sălbatică, cedru și ierburi proaspete — un parfum liber, organic, care miroase a călătorie și natură.",
-            flowerSignature: "Lavandă și margarete", flowerExotic: "Hibiscus exotic", flowerWild: "Buchet mixt de câmp (mușețel, albăstrele, mac)", flowerSpecial: "Floarea-soarelui mică, boemă"
-        },
-        "cyberpunk": {
-            name: "Cyberpunk", x: 85, y: 75,
-            c1: "#9cf7ff", c2: "#5b1fb8", glow: "#00e5ff",
-            img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500",
-            makeup: ["Eyeliner neon UV", "Iluminator holografic", "Gloss metalic"],
-            perfumeFamily: "Ozonic-metalic, futurist",
-            perfumeDesc: "Note reci de mentă, ambră gri și mosc alb — un parfum abstract, aproape sintetic, ca un semnal din viitor.",
-            flowerSignature: "Orhidee albastră", flowerExotic: "Strelitzia — pasărea paradisului", flowerWild: "—  (variantă de seră recomandată în loc de câmp)", flowerSpecial: "Anturium violet electric"
-        },
-        "glam": {
-            name: "Glamour", x: 50, y: 18,
-            c1: "#fff3b0", c2: "#a6820c", glow: "#ffd700",
-            img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500",
-            makeup: ["Ruj roșu clasic impecabil", "Gene false bogate", "Ten glass-skin"],
-            perfumeFamily: "Oriental-floral, opulent",
-            perfumeDesc: "Iasomie de noapte, tuberoză și vanilie neagră — un parfum dens, luxos, făcut pentru intrări memorabile.",
-            flowerSignature: "Trandafiri albi catifelați", flowerExotic: "Gardenie parfumată", flowerWild: "—  (stil rafinat, nu de câmp)", flowerSpecial: "Orhidee albă premium"
-        },
-        "minimalist": {
-            name: "Minimalist", x: 50, y: 82,
-            c1: "#ffffff", c2: "#a8a8b0", glow: "#e0e0e0",
-            img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500",
-            makeup: ["Skin Tint / BB Cream", "Gel transparent sprâncene", "Ulei hidratant buze"],
-            perfumeFamily: "Citric-curat, discret",
-            perfumeDesc: "Bergamotă, mosc alb și note discrete de flori de bumbac — un parfum aproape invizibil, elegant, niciodată excesiv.",
-            flowerSignature: "Lalele albe", flowerExotic: "Orhidee albă simplă", flowerWild: "Margarete albe simple de câmp", flowerSpecial: "Frezii albe minimaliste"
-        }
+// ========== STATE ==========
+let selectedStyle = "rose-gold";
+let selectedBody = "hourglass";
+let selectedNail = "almond";
+let selectedFinger = "long";
+let selectedFoot = "egyptian";
+let selectedToe = "egyptian";
+let selectedSkin = "normal";
+let userEmail = "";
+let consentData = false;
+
+const trends = {
+    "rose-gold": { name: "Rose Gold", x:50, y:48 },
+    "punk": { name: "Punk", x:18, y:22 },
+    "rock": { name: "Rock", x:82, y:22 },
+    "boho": { name: "Boho", x:15, y:75 },
+    "cyberpunk": { name: "Cyberpunk", x:85, y:75 },
+    "glam": { name: "Glamour", x:50, y:15 },
+    "minimalist": { name: "Minimalist", x:50, y:85 }
+};
+
+// Nail recommendations by style
+const nailRecs = {
+    "rose-gold": "Unghii migdală sau ovale, lungime medie, nuanțe nude-roz, chrome rose-gold sau french tip delicat.",
+    "punk": "Formă coffin sau stiletto, negru mat, vișiniu închis sau design grafic. Lungime medie-lungă.",
+    "rock": "Coffin sau squoval, roșu sângeriu, negru gloss sau ombré. Aspect statement.",
+    "boho": "Oval sau squoval natural, nuanțe pământii, nude, sau detalii florale discrete. Lungime scurtă-medie.",
+    "cyberpunk": "Stiletto sau coffin ascuțit, chrome, holografic, neon sau metalic. Lungime lungă.",
+    "glam": "Migdală elegantă sau coffin, roșu clasic, nude luxe sau gold foil. Finish glass.",
+    "minimalist": "Pătrat scurt sau oval scurt, nude, transparent sau milky white. Clean și simplu."
+};
+
+const footRecs = {
+    "egyptian": "Degetul mare dominant – recomandăm pantofi cu vârf rotunjit sau almond, evita vârfurile prea ascuțite.",
+    "greek": "Al 2-lea deget mai lung – ideal pantofi cu spațiu în față, sandale cu barete reglabile.",
+    "roman": "Primele 3 degete aproape egale – se potrivesc majoritatea formelor, preferabil square-toe sau almond.",
+    "germanic": "Degete late și scurte – alege pantofi cu lățime generoasă și suport bun.",
+    "celtic": "Degete înguste, arc ridicat – pantofi cu susținere a arcului și vârf mai îngust."
+};
+
+// GAD-7
+const gadQuestions = [
+    { text: "În ultimele 2 săptămâni, cât de des te-ai simțit nervoasă, anxioasă sau tensionată?", scores: [0,1,2,3] },
+    { text: "Cât de des nu ai putut să oprești sau să controlezi îngrijorarea?", scores: [0,1,2,3] },
+    { text: "Cât de des te-ai îngrijorat prea mult din cauza unor lucruri diferite?", scores: [0,1,2,3] },
+    { text: "Cât de des ai avut probleme să te relaxezi?", scores: [0,1,2,3] },
+    { text: "Cât de des ai fost atât de agitată încât îți era greu să stai pe loc?", scores: [0,1,2,3] },
+    { text: "Cât de des te-ai enervat sau iritat ușor?", scores: [0,1,2,3] },
+    { text: "Cât de des ți-a fost teamă ca și cum s-ar putea întâmpla ceva groaznic?", scores: [0,1,2,3] }
+];
+const gadOptions = ["Deloc", "Câteva zile", "Mai mult de jumătate din zile", "Aproape în fiecare zi"];
+
+let currentQ = 0;
+let gadAnswers = new Array(7).fill(null);
+let selectedOpt = null;
+
+// Feedback 5 questions × 5 options
+const feedbackQs = [
+    { text: "Cât de ușor ți s-a părut să completezi testul?", options: ["Foarte greu", "Greu", "Neutru", "Ușor", "Foarte ușor"] },
+    { text: "Cât de relevante ți s-au părut rezultatele pentru tine?", options: ["Deloc relevante", "Puțin relevante", "Oarecum relevante", "Relevante", "Foarte relevante"] },
+    { text: "Ai găsit utile recomandările de stil / unghii / parfum?", options: ["Deloc", "Puțin", "Moderat", "Destul de utile", "Foarte utile"] },
+    { text: "Cât de probabil este să recomanzi aplicația unei prietene?", options: ["Deloc probabil", "Puțin probabil", "Neutru", "Probabil", "Foarte probabil"] },
+    { text: "Ce ți-a plăcut cel mai mult la experiență?", options: ["Designul", "Viteza testului", "Personalizarea", "Recomandările", "Totul în ansamblu"] }
+];
+let fbIndex = 0;
+let fbAnswers = new Array(5).fill(null);
+let fbSelected = null;
+
+// ========== LANDING ==========
+document.getElementById('consentGDPR').addEventListener('change', checkConsent);
+document.getElementById('consentData').addEventListener('change', checkConsent);
+
+function checkConsent() {
+    const ok = document.getElementById('consentGDPR').checked;
+    document.getElementById('startBtn').disabled = !ok;
+    consentData = document.getElementById('consentData').checked;
+}
+
+function goToSetup() {
+    userEmail = document.getElementById('userEmail').value.trim();
+    document.getElementById('landing-section').style.display = 'none';
+    document.getElementById('setup-section').style.display = 'block';
+    initConstellation();
+    setupGrids();
+}
+
+// ========== SETUP ==========
+function initConstellation() {
+    const box = document.getElementById('constellationBox');
+    box.innerHTML = '';
+    Object.keys(trends).forEach(key => {
+        const t = trends[key];
+        const node = document.createElement('div');
+        node.className = 'star-node' + (key === selectedStyle ? ' active' : '');
+        node.style.left = t.x + '%';
+        node.style.top = t.y + '%';
+        node.innerHTML = `<div class="star-point"></div><div class="star-label">${t.name}</div>`;
+        node.onclick = () => {
+            selectedStyle = key;
+            document.querySelectorAll('.star-node').forEach(n => n.classList.remove('active'));
+            node.classList.add('active');
+        };
+        box.appendChild(node);
+    });
+}
+
+function setupGrids() {
+    const map = {
+        bodyGrid: v => selectedBody = v,
+        nailGrid: v => selectedNail = v,
+        fingerGrid: v => selectedFinger = v,
+        footGrid: v => selectedFoot = v,
+        toeGrid: v => selectedToe = v,
+        skinGrid: v => selectedSkin = v
     };
-
-    let selectedStyle = "rose-gold";
-    let selectedBody = "hourglass";
-    let selectedMetabolism = "fast";
-    let selectedRace = "caucasian";
-    let selectedSkinColor = "fair";
-    let selectedSkinType = "normal";
-
-    function initConstellation() {
-        const box = document.getElementById('constellationBox');
-        const canvas = document.getElementById('constellationCanvas');
-        canvas.width = box.offsetWidth;
-        canvas.height = box.offsetHeight;
-        const ctx = canvas.getContext('2d');
-
-        Object.keys(trendsData).forEach(key => {
-            const item = trendsData[key];
-            const node = document.createElement('div');
-            node.className = `star-node ${key === selectedStyle ? 'active' : ''}`;
-            node.style.left = item.x + '%';
-            node.style.top = item.y + '%';
-            node.style.setProperty('--planet-c1', item.c1);
-            node.style.setProperty('--planet-c2', item.c2);
-            node.style.setProperty('--planet-glow', item.glow);
-            node.innerHTML = `
-                <div class="planet-body">
-                    <span class="sparkle s1"></span>
-                    <span class="sparkle s2"></span>
-                    <span class="sparkle s3"></span>
-                </div>
-                <div class="star-label">${item.name}</div>`;
-            node.onclick = () => selectStyleNode(key);
-            box.appendChild(node);
+    Object.keys(map).forEach(id => {
+        document.querySelectorAll(`#${id} .bow-btn`).forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll(`#${id} .bow-btn`).forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                map[id](btn.dataset.val);
+            };
         });
+    });
+}
 
-        ctx.strokeStyle = 'rgba(199, 199, 207, 0.22)';
-        ctx.lineWidth = 1.2;
-        const keys = Object.keys(trendsData);
-        ctx.beginPath();
-        for (let i = 0; i < keys.length; i++) {
-            for (let j = i + 1; j < keys.length; j++) {
-                let p1 = trendsData[keys[i]];
-                let p2 = trendsData[keys[j]];
-                ctx.moveTo((p1.x / 100) * canvas.width, (p1.y / 100) * canvas.height);
-                ctx.lineTo((p2.x / 100) * canvas.width, (p2.y / 100) * canvas.height);
-            }
-        }
-        ctx.stroke();
-    }
+function startGAD7() {
+    document.getElementById('setup-section').style.display = 'none';
+    document.getElementById('quiz-wrapper').style.display = 'block';
+    currentQ = 0;
+    gadAnswers = new Array(7).fill(null);
+    selectedOpt = null;
+    renderGAD();
+}
 
-    function selectStyleNode(key) {
-        selectedStyle = key;
-        document.querySelectorAll('.star-node').forEach((node, idx) => {
-            const nodeKey = Object.keys(trendsData)[idx];
-            node.classList.toggle('active', nodeKey === key);
-        });
-    }
+// ========== GAD-7 ==========
+function renderGAD() {
+    const q = gadQuestions[currentQ];
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('quizStatus').textContent = `Întrebarea ${currentQ + 1} din 7`;
+    document.getElementById('progressFill').style.width = ((currentQ + 1) / 7 * 100) + '%';
 
-    function setupBowGrids() {
-        const setupGrid = (gridId, callback) => {
-            const grid = document.getElementById(gridId);
-            const btns = grid.querySelectorAll('.bow-btn');
-            btns.forEach(btn => {
-                btn.onclick = () => {
-                    btns.forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    callback(btn.getAttribute('data-val'));
-                };
-            });
+    const cont = document.getElementById('qOptions');
+    cont.innerHTML = '';
+    selectedOpt = gadAnswers[currentQ];
+
+    gadOptions.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'quiz-opt-btn' + (selectedOpt === idx ? ' selected' : '');
+        btn.innerHTML = `<span>${opt}</span><span>➔</span>`;
+        btn.onclick = () => {
+            selectedOpt = idx;
+            document.querySelectorAll('.quiz-opt-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('continueBtn').disabled = false;
         };
-        setupGrid('bodyTypeGrid', val => selectedBody = val);
-        setupGrid('metabolismGrid', val => selectedMetabolism = val);
-        setupGrid('raceGrid', val => selectedRace = val);
-        setupGrid('skinColorGrid', val => selectedSkinColor = val);
-        setupGrid('skinTypeGrid', val => selectedSkinType = val);
+        cont.appendChild(btn);
+    });
+    document.getElementById('continueBtn').disabled = selectedOpt === null;
+}
+
+function nextQ() {
+    if (selectedOpt === null) return;
+    gadAnswers[currentQ] = selectedOpt;
+    if (currentQ < 6) {
+        currentQ++;
+        selectedOpt = null;
+        renderGAD();
+    } else {
+        showResults();
     }
+}
 
-    const moodQuestions = [
-        { q: "Cum reacționezi de obicei când te confrunți cu o schimbare neașteptată de plan?", o: ["Analizez logic și mă adaptez", "Simt un impuls puternic de moment", "Analizez emoțional impactul", "Prefer să mențin controlul calm", "Rămân detașat(ă) și las lucrurile să curgă natural"] },
-        { q: "Ce tip de energie resimți cel mai des în prima parte a zilei?", o: ["Explozie de energie și inițiativă", "Calmă, dar orientată spre acțiune", "Visătoare, cu conectare lentă", "Pragmatică și organizată", "O energie liniștită, meditativă, centrată interior"] },
-        { q: "Care mediu exterior te relaxează instantaneu cel mai mult?", o: ["Vântul puternic și spațiile deschise", "Un foc aprins sau o seară urbană dinamică", "O pădure verde și liniștită", "O apă curgătoare sau marea adâncă", "Un loc sacru, liniștit, încărcat de energie"] },
-        { q: "Cum îți alegi hainele dimineața?", o: ["În funcție de starea de spirit din acea secundă", "Aleg piese statement care să iasă în evidență", "Confort absolut și texturi naturale", "Elegant, curat și bine pus la punct", "Urmez pur și simplu intuiția momentului"] },
-        { q: "Ce element din natura înconjurătoare te atrage subconștient?", o: ["Focul și fulgerele", "Pământul solid și munții", "Aerul liber și înălțimile", "Oceanele și profunzimile acvatice", "Eterul / spațiul infinit, cerul înstelat"] },
-        { q: "Cum gestionezi un conflict direct sau o discuție în contradictoriu?", o: ["Răspund ferm și direct pe loc", "Îmi aprind rapid ambiția și ripostez", "Evit conflictul și caut armonia", "Analizez rece și pun punct argumentat", "Mă detașez emoțional și caut o soluție superioară"] },
-        { q: "Ce tip de sunet sau muzică rezonează cel mai bine cu starea ta interioară?", o: ["Ritmuri electronice / experimentale", "Rock energic sau chitare puternice", "Sunete acustice / ambientale", "Melodii line, profunde, clasice", "Frecvențe vindecătoare, meditație ghidată"] },
-        { q: "Cum preferi să-ți petreci timpul liber la sfârșitul săptămânii?", o: ["Călătorii, descoperiri și noutate", "Evenimente sociale, socializare", "Natură, citit, relaxare acasă", "Planificare, organizare, proiecte", "Introspecție, meditație sau conectare spirituală"] },
-        { q: "Ce valoare personală consideri că te definește cel mai puternic?", o: ["Independența și libertatea", "Pasiunea și curajul", "Empatia și armonia interioară", "Stabilitatea și integritatea", "Conștiința și creșterea spirituală"] },
-        { q: "Cum reacționezi când cineva îți cere ajutorul într-un moment aglomerat?", o: ["Sar imediat să ajut cu entuziasm", "Ofer soluții practice imediate", "Ascult empatic și ofer sprijin", "Evaluez dacă am timp și resurse", "Ofer ajutor din intuiție, simțind exact ce e nevoie"] },
-        { q: "Ce textură sau material vestimentar îți oferă cea mai mare siguranță?", o: ["Piele, metal și accesorii lucioase", "Catifea, mătase sau bumbac greu", "In, lână fină sau materiale organice", "Țesături structurate, linii curate", "Materiale ușoare, fluide, aproape imponderabile"] },
-        { q: "Cum descrii ritmul tău intern de viață în acest moment?", o: ["Accelerat, mereu cu un pas înainte", "Intens, cu valuri de pasiune", "Lin, curgător și flexibil", "Stabil, metodic și predictibil", "Fluid, ghidat de intuiție, dincolo de timp"] },
-        { q: "Ce tip de lumină preferi în locuința ta?", o: ["Lumini colorate, neon sau futuriste", "Lumină caldă, intensă de lampă", "Lumină naturală de soare direct", "Lumină difuză, discretă și relaxantă", "Lumina lunii sau lumânări, atmosferă contemplativă"] },
-        { q: "Cum te raportezi la riscuri și decizii majore de viitor?", o: ["Îmi plac riscurile asumate", "Acționez curajos ghidat de instinct", "Ezit dacă nu simt siguranță", "Calculez fiecare pas în detaliu", "Mă ghidez după semne și intuiție, nu doar rațiune"] },
-        { q: "Ce emoție predominantă ai experimentat în ultimele zile?", o: ["Curiozitate și entuziasm", "Nerăbdare sau efervescență", "Nostalgie sau introspecție", "Echilibru și calm interior", "Pace interioară și conexiune profundă"] },
-        { q: "Cum reacționezi în fața unui eșec sau a unei obstrucții temporare?", o: ["Inovez și caut altă cale", "Mă ambiționez și lupt mai tare", "Iau o pauză și îmi reglez energia", "Îmi ajustez strategia metodic", "Privesc eșecul ca lecție spirituală și merg mai departe senin(ă)"] },
-        { q: "Ce tip de aromă sau parfum îți trezește cele mai vii amintiri?", o: ["Parfumuri fresh, citrice", "Note lemnoase, condimentate", "Flori de câmp, ierburi aromatice", "Vanilie, mosc, note calde", "Tămâie, santal, arome spirituale"] },
-        { q: "Care este atitudinea ta față de regulile stricte impuse de alții?", o: ["Le contest și îmi creez propriile reguli", "Le accept doar dacă au sens", "Le respect pentru a evita tensiunile", "Consider că regulile sunt esențiale", "Le transcend, urmând propriul cod interior"] },
-        { q: "Cum interacționezi cu persoanele necunoscute într-un grup?", o: ["Sunt spontan(ă) și atrag atenția", "Preiau conducerea conversației", "Ascult mai mult la început", "Analizez interlocutorul cu atenție", "Mă conectez intuitiv, simțind energia celorlalți"] },
-        { q: "Ce fel de activitate fizică te eliberează cel mai bine de stres?", o: ["Alergare, mișcare dinamică", "Fitness intens sau forță", "Yoga, stretching, plimbări", "Rutine fixe de întreținere", "Meditație în mișcare, tai chi, respirație conștientă"] },
-        { q: "Cum percepi trecerea timpului în viața de zi cu zi?", o: ["Mi se pare că zboară incredibil de repede", "Este intens, trăit în prezent", "Este elastic, curge natural", "Este strict cronometrat", "Timpul mi se pare o iluzie, trăiesc în prezent pur"] },
-        { q: "Ce culoare crezi că descrie cel mai bine profunzimea ta interioară?", o: ["Argintiu metalic sau nuanțe electrice", "Roșu aprins sau negru profund", "Verde pământiu sau tonuri calde", "Albastru marin sau nuanțe neutre", "Alb sau auriu, lumină pură"] },
-        { q: "Cum te simți atunci când ești pus(ă) în centrul atenției?", o: ["Mă simt stimulat(ă) și în elementul meu", "Radiez carismă și energie", "Prefer discreția și spațiul personal", "Gestionez situația cu profesionalism", "Rămân senin(ă), neatașat(ă) de părerea altora"] },
-        { q: "Ce tip de lectură sau conținut vizual captează imediat interesul tău?", o: ["SF, tehnologie, inovație", "Acțiune, biografii ale unor rebeli", "Natură, filosofie, spiritualitate", "Istorie, economie, dezvoltare", "Spiritualitate, filosofie orientală, texte sacre"] },
-        { q: "Cum îți reîncarci rezervele de energie după o zi extenuantă?", o: ["Schimbând complet activitatea", "Făcând ceva pasional", "Retrăgându-mă în liniște", "Făcând ordine și organizându-mi spațiul", "Meditație, rugăciune sau conectare cu sinele profund"] },
-        { q: "Ce importanță acorzi intuiției comparativ cu logica pură?", o: ["Mă bizui în totalitate pe intuiție", "Ascult instinctul combinat cu acțiunea", "Ascult vocea interioară profundă", "Mă bazez preponderent pe logică", "Mă ghidez aproape exclusiv după intuiție"] },
-        { q: "Cum reacționezi la temperaturile scăzute sau la iarnă?", o: ["Mă mobilizează și îmi dă claritate", "Îmi stimulează energia interioară", "Îmi activează dorința de confort", "Mă adaptez ușor", "Le accept ca parte naturală a ciclului vieții, cu seninătate"] },
-        { q: "Ce gând sau vis recurent te motivează să mergi mai departe?", o: ["Că voi cuceri noi orizonturi", "Că voi reuși să schimb ceva major", "Că voi trăi în pace și armonie", "Că voi construi ceva durabil", "Că voi atinge o stare de liniște și pace interioară"] },
-        { q: "Cum definești succesul personal în etapa actuală?", o: ["Libertatea de a crea și a fi unic(ă)", "Succesul, impactul și recunoașterea", "Echilibrul sufletesc și iubirea", "Siguranța, realizarea și ordinea", "Armonia interioară și evoluția spirituală"] },
-        { q: "Ce mesaj îți transmiți ție însuți/însăți în momentele de incertitudine?", o: ["„Totul este posibil, îndrăznește!”", "„Sunt de neoprit!”", "„Ai răbdare, totul se așază.”", "„Planul funcționează exact cum trebuie.”", "„Totul se întâmplă exact cum trebuie să se întâmple.”"] }
-    ];
-    const zodiacElements = ["Foc (Dinamic, Pasionat)", "Aer (Inovator, Liber)", "Apă (Empatic, Intuitiv)", "Pământ (Pragmatic, Stabil)", "Eter (Spiritual, Intuitiv-Transcendent)"];
+function prevQ() {
+    if (currentQ > 0) {
+        currentQ--;
+        selectedOpt = gadAnswers[currentQ];
+        renderGAD();
+    } else {
+        document.getElementById('quiz-wrapper').style.display = 'none';
+        document.getElementById('setup-section').style.display = 'block';
+    }
+}
 
-    const gad7Items = [
-        "Te-ai simțit agitat(ă), tensionat(ă) sau „pe muchie de cuțit”?",
-        "Ai avut dificultăți în a opri sau controla îngrijorările?",
-        "Te-ai îngrijorat excesiv în legătură cu diverse lucruri din viața ta?",
-        "Ai avut dificultăți în a te relaxa?",
-        "Ai fost atât de neliniștit(ă) încât ți-a fost greu să stai locului?",
-        "Ai devenit ușor iritabil(ă) sau mai ușor de enervat?",
-        "Ai simțit frică, de parcă ceva groaznic urma să se întâmple?"
-    ];
-    const gad7Options = ["Deloc", "Câteva zile", "Mai mult de jumătate din zile", "Aproape în fiecare zi"];
+// ========== RESULTS ==========
+function showResults() {
+    document.getElementById('quiz-wrapper').style.display = 'none';
+    document.getElementById('result-card').style.display = 'block';
 
-    const rsesItems = [
-        "Consider că sunt o persoană valoroasă, cel puțin la fel ca ceilalți.",
-        "Simt că am o serie de calități bune.",
-        "În general, am tendința să mă simt un eșec.",
-        "Sunt capabil(ă) să fac lucrurile la fel de bine ca majoritatea oamenilor.",
-        "Simt că nu am prea multe motive să fiu mândru/mândră de mine.",
-        "Am o atitudine pozitivă față de mine însumi/însămi.",
-        "În general, sunt mulțumit(ă) de mine.",
-        "Mi-aș dori să am mai mult respect față de propria persoană.",
-        "Uneori mă simt cu adevărat inutil(ă).",
-        "Câteodată cred că nu sunt bun(ă) de nimic."
-    ];
-    const rsesReverseIdx = [2, 4, 7, 8, 9];
-    const rsesOptions = ["Dezacord puternic", "Dezacord", "Acord", "Acord puternic"];
+    let score = 0;
+    gadAnswers.forEach((a, i) => { if (a !== null) score += gadQuestions[i].scores[a]; });
 
-    let allQuestions = [];
-    moodQuestions.forEach(item => allQuestions.push({ section: 'mood', text: item.q, options: item.o, type: 'multi' }));
-    gad7Items.forEach(text => allQuestions.push({ section: 'gad7', text: text, options: gad7Options, type: 'single' }));
-    rsesItems.forEach((text, i) => allQuestions.push({ section: 'rses', text: text, options: rsesOptions, type: 'single', reverse: rsesReverseIdx.includes(i) }));
+    let level, cls;
+    if (score <= 4) { level = 'Minimă'; cls = 'minimal'; }
+    else if (score <= 9) { level = 'Ușoară'; cls = 'mild'; }
+    else if (score <= 14) { level = 'Moderată'; cls = 'moderate'; }
+    else { level = 'Severă'; cls = 'severe'; }
 
-    const TOTAL_Q = allQuestions.length;
-    let currentQIndex = 0;
-    let userAnswers = new Array(TOTAL_Q).fill(null);
+    document.getElementById('gadScore').textContent = `Scor: ${score} / 21`;
+    const badge = document.getElementById('gadBadge');
+    badge.textContent = level;
+    badge.className = 'score-badge ' + cls;
 
-    function stageInfo(index) {
-        if (index < 30) return { label: 'Profil de Stil & Mood', note: null };
-        if (index < 37) return {
-            label: 'Test de Bunăstare Emoțională (GAD-7)',
-            note: index === 30 ? 'Următoarele 7 întrebări te ajută să reflectezi asupra stării tale emoționale din ultimele 2 săptămâni. Alege răspunsul care descrie cel mai bine frecvența, nu intensitatea.' : null
+    document.getElementById('resTitle').textContent = trends[selectedStyle].name + ' Style';
+    document.getElementById('resStyle').textContent = `Stil: ${trends[selectedStyle].name} • Corp: ${selectedBody} • Ten: ${selectedSkin} • Degete mâini: ${selectedFinger}`;
+
+    document.getElementById('resNails').textContent = nailRecs[selectedStyle] || nailRecs['minimalist'];
+    document.getElementById('resFeet').textContent = `Formă picior: ${selectedFoot} | Degete: ${selectedToe}. ${footRecs[selectedFoot] || ''}`;
+}
+
+// ========== FEEDBACK ==========
+function goToFeedback() {
+    document.getElementById('result-card').style.display = 'none';
+    document.getElementById('feedback-wrapper').style.display = 'block';
+    fbIndex = 0;
+    fbAnswers = new Array(5).fill(null);
+    fbSelected = null;
+    renderFb();
+}
+
+function renderFb() {
+    const q = feedbackQs[fbIndex];
+    document.getElementById('fbText').textContent = q.text;
+    document.getElementById('fbStatus').textContent = `Întrebarea ${fbIndex + 1} din 5`;
+    document.getElementById('fbProgress').style.width = ((fbIndex + 1) / 5 * 100) + '%';
+
+    const cont = document.getElementById('fbOptions');
+    cont.innerHTML = '';
+    fbSelected = fbAnswers[fbIndex];
+
+    q.options.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'quiz-opt-btn' + (fbSelected === idx ? ' selected' : '');
+        btn.innerHTML = `<span>${opt}</span><span>➔</span>`;
+        btn.onclick = () => {
+            fbSelected = idx;
+            document.querySelectorAll('#fbOptions .quiz-opt-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('fbContinue').disabled = false;
         };
-        return {
-            label: 'Stimă de Sine (RSES)',
-            note: index === 37 ? 'Următoarele 10 afirmații evaluează stima de sine. Alege gradul tău de acord cu fiecare afirmație — nu există răspunsuri corecte sau greșite.' : null
-        };
+        cont.appendChild(btn);
+    });
+    document.getElementById('fbContinue').disabled = fbSelected === null;
+}
+
+function nextFb() {
+    if (fbSelected === null) return;
+    fbAnswers[fbIndex] = fbSelected;
+    if (fbIndex < 4) {
+        fbIndex++;
+        fbSelected = null;
+        renderFb();
+    } else {
+        // Aici poți trimite fbAnswers + consentData + userEmail către backend
+        console.log('Feedback salvat:', { email: userEmail, consent: consentData, answers: fbAnswers, style: selectedStyle });
+        document.getElementById('feedback-wrapper').style.display = 'none';
+        document.getElementById('final-section').style.display = 'block';
     }
+}
 
-    function startQuiz() {
-        const setupEl = document.getElementById('setup-section');
-        const quizEl = document.getElementById('quiz-wrapper');
-        fadeSwitch(setupEl, quizEl);
-        currentQIndex = 0;
-        renderQuestion();
+function prevFb() {
+    if (fbIndex > 0) {
+        fbIndex--;
+        fbSelected = fbAnswers[fbIndex];
+        renderFb();
+    } else {
+        document.getElementById('feedback-wrapper').style.display = 'none';
+        document.getElementById('result-card').style.display = 'block';
     }
-
-    function fadeSwitch(hideEl, showEl) {
-        if (hideEl) {
-            hideEl.classList.add('fading-out');
-            setTimeout(() => {
-                hideEl.style.display = 'none';
-                hideEl.classList.remove('fading-out');
-                if (showEl) revealEl(showEl);
-            }, 260);
-        } else if (showEl) {
-            revealEl(showEl);
-        }
-    }
-
-    function revealEl(el) {
-        el.style.display = 'block';
-        el.classList.add('fading-in');
-        requestAnimationFrame(() => el.classList.add('fade-visible'));
-        setTimeout(() => el.classList.remove('fading-in', 'fade-visible'), 420);
-    }
-
-    function renderQuestion() {
-        const q = allQuestions[currentQIndex];
-        const qText = document.getElementById('qText');
-        const qOptions = document.getElementById('qOptions');
-        const quizStatus = document.getElementById('quizStatus');
-        const progressFill = document.getElementById('progressFill');
-        const stageBadge = document.getElementById('stageBadge');
-        const stageNote = document.getElementById('stageNote');
-        const continueBtn = document.getElementById('continueBtn');
-
-        const progressPct = ((currentQIndex + 1) / TOTAL_Q) * 100;
-        progressFill.style.width = progressPct + '%';
-        quizStatus.innerText = `Întrebarea ${currentQIndex + 1} din ${TOTAL_Q}`;
-
-        const info = stageInfo(currentQIndex);
-        stageBadge.innerText = info.label;
-        if (info.note) {
-            stageNote.innerText = info.note;
-            stageNote.style.display = 'block';
-        } else {
-            stageNote.style.display = 'none';
-        }
-
-        qText.innerText = q.text;
-        qOptions.innerHTML = '';
-
-        const savedAnswer = userAnswers[currentQIndex];
-
-        // Continuă apare pe TOATE întrebările
-        continueBtn.style.display = 'inline-block';
-
-        if (q.type === 'multi') {
-            const selectedSet = new Set(Array.isArray(savedAnswer) ? savedAnswer : []);
-            q.options.forEach((optText, optIdx) => {
-                const btn = document.createElement('div');
-                btn.className = 'quiz-opt-btn multi' + (selectedSet.has(optIdx) ? ' picked' : '');
-                btn.innerHTML = `<span class="opt-indicator"></span><span>${optText}</span>`;
-                btn.onclick = () => toggleMultiOption(optIdx, btn);
-                qOptions.appendChild(btn);
-            });
-            continueBtn.disabled = selectedSet.size === 0;
-        } else {
-            q.options.forEach((optText, optIdx) => {
-                const btn = document.createElement('div');
-                btn.className = 'quiz-opt-btn' + (savedAnswer === optIdx ? ' picked' : '');
-                btn.innerHTML = `<span class="opt-indicator"></span><span>${optText}</span>`;
-                btn.onclick = () => {
-                    userAnswers[currentQIndex] = optIdx;
-                    document.querySelectorAll('.quiz-opt-btn').forEach(b => b.classList.remove('picked'));
-                    btn.classList.add('picked');
-                    continueBtn.disabled = false;
-                };
-                qOptions.appendChild(btn);
-            });
-            continueBtn.disabled = (typeof savedAnswer !== 'number');
-        }
-
-        const card = document.getElementById('questionCard');
-        card.style.animation = 'none';
-        setTimeout(() => card.style.animation = 'fadeIn 0.35s ease', 10);
-    }
-
-    function toggleMultiOption(optIdx, btnEl) {
-        let arr = Array.isArray(userAnswers[currentQIndex]) ? userAnswers[currentQIndex].slice() : [];
-        const pos = arr.indexOf(optIdx);
-        if (pos >= 0) {
-            arr.splice(pos, 1);
-            btnEl.classList.remove('picked');
-        } else {
-            arr.push(optIdx);
-            btnEl.classList.add('picked');
-        }
-        userAnswers[currentQIndex] = arr;
-        document.getElementById('continueBtn').disabled = arr.length === 0;
-    }
-
-    function continueQuestion() {
-        const q = allQuestions[currentQIndex];
-        if (q.type === 'multi') {
-            const arr = userAnswers[currentQIndex];
-            if (!arr || arr.length === 0) return;
-        } else {
-            if (typeof userAnswers[currentQIndex] !== 'number') return;
-        }
-        advanceQuestion();
-    }
-
-    function advanceQuestion() {
-        if (currentQIndex < TOTAL_Q - 1) {
-            currentQIndex++;
-            renderQuestion();
-        } else {
-            generateFinalAnalysis();
-        }
-    }
-
-    function prevQuestion() {
-        if (currentQIndex > 0) {
-            currentQIndex--;
-            renderQuestion();
-        } else {
-            const setupEl = document.getElementById('setup-section');
-            const quizEl = document.getElementById('quiz-wrapper');
-            fadeSwitch(quizEl, setupEl);
-        }
-    }
-
-    function computeGAD7() {
-        let total = 0;
-        for (let i = 30; i < 37; i++) {
-            const ans = userAnswers[i];
-            total += (typeof ans === 'number') ? ans : 0;
-        }
-        let band, label, color, desc;
-        if (total <= 4) { band = 'minima'; label = 'Anxietate minimă'; color = '#4a8a5f'; desc = 'Nivelul răspunsurilor tale sugerează o încărcătură de anxietate minimă în ultimele două săptămâni.'; }
-        else if (total <= 9) { band = 'usoara'; label = 'Anxietate ușoară'; color = '#c9a227'; desc = 'Răspunsurile indică un nivel ușor de anxietate. Poate fi util să observi ce situații îți amplifică neliniștea.'; }
-        else if (total <= 14) { band = 'moderata'; label = 'Anxietate moderată'; color = '#d97b3f'; desc = 'Scorul indică un nivel moderat de anxietate. Discuția cu un specialist ar putea aduce claritate și instrumente utile.'; }
-        else { band = 'severa'; label = 'Anxietate severă'; color = '#c0392b'; desc = 'Scorul indică un nivel ridicat de anxietate. Îți recomandăm cu blândețe să discuți cât mai curând cu un psiholog sau medic.'; }
-        return { total, band, label, color, desc };
-    }
-
-    function computeRSES() {
-        let total = 0;
-        for (let i = 37; i < 47; i++) {
-            const q = allQuestions[i];
-            const ansIdx = userAnswers[i];
-            if (typeof ansIdx !== 'number') continue;
-            const score = q.reverse ? (3 - ansIdx) : ansIdx;
-            total += score;
-        }
-        let band, label, color, desc;
-        if (total <= 14) { band = 'scazuta'; label = 'Stimă de sine scăzută'; color = '#c0392b'; desc = 'Răspunsurile sugerează o stimă de sine mai scăzută în acest moment. Fii blând(ă) cu tine — mici pași de auto-apreciere zilnică pot ajuta, iar sprijinul unui specialist poate face diferența.'; }
-        else if (total <= 25) { band = 'normala'; label = 'Stimă de sine în limite normale'; color = '#c9a227'; desc = 'Nivelul tău de stimă de sine se încadrează în limitele obișnuite, cu spațiu firesc de fluctuație în funcție de context.'; }
-        else { band = 'ridicata'; label = 'Stimă de sine ridicată'; color = '#4a8a5f'; desc = 'Răspunsurile indică o stimă de sine ridicată — o relație solidă și încrezătoare cu propria persoană.'; }
-        return { total, band, label, color, desc };
-    }
-
-    function generateFinalAnalysis() {
-        const quizEl = document.getElementById('quiz-wrapper');
-        const resultEl = document.getElementById('result-card');
-        quizEl.style.display = 'none';
-
-        let scores = [0, 0, 0, 0, 0];
-        for (let i = 0; i < 30; i++) {
-            const arr = userAnswers[i];
-            if (Array.isArray(arr)) arr.forEach(optIdx => scores[optIdx]++);
-        }
-        let maxIndex = scores.indexOf(Math.max(...scores));
-
-        const styleData = trendsData[selectedStyle];
-        document.getElementById('resImg').src = styleData.img;
-        document.getElementById('resTitle').innerText = styleData.name + " Style";
-
-        document.getElementById('resDesc').innerText = `Ai selectat stilul ${styleData.name} direct din Constelația Cosmică. Profilul tău combină corpul de tip ${selectedBody} cu o nuanță de piele ${selectedSkinColor} și un ten ${selectedSkinType}.`;
-
-        document.getElementById('resHoroscope').innerText = `Din cele 30 de răspunsuri (selecții multiple), modul tău predominant aparține elementului ${zodiacElements[maxIndex]}. Starea ta emoțională indică o nevoie de expansiune creativă și încredere în instinctul propriu.`;
-
-        document.getElementById('resPerfumeFamily').innerText = styleData.perfumeFamily;
-        document.getElementById('resPerfumeDesc').innerText = styleData.perfumeDesc;
-
-        document.getElementById('resFlowerSignature').innerText = styleData.flowerSignature;
-        document.getElementById('resFlowerExotic').innerText = styleData.flowerExotic;
-        document.getElementById('resFlowerWild').innerText = styleData.flowerWild;
-        document.getElementById('resFlowerSpecial').innerText = styleData.flowerSpecial;
-
-        let makeupUl = document.getElementById('resMakeup');
-        makeupUl.innerHTML = '';
-        styleData.makeup.forEach(m => {
-            let li = document.createElement('li');
-            li.innerText = m;
-            makeupUl.appendChild(li);
-        });
-
-        let bodyUl = document.getElementById('resBodyAdvice');
-        bodyUl.innerHTML = '';
-        let li1 = document.createElement('li');
-        li1.innerText = `Recomandare Metabolism (${selectedMetabolism}): Consumă alimente bogate în nutrienți naturali adaptate ritmului tău de ardere.`;
-        let li2 = document.createElement('li');
-        li2.innerText = `Recomandare Siluetă (${selectedBody}): Pune în valoare liniile naturale vestimentare care oferă armonie vizuală.`;
-        bodyUl.appendChild(li1);
-        bodyUl.appendChild(li2);
-
-        const gad7 = computeGAD7();
-        document.getElementById('gad7Score').innerText = gad7.total;
-        const gad7Tag = document.getElementById('gad7BandTag');
-        gad7Tag.innerText = gad7.label;
-        gad7Tag.style.background = gad7.color;
-        document.getElementById('gad7BandDesc').innerText = gad7.desc;
-
-        const rses = computeRSES();
-        document.getElementById('rsesScore').innerText = rses.total;
-        const rsesTag = document.getElementById('rsesBandTag');
-        rsesTag.innerText = rses.label;
-        rsesTag.style.background = rses.color;
-        document.getElementById('rsesBandDesc').innerText = rses.desc;
-
-        window._flowerShareText = `Recomandare de flori (AstroBeauty AI — stil ${styleData.name}):\n` +
-            `• Semnătură: ${styleData.flowerSignature}\n` +
-            `• Exotică: ${styleData.flowerExotic}\n` +
-            `• De câmp: ${styleData.flowerWild}\n` +
-            `• Ocazie specială: ${styleData.flowerSpecial}`;
-
-        revealEl(resultEl);
-        resultEl.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function copyFlowerRec() {
-        const btn = document.getElementById('copyFlowerBtn');
-        const text = window._flowerShareText || '';
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => showCopied(btn));
-        } else {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            try { document.execCommand('copy'); } catch (e) {}
-            document.body.removeChild(ta);
-            showCopied(btn);
-        }
-    }
-
-    function showCopied(btn) {
-        btn.classList.add('copied');
-        const original = btn.innerText;
-        btn.innerText = 'Copiat ✓';
-        setTimeout(() => { btn.classList.remove('copied'); btn.innerText = original; }, 1800);
-    }
-
-    window.onload = () => {
-        initConstellation();
-        setupBowGrids();
-    };
+}
 </script>
-
 </body>
 </html>
