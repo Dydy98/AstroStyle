@@ -1,704 +1,667 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstroBeauty — Constelația Stilului & Test de Mood</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --rose-gold: #b76e79;
-            --rose-gold-light: #f4eae6;
-            --rose-gold-glow: #e8b4b8;
-            --silver: #c0c0c0;
-            --silver-light: #f8f9fa;
-            --text-dark: #2a1f22;
-            --card-bg: rgba(255, 255, 255, 0.88);
-            --border-glow: rgba(183, 110, 121, 0.4);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura Profile – Personal Style & Wellness</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-        
-        body { 
-            background: linear-gradient(135deg, #120e17 0%, #221929 50%, #17101d 100%); 
-            color: var(--text-dark); 
-            min-height: 100vh; 
-            padding: 20px 10px;
-            overflow-x: hidden;
-        }
+  :root {
+    --rose-gold: #B76E79;
+    --rose-gold-light: #E8B4B8;
+    --rose-gold-dark: #8B4A52;
+    --cosmic: #0B0B1A;
+    --card-bg: rgba(255,255,255,0.08);
+    --text: #F8F1F1;
+  }
 
-        .main-container { 
-            max-width: 800px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            padding: 30px; 
-            border-radius: 28px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 20px var(--border-glow); 
-            border: 2px solid var(--rose-gold);
-            backdrop-filter: blur(15px);
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        h1 { 
-            text-align: center; 
-            color: var(--rose-gold); 
-            font-size: 2.2rem; 
-            font-weight: 700;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .subtitle { 
-            text-align: center; 
-            font-size: 0.9rem; 
-            color: #666; 
-            margin-bottom: 30px; 
-        }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cosmic);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        /* --- SECTION 1: CONSTELAȚIA DE TRENDURI --- */
-        .constellation-title {
-            text-align: center;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+  /* Cosmic background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    z-index: -2;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 4s infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
 
-        .constellation-box {
-            position: relative;
-            width: 100%;
-            height: 320px;
-            background: radial-gradient(circle, #2a1d2e 0%, #110a14 100%);
-            border-radius: 20px;
-            border: 2px solid var(--silver);
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: inset 0 0 20px rgba(183, 110, 121, 0.3);
-        }
+  /* Header */
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    background: linear-gradient(135deg, #E8B4B8, #B76E79, #F5D0D3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  header p { opacity: 0.7; margin-top: 0.4rem; font-size: 0.95rem; }
 
-        /* Linii interconectate pe canvas */
-        #constellationCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
+  /* Progress */
+  .progress-bar {
+    width: 90%;
+    max-width: 480px;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    margin: 1.5rem auto;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose-gold), var(--rose-gold-light));
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .progress-text {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
 
-        .star-node {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
+  /* Main card */
+  .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(183,110,121,0.25);
+    border-radius: 28px;
+    padding: 2.2rem 1.8rem;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transition: all 0.4s ease;
+  }
 
-        .star-point {
-            width: 18px;
-            height: 18px;
-            background: var(--silver);
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fff, 0 0 15px var(--rose-gold);
-            transition: all 0.3s ease;
-        }
+  .question-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    margin-bottom: 1.6rem;
+    line-height: 1.35;
+    text-align: center;
+  }
 
-        .star-label {
-            color: #fff;
-            font-size: 0.75rem;
-            margin-top: 6px;
-            font-weight: 600;
-            text-shadow: 0 0 5px #000;
-            white-space: nowrap;
-        }
+  /* Bow-style buttons */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .bow-btn {
+    position: relative;
+    background: linear-gradient(145deg, rgba(183,110,121,0.25), rgba(183,110,121,0.08));
+    border: 1.5px solid var(--rose-gold);
+    border-radius: 50px;
+    padding: 1rem 1.4rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: left;
+    overflow: hidden;
+  }
+  .bow-btn::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 18px;
+    width: 22px; height: 14px;
+    background: linear-gradient(135deg, #E8B4B8, #B76E79);
+    border-radius: 50% 50% 0 0;
+    box-shadow: 14px 0 0 #B76E79;
+    transform: rotate(-15deg);
+    opacity: 0.9;
+  }
+  .bow-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(183,110,121,0.35);
+    background: linear-gradient(145deg, rgba(183,110,121,0.4), rgba(183,110,121,0.15));
+  }
+  .bow-btn.selected {
+    background: linear-gradient(145deg, var(--rose-gold), var(--rose-gold-dark));
+    border-color: var(--rose-gold-light);
+    box-shadow: 0 0 25px rgba(183,110,121,0.5);
+  }
+  .bow-btn.multi.selected::after {
+    content: '✓';
+    position: absolute;
+    right: 18px;
+    font-weight: 700;
+  }
 
-        .star-node:hover .star-point, .star-node.active .star-point {
-            background: var(--rose-gold);
-            transform: scale(1.5);
-            box-shadow: 0 0 15px var(--rose-gold), 0 0 25px #fff;
-        }
+  /* Navigation */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.8rem;
+    gap: 1rem;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 0.9rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  .back-btn {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.3) !important;
+    color: white;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.08); }
+  .next-btn {
+    background: linear-gradient(135deg, var(--rose-gold), var(--rose-gold-dark));
+    color: white;
+  }
+  .next-btn:hover { filter: brightness(1.15); }
 
-        .star-node.active .star-label {
-            color: var(--rose-gold-glow);
-            font-size: 0.85rem;
-        }
+  /* Constellation */
+  .constellation {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    margin: 1.5rem 0;
+  }
+  .trend-star {
+    position: absolute;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #F5D0D3, var(--rose-gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(183,110,121,0.6);
+    transition: all 0.3s;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .trend-star:hover, .trend-star.selected {
+    transform: scale(1.18);
+    box-shadow: 0 0 35px rgba(232,180,184,0.9);
+  }
+  .line {
+    position: absolute;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(183,110,121,0.5), transparent);
+    transform-origin: left center;
+  }
 
-        /* --- SECTION 2: BUTOANE ÎN FORMĂ DE FUNDIȚE (BOW CHIPS) --- */
-        .section-label {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin: 20px 0 10px 0;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+  /* Results */
+  .result-section {
+    display: none;
+    max-width: 560px;
+    margin: 0 auto 3rem;
+  }
+  .result-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(183,110,121,0.3);
+    border-radius: 24px;
+    padding: 1.8rem;
+    margin-bottom: 1.4rem;
+  }
+  .result-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--rose-gold-light);
+    margin-bottom: 0.8rem;
+  }
+  .score-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  .minimal { background: #2E7D32; }
+  .mild { background: #F9A825; color: #111; }
+  .moderate { background: #EF6C00; }
+  .severe { background: #C62828; }
 
-        .bow-options-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .bow-btn {
-            position: relative;
-            background: linear-gradient(135deg, #ffffff 0%, #f4eae6 100%);
-            border: 2px solid var(--rose-gold);
-            color: var(--text-dark);
-            padding: 8px 18px 8px 36px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-            display: inline-flex;
-            align-items: center;
-            user-select: none;
-        }
-
-        /* Iconița de fundiță integrată pe buton */
-        .bow-btn::before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            width: 18px;
-            height: 18px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b76e79"><path d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2" fill="%23c0c0c0"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        .bow-btn:hover {
-            transform: translateY(-2px);
-            border-color: var(--silver);
-            box-shadow: 0 5px 12px rgba(183, 110, 121, 0.3);
-        }
-
-        .bow-btn.selected {
-            background: linear-gradient(135deg, var(--rose-gold) 0%, #a05a65 100%);
-            color: #fff;
-            border-color: var(--silver);
-            box-shadow: 0 4px 12px rgba(183, 110, 121, 0.4);
-        }
-
-        .bow-btn.selected::before {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2" fill="%23c0c0c0"/></svg>');
-        }
-
-        /* --- BUTTON DE START --- */
-        .action-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--rose-gold) 0%, var(--silver) 100%);
-            border: none;
-            color: #1a1a1a;
-            font-size: 1.05rem;
-            font-weight: 700;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(183, 110, 121, 0.4);
-        }
-
-        /* --- SECTION 3: CHESTIONAR O SINGURĂ ÎNTREBARE PE ECRAN --- */
-        #quiz-wrapper {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .quiz-progress-bar-container {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            border: 1px solid var(--silver);
-        }
-
-        .quiz-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--rose-gold), var(--silver));
-            transition: width 0.3s ease;
-        }
-
-        .quiz-status {
-            text-align: right;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--rose-gold);
-            margin-bottom: 15px;
-        }
-
-        .question-card-single {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 22px;
-            border: 2px solid var(--rose-gold-glow);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .question-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        .quiz-options-single {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .quiz-opt-btn {
-            padding: 14px 20px;
-            background: var(--rose-gold-light);
-            border: 1.5px solid var(--rose-gold-glow);
-            border-radius: 15px;
-            text-align: left;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .quiz-opt-btn:hover {
-            background: var(--rose-gold);
-            color: #fff;
-            border-color: var(--silver);
-            transform: translateX(5px);
-        }
-
-        .quiz-nav-btns {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .nav-sub-btn {
-            background: transparent;
-            border: 1px solid var(--rose-gold);
-            color: var(--rose-gold);
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* --- SECTION 4: REZULTAT FINAL --- */
-        #result-card {
-            display: none;
-            margin-top: 30px;
-            padding: 25px;
-            background: #fff;
-            border-radius: 22px;
-            border: 2px solid var(--rose-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .result-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 18px;
-            margin-bottom: 20px;
-            border: 2px solid var(--silver);
-        }
-
-        .res-sec-title {
-            color: var(--rose-gold);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 15px;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--rose-gold-glow);
-            padding-bottom: 4px;
-        }
-
-        ul { padding-left: 20px; font-size: 0.9rem; }
-        ul li { margin-bottom: 6px; }
-    </style>
+  .hidden { display: none !important; }
+</style>
 </head>
 <body>
+<div class="stars" id="stars"></div>
 
-<div class="main-container">
-    <h1>AstroBeauty AI</h1>
-    <p class="subtitle">Constelația Stilului, Profil Biometric & Test Psihologic de Mood</p>
+<header>
+  <h1>Aura Profile</h1>
+  <p>Descoperă stilul, starea & recomandările tale</p>
+</header>
 
-    <!-- SETUP FORM -->
-    <div id="setup-section">
-        <!-- CONSTELAȚIA DE TRENDURI -->
-        <div class="constellation-title">
-            <span>✨</span> Alege Trendul din Constelația Cosmică <span>✨</span>
-        </div>
-        
-        <div class="constellation-box" id="constellationBox">
-            <canvas id="constellationCanvas"></canvas>
-            <!-- Nodurile stea vor fi generate din JS -->
-        </div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-text" id="progressText">Întrebarea 1 din 30</div>
 
-        <!-- OPCIUNI CU FUNDITE -->
-        <div class="section-label">🎀 Tip de Corp / Siluetă:</div>
-        <div class="bow-options-grid" id="bodyTypeGrid">
-            <div class="bow-btn selected" data-val="hourglass">Clepsidră</div>
-            <div class="bow-btn" data-val="ectomorph">Ectomorf (Subțire)</div>
-            <div class="bow-btn" data-val="endomorph">Endomorf (Plin)</div>
-            <div class="bow-btn" data-val="mesomorph">Mezomorf (Atletic)</div>
-            <div class="bow-btn" data-val="rectangle">Pătrat / Dreptunghi</div>
-        </div>
+<!-- QUESTION CARD -->
+<div class="card" id="questionCard">
+  <div class="question-title" id="questionTitle"></div>
+  <div class="options" id="optionsContainer"></div>
+  <div class="nav">
+    <button class="nav-btn back-btn" id="backBtn" onclick="prevQuestion()">← Înapoi</button>
+    <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()">Continuă →</button>
+  </div>
+</div>
 
-        <div class="section-label">🎀 Tip Metabolism:</div>
-        <div class="bow-options-grid" id="metabolismGrid">
-            <div class="bow-btn selected" data-val="fast">Rapid (Ardere accelerată)</div>
-            <div class="bow-btn" data-val="slow">Lent (Stocare eficientă)</div>
-            <div class="bow-btn" data-val="mixed">Mixt / Echilibrat</div>
-        </div>
-
-        <div class="section-label">🎀 Rasă / Etnie:</div>
-        <div class="bow-options-grid" id="raceGrid">
-            <div class="bow-btn selected" data-val="caucasian">Caucazian</div>
-            <div class="bow-btn" data-val="asian">Asiatic</div>
-            <div class="bow-btn" data-val="black">African / Black</div>
-            <div class="bow-btn" data-val="latino">Latino</div>
-            <div class="bow-btn" data-val="mixed">Mixtă</div>
-        </div>
-
-        <div class="section-label">🎀 Nuanță Piele:</div>
-        <div class="bow-options-grid" id="skinColorGrid">
-            <div class="bow-btn selected" data-val="fair">Porțelan / Foarte deschisă</div>
-            <div class="bow-btn" data-val="light">Deschisă</div>
-            <div class="bow-btn" data-val="tan">Măslinie / Bronzată</div>
-            <div class="bow-btn" data-val="deep">Profundă / Închisă</div>
-        </div>
-
-        <div class="section-label">🎀 Tip Ten:</div>
-        <div class="bow-options-grid" id="skinTypeGrid">
-            <div class="bow-btn selected" data-val="normal">Normal</div>
-            <div class="bow-btn" data-val="oily">Gras / Sebum</div>
-            <div class="bow-btn" data-val="dry">Uscat</div>
-            <div class="bow-btn" data-val="combination">Mixt</div>
-        </div>
-
-        <button class="action-btn" onclick="startSingleQuiz()">Începe Testul Psihologic de Mood (30 Întrebări) ➔</button>
-    </div>
-
-    <!-- CHESTIONAR O SINGURA INTREBARE PE ECRAN -->
-    <div id="quiz-wrapper">
-        <div class="quiz-progress-bar-container">
-            <div class="quiz-progress-fill" id="progressFill"></div>
-        </div>
-        <div class="quiz-status" id="quizStatus">Întrebarea 1 din 30</div>
-
-        <div class="question-card-single" id="questionCard">
-            <div class="question-text" id="qText">Se încarcă întrebarea...</div>
-            <div class="quiz-options-single" id="qOptions"></div>
-        </div>
-
-        <div class="quiz-nav-btns">
-            <button class="nav-sub-btn" onclick="prevQuestion()">⬅ Întrebarea Anterioară</button>
-        </div>
-    </div>
-
-    <!-- CARD REZULTATE -->
-    <div id="result-card">
-        <img id="resImg" class="result-img" src="" alt="Look">
-        <h2 id="resTitle" style="color:var(--rose-gold); text-align:center;"></h2>
-        
-        <div class="res-sec-title">✨ Profil Biometric & Stil Personal</div>
-        <p id="resDesc" style="font-size:0.9rem; line-height:1.5;"></p>
-
-        <div class="res-sec-title">🔮 Horoscopul Stării (Generat din Test)</div>
-        <p id="resHoroscope" style="font-size:0.9rem; line-height:1.5;"></p>
-
-        <div class="res-sec-title">💄 Recomandări Machiaj & Îngrijire</div>
-        <ul id="resMakeup"></ul>
-
-        <div class="res-sec-title">🥗 Ghid Nutriție & Corp</div>
-        <ul id="resBodyAdvice"></ul>
-
-        <button class="action-btn" onclick="location.reload()" style="margin-top:20px;">🔄 Reia Analiza</button>
-    </div>
+<!-- RESULTS -->
+<div class="result-section" id="results">
+  <div class="result-card">
+    <h3>🧠 Anxietate (GAD-7)</h3>
+    <p id="gadScore"></p>
+    <div class="score-badge" id="gadBadge"></div>
+  </div>
+  <div class="result-card">
+    <h3>💎 Stima de sine (RSES)</h3>
+    <p id="rsesScore"></p>
+  </div>
+  <div class="result-card">
+    <h3>🌸 Parfum recomandat</h3>
+    <p id="perfumeRec"></p>
+  </div>
+  <div class="result-card">
+    <h3>💐 Flori potrivite (pentru iubit / soț)</h3>
+    <p id="flowerRec"></p>
+  </div>
+  <div class="result-card">
+    <h3>✨ Stilul tău dominant</h3>
+    <p id="styleRec"></p>
+  </div>
 </div>
 
 <script>
-    // --- STILURI & CONSTELAȚIE ---
-    const trendsData = {
-        "rose-gold": { name: "Rose Gold", x: 50, y: 50, img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500", makeup: ["Ruj nude-trandafiriu cremos", "Iluminator soft rose-gold pe pomeți", "Farduri în tonuri de șampanie"] },
-        "punk": { name: "Punk", x: 20, y: 25, img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500", makeup: ["Eyeliner negru grafic", "Ruj negru mat sau vișiniu", "Ten uniform mat"] },
-        "rock": { name: "Rock", x: 80, y: 25, img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500", makeup: ["Smokey eyes negru intens", "Mascara volum maxim", "Ruj roșu sângeriu"] },
-        "boho": { name: "Boho Chic", x: 15, y: 75, img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500", makeup: ["Fard de obraz piersiciu", "Balsam de buze hidratant", "Sprâncene naturale"] },
-        "cyberpunk": { name: "Cyberpunk", x: 85, y: 75, img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500", makeup: ["Eyeliner neon UV", "Iluminator holographic", "Gloss metalic"] },
-        "glam": { name: "Glamour", x: 50, y: 18, img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500", makeup: ["Ruj roșu clasic impecabil", "Gene false bogate", "Ten glass-skin"] },
-        "minimalist": { name: "Minimalist", x: 50, y: 82, img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500", makeup: ["Skin Tint / BB Cream", "Gel transparent sprâncene", "Ulei hidratant buze"] }
+// ========== DATA ==========
+const questions = [
+  // --- CONSTELAȚIE TRENDURI ---
+  {
+    id: 'trends',
+    type: 'constellation',
+    title: 'Alege stilurile care te reprezintă (poți selecta mai multe)',
+    multi: true,
+    options: ['Punk','Rock','Boho','Cyberpunk','Glamour','Minimalist','Rose Gold']
+  },
+  // --- BODY / METABOLISM / SKIN ---
+  {
+    id: 'body',
+    title: 'Tipul tău de corp',
+    multi: false,
+    options: ['Clepsidră','Pară','Măr','Dreptunghi','Atletic']
+  },
+  {
+    id: 'metabolism',
+    title: 'Cum ți-ai descrie metabolismul?',
+    multi: false,
+    options: ['Foarte rapid','Rapid','Echilibrat','Lent','Foarte lent']
+  },
+  {
+    id: 'skin',
+    title: 'Tipul tău de ten',
+    multi: false,
+    options: ['Uscat','Mixt','Gras','Sensibil','Normal']
+  },
+  {
+    id: 'undertone',
+    title: 'Subtonul pielii',
+    multi: false,
+    options: ['Caldi (auriu)','Reci (roz)','Neutru','Măsliniu','Nu știu']
+  },
+  // --- GAD-7 (7 itemi reali) ---
+  {
+    id: 'gad1',
+    title: 'În ultimele 2 săptămâni, cât de des te-ai simțit nervoasă, anxioasă sau tensionată?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad2',
+    title: 'Cât de des nu ai putut să oprești sau să controlezi îngrijorarea?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad3',
+    title: 'Cât de des te-ai îngrijorat prea mult din cauza unor lucruri diferite?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad4',
+    title: 'Cât de des ai avut probleme să te relaxezi?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad5',
+    title: 'Cât de des ai fost atât de agitată încât îți era greu să stai pe loc?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad6',
+    title: 'Cât de des te-ai enervat sau iritat ușor?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  {
+    id: 'gad7',
+    title: 'Cât de des ți-a fost teamă ca și cum s-ar putea întâmpla ceva groaznic?',
+    multi: false,
+    options: ['Deloc','Câteva zile','Mai mult de jumătate din zile','Aproape în fiecare zi'],
+    scores: [0,1,2,3]
+  },
+  // --- RSES (10 itemi + reverse) ---
+  {
+    id: 'rses1',
+    title: 'În general, sunt mulțumită de mine însămi.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: false
+  },
+  {
+    id: 'rses2',
+    title: 'Uneori cred că nu sunt deloc bună.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: true
+  },
+  {
+    id: 'rses3',
+    title: 'Simt că am o serie de calități bune.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: false
+  },
+  {
+    id: 'rses4',
+    title: 'Sunt capabilă să fac lucruri la fel de bine ca majoritatea oamenilor.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: false
+  },
+  {
+    id: 'rses5',
+    title: 'Simt că nu am prea multe de care să fiu mândră.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: true
+  },
+  {
+    id: 'rses6',
+    title: 'Cu siguranță mă simt inutilă uneori.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: true
+  },
+  {
+    id: 'rses7',
+    title: 'Simt că sunt o persoană de valoare, cel puțin pe același plan cu alții.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: false
+  },
+  {
+    id: 'rses8',
+    title: 'Mi-aș dori să am mai mult respect pentru mine însămi.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: true
+  },
+  {
+    id: 'rses9',
+    title: 'În general, sunt înclinată să cred că sunt un eșec.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: true
+  },
+  {
+    id: 'rses10',
+    title: 'Am o atitudine pozitivă față de mine însămi.',
+    multi: false,
+    options: ['Dezacord total','Dezacord','Acord','Acord total'],
+    scores: [0,1,2,3],
+    reverse: false
+  },
+  // --- EXTRA STYLE / PERFUME / FLOWERS ---
+  {
+    id: 'perfumePref',
+    title: 'Ce tip de parfum te atrage cel mai mult?',
+    multi: true,
+    options: ['Dulce & vanilat','Floral proaspăt','Elegant & sofisticat','Oriental intens','Proaspăt citric']
+  },
+  {
+    id: 'flowerMood',
+    title: 'Ce atmosferă îți place la flori?',
+    multi: true,
+    options: ['Exotice & tropicale','De câmp & sălbatice','Elegante & clasice','Romantice & delicate','Moderne & minimaliste']
+  },
+  {
+    id: 'season',
+    title: 'Anotimpul tău preferat',
+    multi: false,
+    options: ['Primăvara','Vara','Toamna','Iarna','Toate la fel']
+  }
+];
+
+let current = 0;
+let answers = {};
+let selected = new Set();
+
+// Create stars background
+function createStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.width = s.style.height = Math.random() * 2.5 + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = Math.random() * 5 + 's';
+    container.appendChild(s);
+  }
+}
+createStars();
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('questionTitle').textContent = q.title;
+  document.getElementById('progressText').textContent = `Întrebarea ${current + 1} din ${questions.length}`;
+  document.getElementById('progressFill').style.width = ((current + 1) / questions.length * 100) + '%';
+  document.getElementById('backBtn').style.visibility = current === 0 ? 'hidden' : 'visible';
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  selected = new Set(answers[q.id] || []);
+
+  if (q.type === 'constellation') {
+    renderConstellation(q, container);
+  } else {
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'bow-btn' + (q.multi ? ' multi' : '');
+      btn.textContent = opt;
+      if (selected.has(opt)) btn.classList.add('selected');
+      btn.onclick = () => toggleOption(opt, q.multi, btn);
+      container.appendChild(btn);
+    });
+  }
+
+  // Auto-hide next if single select already chosen
+  document.getElementById('nextBtn').style.display = q.multi || q.type === 'constellation' ? 'block' : 'none';
+}
+
+function toggleOption(opt, multi, btn) {
+  if (multi) {
+    if (selected.has(opt)) {
+      selected.delete(opt);
+      btn.classList.remove('selected');
+    } else {
+      if (selected.size >= 5) return; // max 5
+      selected.add(opt);
+      btn.classList.add('selected');
+    }
+  } else {
+    // single → auto advance
+    selected.clear();
+    selected.add(opt);
+    document.querySelectorAll('.bow-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    setTimeout(() => nextQuestion(), 380);
+  }
+}
+
+function renderConstellation(q, container) {
+  const wrap = document.createElement('div');
+  wrap.className = 'constellation';
+  const positions = [
+    {x:20,y:30},{x:50,y:15},{x:80,y:35},{x:35,y:55},
+    {x:65,y:60},{x:15,y:75},{x:75,y:80}
+  ];
+  q.options.forEach((opt, i) => {
+    const star = document.createElement('div');
+    star.className = 'trend-star' + (selected.has(opt) ? ' selected' : '');
+    star.textContent = opt;
+    star.style.left = positions[i].x + '%';
+    star.style.top = positions[i].y + '%';
+    star.onclick = () => {
+      if (selected.has(opt)) {
+        selected.delete(opt);
+        star.classList.remove('selected');
+      } else {
+        if (selected.size >= 5) return;
+        selected.add(opt);
+        star.classList.add('selected');
+      }
     };
+    wrap.appendChild(star);
+  });
+  container.appendChild(wrap);
+}
 
-    let selectedStyle = "rose-gold";
-    let selectedBody = "hourglass";
-    let selectedMetabolism = "fast";
-    let selectedRace = "caucasian";
-    let selectedSkinColor = "fair";
-    let selectedSkinType = "normal";
+function nextQuestion() {
+  const q = questions[current];
+  answers[q.id] = Array.from(selected);
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
 
-    // Inițializare Constelație
-    function initConstellation() {
-        const box = document.getElementById('constellationBox');
-        const canvas = document.getElementById('constellationCanvas');
-        canvas.width = box.offsetWidth;
-        canvas.height = box.offsetHeight;
-        const ctx = canvas.getContext('2d');
+function prevQuestion() {
+  if (current > 0) {
+    current--;
+    renderQuestion();
+  }
+}
 
-        // Render stele
-        Object.keys(trendsData).forEach(key => {
-            const item = trendsData[key];
-            const node = document.createElement('div');
-            node.className = `star-node ${key === selectedStyle ? 'active' : ''}`;
-            node.style.left = item.x + '%';
-            node.style.top = item.y + '%';
-            node.innerHTML = `<div class="star-point"></div><div class="star-label">${item.name}</div>`;
-            node.onclick = () => selectStyleNode(key);
-            box.appendChild(node);
-        });
+function showResults() {
+  document.getElementById('questionCard').classList.add('hidden');
+  document.querySelector('.progress-bar').classList.add('hidden');
+  document.getElementById('progressText').classList.add('hidden');
+  document.getElementById('results').style.display = 'block';
 
-        // Desenare linii între stele
-        ctx.strokeStyle = 'rgba(192, 192, 192, 0.25)';
-        ctx.lineWidth = 1.5;
-        const keys = Object.keys(trendsData);
-        ctx.beginPath();
-        for(let i=0; i<keys.length; i++) {
-            for(let j=i+1; j<keys.length; j++) {
-                let p1 = trendsData[keys[i]];
-                let p2 = trendsData[keys[j]];
-                ctx.moveTo((p1.x/100)*canvas.width, (p1.y/100)*canvas.height);
-                ctx.lineTo((p2.x/100)*canvas.width, (p2.y/100)*canvas.height);
-            }
-        }
-        ctx.stroke();
+  // GAD-7
+  let gad = 0;
+  for (let i = 1; i <= 7; i++) {
+    const ans = answers['gad' + i];
+    if (ans && ans[0]) {
+      const idx = questions.find(q => q.id === 'gad' + i).options.indexOf(ans[0]);
+      gad += questions.find(q => q.id === 'gad' + i).scores[idx];
     }
+  }
+  let gadLevel, badgeClass;
+  if (gad <= 4) { gadLevel = 'Minimă'; badgeClass = 'minimal'; }
+  else if (gad <= 9) { gadLevel = 'Ușoară'; badgeClass = 'mild'; }
+  else if (gad <= 14) { gadLevel = 'Moderată'; badgeClass = 'moderate'; }
+  else { gadLevel = 'Severă'; badgeClass = 'severe'; }
+  document.getElementById('gadScore').textContent = `Scor: ${gad}/21`;
+  const badge = document.getElementById('gadBadge');
+  badge.textContent = gadLevel;
+  badge.className = 'score-badge ' + badgeClass;
 
-    function selectStyleNode(key) {
-        selectedStyle = key;
-        document.querySelectorAll('.star-node').forEach((node, idx) => {
-            const nodeKey = Object.keys(trendsData)[idx];
-            if(nodeKey === key) node.classList.add('active');
-            else node.classList.remove('active');
-        });
+  // RSES
+  let rses = 0;
+  for (let i = 1; i <= 10; i++) {
+    const q = questions.find(qq => qq.id === 'rses' + i);
+    const ans = answers['rses' + i];
+    if (ans && ans[0]) {
+      let idx = q.options.indexOf(ans[0]);
+      let score = q.scores[idx];
+      if (q.reverse) score = 3 - score;
+      rses += score;
     }
+  }
+  document.getElementById('rsesScore').textContent = `Scor: ${rses}/30 — ${rses >= 15 ? 'Stima de sine normală / ridicată' : 'Stima de sine scăzută'}`;
 
-    // --- MANIPULARE BUTOANE CU FUNDIȚE ---
-    function setupBowGrids() {
-        const setupGrid = (gridId, callback) => {
-            const grid = document.getElementById(gridId);
-            const btns = grid.querySelectorAll('.bow-btn');
-            btns.forEach(btn => {
-                btn.onclick = () => {
-                    btns.forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    callback(btn.getAttribute('data-val'));
-                };
-            });
-        };
+  // Perfume
+  const perf = answers.perfumePref || [];
+  let perfumeText = 'Parfum floral elegant cu note soft';
+  if (perf.includes('Dulce & vanilat')) perfumeText = 'Parfum dulce, vanilat, gourmand – cald și seducător';
+  else if (perf.includes('Floral proaspăt')) perfumeText = 'Parfum floral proaspăt, aerisit, cu note de trandafir și peonie';
+  else if (perf.includes('Elegant & sofisticat')) perfumeText = 'Parfum elegant, sofistificat, cu note lemnoase și pudrate';
+  else if (perf.includes('Oriental intens')) perfumeText = 'Parfum oriental intens, cu ambră și condimente';
+  else if (perf.includes('Proaspăt citric')) perfumeText = 'Parfum proaspăt citric, energizant și luminos';
+  document.getElementById('perfumeRec').textContent = perfumeText;
 
-        setupGrid('bodyTypeGrid', val => selectedBody = val);
-        setupGrid('metabolismGrid', val => selectedMetabolism = val);
-        setupGrid('raceGrid', val => selectedRace = val);
-        setupGrid('skinColorGrid', val => selectedSkinColor = val);
-        setupGrid('skinTypeGrid', val => selectedSkinType = val);
-    }
+  // Flowers
+  const flowers = answers.flowerMood || [];
+  let flowerText = 'Buchet mixt de flori de câmp și trandafiri pastel';
+  if (flowers.includes('Exotice & tropicale')) flowerText = 'Orhidee, strelitzia, protea și flori tropicale exotice';
+  else if (flowers.includes('De câmp & sălbatice')) flowerText = 'Flori de câmp, lavandă, mușețel, eucalipt și graminee';
+  else if (flowers.includes('Elegante & clasice')) flowerText = 'Trandafiri albi/crem, crini, hortensii elegante';
+  else if (flowers.includes('Romantice & delicate')) flowerText = 'Pioni, ranunculus, eustoma și trandafiri roz';
+  else if (flowers.includes('Moderne & minimaliste')) flowerText = 'Flori monocromatice, aranjamente curate, eucalipt + 1-2 specii';
+  document.getElementById('flowerRec').textContent = flowerText;
 
-    // --- CELE 30 DE ÎNTREBĂRI ---
-    const questionsList = [
-        "1. Cum reacționezi de obicei când te confrunți cu o schimbare neașteptată de plan?",
-        "2. Ce tip de energie resimți cel mai des în prima parte a zilei?",
-        "3. Care mediu exterior te relaxează instantaneu cel mai mult?",
-        "4. Cum îți alegi hainele dimineața?",
-        "5. Ce element din natura înconjurătoare te atrage subconștient?",
-        "6. Cum gestionezi un conflict direct sau o discuție în contradictoriu?",
-        "7. Ce tip de sunet sau muzică rezonează cel mai bine cu starea ta interioară?",
-        "8. Cum preferi să-ți petreci timpul liber la sfârșitul săptămânii?",
-        "9. Ce valoare personală consideri că te definește cel mai puternic?",
-        "10. Cum reacționezi când cineva îți cere ajutorul într-un moment aglomerat?",
-        "11. Ce textură sau material vestimentar îți oferă cea mai mare siguranță?",
-        "12. Cum descrii ritmul tău intern de viață în acest moment?",
-        "13. Ce tip de lumină preferi în locuința ta?",
-        "14. Cum te raportezi la riscuri și decizii majore de viitor?",
-        "15. Ce emoție predominantă ai experimentat în ultimele zile?",
-        "16. Cum reacționezi în fața unui eșec sau a unei obstrucții temporare?",
-        "17. Ce tip de aromă sau parfum îți trezește cele mai vii amintiri?",
-        "18. Care este atitudinea ta față de regulile stricte impuse de alții?",
-        "19. Cum interacționezi cu persoanele necunoscute într-un grup?",
-        "20. Ce fel de activitate fizică te eliberează cel mai bine de stres?",
-        "21. Cum percepi trecerea timpului în viața de zi cu zi?",
-        "22. Ce culoare crezi că descrie cel mai bine profunzimea ta interioară?",
-        "23. Cum te simți atunci când ești pus în centrul atenției?",
-        "24. Ce tip de lectură sau conținut vizual captează imediat interesul tău?",
-        "25. Cum îți reîncarci rezervele de energie după o zi extenuantă?",
-        "26. Ce importanță acorzi intuiției comparativ cu logica pură?",
-        "27. Cum reacționezi la temperaturile scăzute sau la iarnă?",
-        "28. Ce gând sau vis recurent te motivează să mergi mai departe?",
-        "29. Cum definești succesul personal în etapa actuală?",
-        "30. Ce mesaj îți transmiți ție însuți/însăți în momentele de incertitudine?"
-    ];
+  // Style
+  const trends = answers.trends || [];
+  document.getElementById('styleRec').textContent = trends.length
+    ? 'Stil dominant: ' + trends.join(', ')
+    : 'Stil echilibrat, versatil';
+}
 
-    const optionSets = [
-        ["A. Analizez logic și mă adaptez", "B. Simt un impuls puternic de moment", "C. Analizez emoțional impactul", "D. Prefer să mențin controlul calm"],
-        ["A. Explozie de energie și inițiativă", "B. Calmă, dar orientată spre acțiune", "C. Visătoare, cu conectare lentă", "D. Pragmatică și organizată"],
-        ["A. Vântul puternic și spațiile deschise", "B. Un foc aprins sau o seară urbană dinamică", "C. O pădure verde și liniștită", "D. O apă curgătoare sau marea adâncă"],
-        ["A. În funcție de starea de spirit din acea secundă", "B. Aleg piese statement care să iasă în evidență", "C. Confort absolut și texturi naturale", "D. Elegant, curat și bine pus la punct"],
-        ["A. Focul și fulgerele", "B. Pământul solid și munții", "C. Aerul liber și înălțimile", "D. Oceanele și profunzimile acvatice"],
-        ["A. Răspund ferm și direct pe loc", "B. Îmi aprind rapid ambiția și ripostez", "C. Evit conflictul și caut armonia", "D. Analizez rece și pun punct argumentat"],
-        ["A. Ritmuri electronice / experimentale", "B. Rock energic sau chitare puternice", "C. Sunete acustice / ambientale", "D. Melodii line, profunde / clasice"],
-        ["A. Călătorii, descoperiri și noutate", "B. Evenimente sociale, socializare", "C. Natură, citit, relaxare acasă", "D. Planificare, organizare, proiecte"],
-        ["A. Independența și libertatea", "B. Pasiunea și curajul", "C. Empatia și armonia interioară", "D. Stabilitatea și integritatea"],
-        ["A. Sar imediat să ajut cu entuziasm", "B. Ofer soluții practice imediate", "C. Ascult empatic și ofer sprijin", "D. Evaluez dacă am timp și resurse"],
-        ["A. Piele, metal și accesorii lucioase", "B. Catifea, mătase sau bumbac greu", "C. In, lână fină sau materiale organice", "D. Țesături structurate, linii curate"],
-        ["A. Accelerat, mereu cu un pas înainte", "B. Intens, cu valuri de pasiune", "C. Lin, curgător și flexibil", "D. Stabil, metodic și predictibil"],
-        ["A. Lumini colorate, neon sau futuriste", "B. Lumină caldă, intensă de lampă", "C. Lumină naturală de soare direct", "D. Lumină difuză, discretă și relaxantă"],
-        ["A. Îmi plac riscurile asumate", "B. Acționez curajos ghidat de instinct", "C. Ezit dacă nu simt siguranță", "D. Calculez fiecare pas în detaliu"],
-        ["A. Curiozitate și entuziasm", "B. Nerăbdare sau efervescență", "C. Nostalgie sau introspecție", "D. Echilibru și calm interior"],
-        ["A. Inovez și caut altă cale", "B. Mă ambiționez și lupt mai tare", "C. Iau o pauză și îmi reglez energia", "D. Îmi ajustez strategia metodic"],
-        ["A. Parfumuri fresh, citrice", "B. Note lemnoase, condimentate", "C. Flori de câmp, ierburi aromatice", "D. Vanilie, mosc, note calde"],
-        ["A. Le contest și îmi creez propriile reguli", "B. Le accept doar dacă au sens", "C. Le respect pentru a evita tensiunile", "D. Consider că regulile sunt esențiale"],
-        ["A. Sunt spontan(ă) și atrag atenția", "B. Preiau conducerea conversației", "C. Ascult mai mult la început", "D. Analizez interlocutorul cu atenție"],
-        ["A. Alergare, mișcare dinamică", "B. Fitness intens sau forță", "C. Yoga, stretching, plimbări", "D. Rutine fixe de întreținere"],
-        ["A. Mi se pare că zboară incredibil de repede", "B. Este intens, trăit în prezent", "C. Este elastic, curge natural", "D. Este strict cronometrat"],
-        ["A. Argintiu metalic sau nuanțe electrice", "B. Roșu aprins sau negru profund", "C. Verde pământiu sau tonuri calde", "D. Albastru marin sau nuanțe neutre"],
-        ["A. Mă simt stimulat(ă) și în elementul meu", "B. Radiez carismă și energie", "C. Prefer discreția și spațiul personal", "D. Gestionez situația cu profesionalism"],
-        ["A. SF, tehnologie, inovație", "B. Acțiune, biografii ale unor rebeli", "C. Natură, filosofie, spiritualitate", "D. Istorie, economie, dezvoltare"],
-        ["A. Schimbând complet activitatea", "B. Făcând ceva pasional", "C. Retrăgându-mă în liniște", "D. Făcând ordine și organizându-mi spațiul"],
-        ["A. Mă bizui în totalitate pe intuiție", "B. Ascult instinctul combinat cu acțiunea", "C. Ascult vocea interioară profundă", "D. Mă bazez preponderent pe logică"],
-        ["A. Mă mobilizează și îmi dă claritate", "B. Îmi stimulează energia interioară", "C. Îmi activează dorința de confort", "D. Mă adaptez ușor"],
-        ["A. Că voi cuceri noi orizonturi", "B. Că voi reuși să schimb ceva major", "C. Că voi trăi în pace și armonie", "D. Că voi construi ceva durabil"],
-        ["A. Libertatea de a crea și a fi unic(ă)", "B. Succesul, impactul și recunoașterea", "C. Echilibrul sufletesc și iubirea", "D. Siguranța, realizarea și ordinea"],
-        ["A. „Totul este posibil, îndrăznește!”", "B. „Sunt de neoprit!”", "C. „Ai răbdare, totul se așază.”", "D. „Planul funcționează exact cum trebuie.”"]
-    ];
-
-    let currentQIndex = 0;
-    let userAnswers = new Array(30).fill(0);
-
-    function startSingleQuiz() {
-        document.getElementById('setup-section').style.display = 'none';
-        document.getElementById('quiz-wrapper').style.display = 'block';
-        renderQuestion();
-    }
-
-    function renderQuestion() {
-        const qText = document.getElementById('qText');
-        const qOptions = document.getElementById('qOptions');
-        const quizStatus = document.getElementById('quizStatus');
-        const progressFill = document.getElementById('progressFill');
-
-        // Actualizare Progress
-        const progressPct = ((currentQIndex + 1) / 30) * 100;
-        progressFill.style.width = progressPct + '%';
-        quizStatus.innerText = `Întrebarea ${currentQIndex + 1} din 30`;
-
-        // Render Întrebare
-        qText.innerText = questionsList[currentQIndex];
-        qOptions.innerHTML = '';
-
-        optionSets[currentQIndex].forEach((optText, optIdx) => {
-            const btn = document.createElement('div');
-            btn.className = 'quiz-opt-btn';
-            btn.innerHTML = `<span>${optText}</span> <span>➔</span>`;
-            btn.onclick = () => selectAnswer(optIdx);
-            qOptions.appendChild(btn);
-        });
-
-        document.getElementById('questionCard').style.animation = 'none';
-        setTimeout(() => document.getElementById('questionCard').style.animation = 'fadeIn 0.3s ease', 10);
-    }
-
-    function selectAnswer(optIdx) {
-        userAnswers[currentQIndex] = optIdx;
-        if(currentQIndex < 29) {
-            currentQIndex++;
-            renderQuestion();
-        } else {
-            generateFinalAnalysis();
-        }
-    }
-
-    function prevQuestion() {
-        if(currentQIndex > 0) {
-            currentQIndex--;
-            renderQuestion();
-        } else {
-            document.getElementById('quiz-wrapper').style.display = 'none';
-            document.getElementById('setup-section').style.display = 'block';
-        }
-    }
-
-    // --- GENERARE REZULTAT FINAL ---
-    function generateFinalAnalysis() {
-        document.getElementById('quiz-wrapper').style.display = 'none';
-
-        // Calcul element astrologic
-        let scores = [0, 0, 0, 0];
-        userAnswers.forEach(ans => scores[ans]++);
-        let maxIndex = scores.indexOf(Math.max(...scores));
-        let zodiacElements = ["Foc (Dinamic, Pasionat)", "Aer (Inovator, Liber)", "Apă (Empatic, Intuitiv)", "Pământ (Pragmatic, Stabil)"];
-
-        const styleData = trendsData[selectedStyle];
-        document.getElementById('resImg').src = styleData.img;
-        document.getElementById('resTitle').innerText = styleData.name + " Style";
-
-        document.getElementById('resDesc').innerText = `Ai selectat stilul ${styleData.name} direct din Constelația Cosmică. Profilul tău combină corpul de tip ${selectedBody} cu o nuanță de piele ${selectedSkinColor}.`;
-
-        document.getElementById('resHoroscope').innerText = `În urma celor 30 de răspunsuri, modul tău predominant aparține elementului **${zodiacElements[maxIndex]}**. Starea ta emoțională indică o nevoie de expansiune creativă și încredere în instinctul propriu.`;
-
-        let makeupUl = document.getElementById('resMakeup');
-        makeupUl.innerHTML = '';
-        styleData.makeup.forEach(m => {
-            let li = document.createElement('li');
-            li.innerText = m;
-            makeupUl.appendChild(li);
-        });
-
-        let bodyUl = document.getElementById('resBodyAdvice');
-        bodyUl.innerHTML = '';
-        let li1 = document.createElement('li');
-        li1.innerText = `Recomandare Metabolism (${selectedMetabolism}): Consumă alimente bogate în nutrienți naturali adaptate ritmului tău de ardere.`;
-        let li2 = document.createElement('li');
-        li2.innerText = `Recomandare Siluetă (${selectedBody}): Pune în valoare liniile naturale vestimentare care oferă armonie vizuală.`;
-        bodyUl.appendChild(li1);
-        bodyUl.appendChild(li2);
-
-        document.getElementById('result-card').style.display = 'block';
-        document.getElementById('result-card').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Window load
-    window.onload = () => {
-        initConstellation();
-        setupBowGrids();
-    };
+// Start
+renderQuestion();
 </script>
-
 </body>
 </html>
