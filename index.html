@@ -1,687 +1,247 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AstroBeauty AI — Stil, GAD-7 & Feedback</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-    --rose-gold: #b76e79;
-    --rose-gold-light: #f4eae6;
-    --rose-gold-glow: #e8b4b8;
-    --champagne: #d9c08c;
-    --beige: #f5ebe0;
-    --text-dark: #2a1f22;
-    --text-soft: #6a5a5e;
-    --card-bg: rgba(255,255,255,0.94);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-
-/* Cursor fundiță */
-html, body, button, .bow-btn, .quiz-opt-btn, .star-node {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path fill="%23e53935" d="M12 10.5c-1.5-2.5-5-4.5-7.5-3.5C2 8 1.5 11 3.5 12.5c2 1.5 5.5.5 8.5-2zm0 3c-1.5 2.5-5 4.5-7.5 3.5C2 16 1.5 13 3.5 11.5c2-1.5 5.5-.5 8.5 2zm0-3c1.5-2.5 5-4.5 7.5-3.5C22 8 22.5 11 20.5 12.5c-2 1.5-5.5.5-8.5-2zm0 3c1.5 2.5 5 4.5 7.5 3.5C22 16 22.5 13 20.5 11.5c-2-1.5-5.5-.5-8.5 2z"/><circle cx="12" cy="12" r="2.3" fill="%23ff8a80"/></svg>') 18 18, auto !important;
-}
-
-body {
-    background: radial-gradient(ellipse at top, #241a2c 0%, #140e19 60%, #0d090f 100%);
-    color: var(--text-dark);
-    min-height: 100vh;
-    padding: 20px 12px 50px;
-}
-
-.main-container {
-    max-width: 780px;
-    margin: auto;
-    background: var(--card-bg);
-    padding: 32px 28px;
-    border-radius: 28px;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.35);
-    border: 1.5px solid rgba(183,110,121,0.5);
-}
-
-h1 {
-    font-family: 'Playfair Display', serif;
-    text-align: center;
-    color: var(--rose-gold);
-    font-size: 2.2rem;
-    margin-bottom: 4px;
-}
-.subtitle { text-align: center; font-size: 0.88rem; color: var(--text-soft); margin-bottom: 18px; }
-
-.section-label {
-    font-weight: 600;
-    font-size: 0.92rem;
-    margin: 18px 0 9px;
-    color: var(--text-dark);
-}
-.bow-options-grid { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 6px; }
-
-.bow-btn {
-    background: linear-gradient(135deg, #fff, #f4eae6);
-    border: 1.5px solid var(--rose-gold);
-    color: var(--text-dark);
-    padding: 9px 16px;
-    border-radius: 50px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    transition: 0.25s;
-    user-select: none;
-}
-.bow-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(183,110,121,0.25); }
-.bow-btn.selected {
-    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
-    color: #fff;
-    border-color: transparent;
-}
-
-.action-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--rose-gold), var(--champagne));
-    border: none;
-    color: #241820;
-    font-size: 1.02rem;
-    font-weight: 700;
-    border-radius: 18px;
-    margin-top: 22px;
-    transition: 0.3s;
-}
-.action-btn:hover { transform: translateY(-2px); }
-.action-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-
-/* GDPR + Login */
-.gdpr-box {
-    background: #fdf6f0;
-    border: 1.5px solid rgba(183,110,121,0.35);
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 18px;
-    font-size: 0.86rem;
-    line-height: 1.55;
-    color: var(--text-soft);
-}
-.consent-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin: 14px 0;
-    font-size: 0.88rem;
-}
-.consent-row input { margin-top: 3px; transform: scale(1.15); }
-.email-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--rose-gold-glow);
-    border-radius: 12px;
-    font-size: 0.95rem;
-    margin-top: 8px;
-}
-
-/* Constelație simplificată */
-.constellation-box {
-    position: relative;
-    width: 100%;
-    height: 280px;
-    background: radial-gradient(circle at 50% 40%, #2c1e34 0%, #150c1a 100%);
-    border-radius: 20px;
-    margin-bottom: 22px;
-    overflow: hidden;
-}
-.star-node {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 5;
-}
-.star-point {
-    width: 16px; height: 16px;
-    background: #c0c0c0;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #fff, 0 0 14px var(--rose-gold);
-    transition: 0.3s;
-}
-.star-label { color: #fff; font-size: 0.72rem; margin-top: 5px; font-weight: 600; text-shadow: 0 0 5px #000; }
-.star-node.active .star-point, .star-node:hover .star-point {
-    background: var(--rose-gold);
-    transform: scale(1.45);
-}
-
-/* Quiz */
-#quiz-wrapper, #feedback-wrapper, #result-card, #setup-section { display: none; }
-#landing-section { display: block; }
-
-.quiz-progress-bar-container {
-    height: 8px;
-    background: #e8e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-.quiz-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--rose-gold), var(--champagne));
-    transition: 0.35s;
-}
-.quiz-status { text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--rose-gold); margin-bottom: 14px; }
-
-.question-card {
-    background: #fdf8f4;
-    padding: 24px 20px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(183,110,121,0.35);
-    margin-bottom: 18px;
-}
-.question-text { font-size: 1.08rem; font-weight: 600; margin-bottom: 16px; line-height: 1.4; }
-
-.quiz-opt-btn {
-    padding: 13px 16px;
-    background: #fff;
-    border: 1.5px solid var(--rose-gold-glow);
-    border-radius: 14px;
-    margin-bottom: 9px;
-    font-size: 0.94rem;
-    transition: 0.2s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.quiz-opt-btn:hover { background: #fdf0f0; }
-.quiz-opt-btn.selected {
-    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
-    color: #fff;
-    border-color: transparent;
-}
-
-.nav-btns {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 8px;
-}
-.nav-btn {
-    padding: 9px 18px;
-    border-radius: 12px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    border: 1.5px solid var(--rose-gold);
-    background: #f5ebe0;
-    color: var(--rose-gold);
-    transition: 0.2s;
-}
-.nav-btn.primary {
-    background: linear-gradient(135deg, var(--rose-gold), #8a4a54);
-    color: #fff;
-    border: none;
-}
-.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* Results */
-.score-badge {
-    display: inline-block;
-    padding: 5px 14px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 0.88rem;
-    color: #fff;
-    margin-top: 6px;
-}
-.minimal { background: #2e7d32; }
-.mild { background: #f9a825; color: #222; }
-.moderate { background: #ef6c00; }
-.severe { background: #c62828; }
-
-.res-sec { margin-top: 18px; }
-.res-sec h3 {
-    font-family: 'Playfair Display', serif;
-    color: var(--rose-gold);
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--rose-gold-glow);
-    padding-bottom: 4px;
-}
-.disclaimer { font-size: 0.78rem; color: var(--text-soft); font-style: italic; margin-top: 8px; line-height: 1.45; }
-</style>
-</head>
-<body>
-<div class="main-container">
-
-    <!-- ========== 1. LANDING + GDPR + CONSENT ========== -->
-    <div id="landing-section">
-        <h1>AstroBeauty AI</h1>
-        <p class="subtitle">Stil personalizat • Test GAD-7 • Feedback pentru îmbunătățire</p>
-
-        <div class="gdpr-box">
-            <strong>Disclaimer GDPR & Confidențialitate</strong><br><br>
-            Datele introduse (email, preferințe de stil, răspunsuri la test) sunt folosite exclusiv pentru generarea rezultatelor personalizate și, doar cu acordul tău, pentru îmbunătățirea aplicației. 
-            Nu vindem datele către terți. Poți solicita ștergerea datelor oricând. 
-            Continuând, confirmi că ai peste 16 ani și ești de acord cu prelucrarea datelor conform GDPR.
-        </div>
-
-        <div class="section-label">Email (opțional – pentru salvare rezultat)</div>
-        <input type="email" id="userEmail" class="email-input" placeholder="adresa@email.com">
-
-        <div class="consent-row">
-            <input type="checkbox" id="consentData">
-            <label for="consentData">Sunt de acord ca datele și feedback-ul meu să fie folosite pentru a îmbunătăți aplicația AstroBeauty (anonimizat).</label>
-        </div>
-
-        <div class="consent-row">
-            <input type="checkbox" id="consentGDPR">
-            <label for="consentGDPR">Am citit și sunt de acord cu prelucrarea datelor conform GDPR.</label>
-        </div>
-
-        <button class="action-btn" id="startBtn" disabled onclick="goToSetup()">Continuă către Profilul de Stil →</button>
-    </div>
-
-    <!-- ========== 2. SETUP (Stil + Corp + Unghii + Picioare) ========== -->
-    <div id="setup-section">
-        <h1>AstroBeauty AI</h1>
-        <p class="subtitle">Alege stilul și caracteristicile tale</p>
-
-        <div class="section-label">✦ Trend din Constelație</div>
-        <div class="constellation-box" id="constellationBox"></div>
-
-        <div class="section-label">Tip de Corp</div>
-        <div class="bow-options-grid" id="bodyGrid">
-            <div class="bow-btn selected" data-val="hourglass">Clepsidră</div>
-            <div class="bow-btn" data-val="pear">Pară</div>
-            <div class="bow-btn" data-val="apple">Măr</div>
-            <div class="bow-btn" data-val="rectangle">Dreptunghi</div>
-            <div class="bow-btn" data-val="athletic">Atletic</div>
-        </div>
-
-        <div class="section-label">Formă Unghii</div>
-        <div class="bow-options-grid" id="nailGrid">
-            <div class="bow-btn selected" data-val="almond">Migdală</div>
-            <div class="bow-btn" data-val="oval">Oval</div>
-            <div class="bow-btn" data-val="square">Pătrat</div>
-            <div class="bow-btn" data-val="coffin">Coffin / Balerina</div>
-            <div class="bow-btn" data-val="stiletto">Stiletto</div>
-        </div>
-
-        <div class="section-label">Formă Degete Mâini</div>
-        <div class="bow-options-grid" id="fingerGrid">
-            <div class="bow-btn selected" data-val="long">Lungi & subțiri</div>
-            <div class="bow-btn" data-val="short">Scurte</div>
-            <div class="bow-btn" data-val="tapered">Îngustate</div>
-            <div class="bow-btn" data-val="wide">Late</div>
-        </div>
-
-        <div class="section-label">Formă Picioare</div>
-        <div class="bow-options-grid" id="footGrid">
-            <div class="bow-btn selected" data-val="egyptian">Egiptean</div>
-            <div class="bow-btn" data-val="greek">Grec</div>
-            <div class="bow-btn" data-val="roman">Roman</div>
-            <div class="bow-btn" data-val="germanic">Germanic</div>
-            <div class="bow-btn" data-val="celtic">Celtic</div>
-        </div>
-
-        <div class="section-label">Formă Degete de la Picioare</div>
-        <div class="bow-options-grid" id="toeGrid">
-            <div class="bow-btn selected" data-val="egyptian">Egiptean (deget mare dominant)</div>
-            <div class="bow-btn" data-val="greek">Grec (al 2-lea deget mai lung)</div>
-            <div class="bow-btn" data-val="roman">Roman (primele 3 egale)</div>
-            <div class="bow-btn" data-val="square">Pătrat</div>
-        </div>
-
-        <div class="section-label">Tip Ten</div>
-        <div class="bow-options-grid" id="skinGrid">
-            <div class="bow-btn selected" data-val="normal">Normal</div>
-            <div class="bow-btn" data-val="oily">Gras</div>
-            <div class="bow-btn" data-val="dry">Uscat</div>
-            <div class="bow-btn" data-val="combination">Mixt</div>
-        </div>
-
-        <button class="action-btn" onclick="startGAD7()">Începe Testul GAD-7 (7 întrebări) →</button>
-    </div>
-
-    <!-- ========== 3. QUIZ GAD-7 ========== -->
-    <div id="quiz-wrapper">
-        <div class="quiz-progress-bar-container"><div class="quiz-progress-fill" id="progressFill"></div></div>
-        <div class="quiz-status" id="quizStatus">Întrebarea 1 din 7</div>
-
-        <div class="question-card">
-            <div class="question-text" id="qText"></div>
-            <div id="qOptions"></div>
-        </div>
-
-        <div class="nav-btns">
-            <button class="nav-btn" onclick="prevQ()">← Înapoi</button>
-            <button class="nav-btn primary" id="continueBtn" disabled onclick="nextQ()">Continuă →</button>
-        </div>
-    </div>
-
-    <!-- ========== 4. REZULTATE ========== -->
-    <div id="result-card">
-        <h1 style="font-size:1.8rem; margin-bottom:12px;" id="resTitle">Rezultatul tău</h1>
-
-        <div class="res-sec">
-            <h3>🧠 Anxietate (GAD-7)</h3>
-            <p id="gadScore"></p>
-            <div class="score-badge" id="gadBadge"></div>
-            <p class="disclaimer">Acest test este un instrument de auto-evaluare și nu înlocuiește un diagnostic medical. Dacă scorul este ridicat, consultă un specialist.</p>
-        </div>
-
-        <div class="res-sec">
-            <h3>✨ Stil & Profil</h3>
-            <p id="resStyle"></p>
-        </div>
-
-        <div class="res-sec">
-            <h3>💅 Recomandare Unghii personalizată</h3>
-            <p id="resNails"></p>
-        </div>
-
-        <div class="res-sec">
-            <h3>🦶 Formă picioare & recomandare</h3>
-            <p id="resFeet"></p>
-        </div>
-
-        <button class="action-btn" onclick="goToFeedback()">Continuă către Feedback (5 întrebări) →</button>
-    </div>
-
-    <!-- ========== 5. FEEDBACK STANDARDIZAT ========== -->
-    <div id="feedback-wrapper">
-        <h1 style="font-size:1.7rem;">Feedback pentru îmbunătățire</h1>
-        <p class="subtitle">5 întrebări scurte – ne ajuți să facem aplicația mai bună</p>
-
-        <div class="quiz-progress-bar-container"><div class="quiz-progress-fill" id="fbProgress"></div></div>
-        <div class="quiz-status" id="fbStatus">Întrebarea 1 din 5</div>
-
-        <div class="question-card">
-            <div class="question-text" id="fbText"></div>
-            <div id="fbOptions"></div>
-        </div>
-
-        <div class="nav-btns">
-            <button class="nav-btn" onclick="prevFb()">← Înapoi</button>
-            <button class="nav-btn primary" id="fbContinue" disabled onclick="nextFb()">Continuă →</button>
-        </div>
-    </div>
-
-    <!-- Final -->
-    <div id="final-section" style="display:none; text-align:center; padding:30px 10px;">
-        <h1 style="font-size:1.8rem;">Mulțumim! 💕</h1>
-        <p style="margin:16px 0; color:var(--text-soft);">Feedback-ul tău ne ajută să îmbunătățim AstroBeauty.</p>
-        <button class="action-btn" onclick="location.reload()">Reîncepe analiza</button>
-    </div>
-</div>
-
-<script>
-// ========== STATE ==========
-let selectedStyle = "rose-gold";
-let selectedBody = "hourglass";
-let selectedNail = "almond";
-let selectedFinger = "long";
-let selectedFoot = "egyptian";
-let selectedToe = "egyptian";
-let selectedSkin = "normal";
-let userEmail = "";
-let consentData = false;
-
-const trends = {
-    "rose-gold": { name: "Rose Gold", x:50, y:48 },
-    "punk": { name: "Punk", x:18, y:22 },
-    "rock": { name: "Rock", x:82, y:22 },
-    "boho": { name: "Boho", x:15, y:75 },
-    "cyberpunk": { name: "Cyberpunk", x:85, y:75 },
-    "glam": { name: "Glamour", x:50, y:15 },
-    "minimalist": { name: "Minimalist", x:50, y:85 }
-};
-
-// Nail recommendations by style
-const nailRecs = {
-    "rose-gold": "Unghii migdală sau ovale, lungime medie, nuanțe nude-roz, chrome rose-gold sau french tip delicat.",
-    "punk": "Formă coffin sau stiletto, negru mat, vișiniu închis sau design grafic. Lungime medie-lungă.",
-    "rock": "Coffin sau squoval, roșu sângeriu, negru gloss sau ombré. Aspect statement.",
-    "boho": "Oval sau squoval natural, nuanțe pământii, nude, sau detalii florale discrete. Lungime scurtă-medie.",
-    "cyberpunk": "Stiletto sau coffin ascuțit, chrome, holografic, neon sau metalic. Lungime lungă.",
-    "glam": "Migdală elegantă sau coffin, roșu clasic, nude luxe sau gold foil. Finish glass.",
-    "minimalist": "Pătrat scurt sau oval scurt, nude, transparent sau milky white. Clean și simplu."
-};
-
-const footRecs = {
-    "egyptian": "Degetul mare dominant – recomandăm pantofi cu vârf rotunjit sau almond, evita vârfurile prea ascuțite.",
-    "greek": "Al 2-lea deget mai lung – ideal pantofi cu spațiu în față, sandale cu barete reglabile.",
-    "roman": "Primele 3 degete aproape egale – se potrivesc majoritatea formelor, preferabil square-toe sau almond.",
-    "germanic": "Degete late și scurte – alege pantofi cu lățime generoasă și suport bun.",
-    "celtic": "Degete înguste, arc ridicat – pantofi cu susținere a arcului și vârf mai îngust."
-};
-
-// GAD-7
-const gadQuestions = [
-    { text: "În ultimele 2 săptămâni, cât de des te-ai simțit nervoasă, anxioasă sau tensionată?", scores: [0,1,2,3] },
-    { text: "Cât de des nu ai putut să oprești sau să controlezi îngrijorarea?", scores: [0,1,2,3] },
-    { text: "Cât de des te-ai îngrijorat prea mult din cauza unor lucruri diferite?", scores: [0,1,2,3] },
-    { text: "Cât de des ai avut probleme să te relaxezi?", scores: [0,1,2,3] },
-    { text: "Cât de des ai fost atât de agitată încât îți era greu să stai pe loc?", scores: [0,1,2,3] },
-    { text: "Cât de des te-ai enervat sau iritat ușor?", scores: [0,1,2,3] },
-    { text: "Cât de des ți-a fost teamă ca și cum s-ar putea întâmpla ceva groaznic?", scores: [0,1,2,3] }
-];
-const gadOptions = ["Deloc", "Câteva zile", "Mai mult de jumătate din zile", "Aproape în fiecare zi"];
-
-let currentQ = 0;
-let gadAnswers = new Array(7).fill(null);
-let selectedOpt = null;
-
-// Feedback 5 questions × 5 options
-const feedbackQs = [
-    { text: "Cât de ușor ți s-a părut să completezi testul?", options: ["Foarte greu", "Greu", "Neutru", "Ușor", "Foarte ușor"] },
-    { text: "Cât de relevante ți s-au părut rezultatele pentru tine?", options: ["Deloc relevante", "Puțin relevante", "Oarecum relevante", "Relevante", "Foarte relevante"] },
-    { text: "Ai găsit utile recomandările de stil / unghii / parfum?", options: ["Deloc", "Puțin", "Moderat", "Destul de utile", "Foarte utile"] },
-    { text: "Cât de probabil este să recomanzi aplicația unei prietene?", options: ["Deloc probabil", "Puțin probabil", "Neutru", "Probabil", "Foarte probabil"] },
-    { text: "Ce ți-a plăcut cel mai mult la experiență?", options: ["Designul", "Viteza testului", "Personalizarea", "Recomandările", "Totul în ansamblu"] }
-];
-let fbIndex = 0;
-let fbAnswers = new Array(5).fill(null);
-let fbSelected = null;
-
-// ========== LANDING ==========
-document.getElementById('consentGDPR').addEventListener('change', checkConsent);
-document.getElementById('consentData').addEventListener('change', checkConsent);
-
-function checkConsent() {
-    const ok = document.getElementById('consentGDPR').checked;
-    document.getElementById('startBtn').disabled = !ok;
-    consentData = document.getElementById('consentData').checked;
-}
-
-function goToSetup() {
-    userEmail = document.getElementById('userEmail').value.trim();
-    document.getElementById('landing-section').style.display = 'none';
-    document.getElementById('setup-section').style.display = 'block';
-    initConstellation();
-    setupGrids();
-}
-
-// ========== SETUP ==========
-function initConstellation() {
-    const box = document.getElementById('constellationBox');
-    box.innerHTML = '';
-    Object.keys(trends).forEach(key => {
-        const t = trends[key];
-        const node = document.createElement('div');
-        node.className = 'star-node' + (key === selectedStyle ? ' active' : '');
-        node.style.left = t.x + '%';
-        node.style.top = t.y + '%';
-        node.innerHTML = `<div class="star-point"></div><div class="star-label">${t.name}</div>`;
-        node.onclick = () => {
-            selectedStyle = key;
-            document.querySelectorAll('.star-node').forEach(n => n.classList.remove('active'));
-            node.classList.add('active');
-        };
-        box.appendChild(node);
-    });
-}
-
-function setupGrids() {
-    const map = {
-        bodyGrid: v => selectedBody = v,
-        nailGrid: v => selectedNail = v,
-        fingerGrid: v => selectedFinger = v,
-        footGrid: v => selectedFoot = v,
-        toeGrid: v => selectedToe = v,
-        skinGrid: v => selectedSkin = v
-    };
-    Object.keys(map).forEach(id => {
-        document.querySelectorAll(`#${id} .bow-btn`).forEach(btn => {
-            btn.onclick = () => {
-                document.querySelectorAll(`#${id} .bow-btn`).forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                map[id](btn.dataset.val);
-            };
-        });
-    });
-}
-
-function startGAD7() {
-    document.getElementById('setup-section').style.display = 'none';
-    document.getElementById('quiz-wrapper').style.display = 'block';
-    currentQ = 0;
-    gadAnswers = new Array(7).fill(null);
-    selectedOpt = null;
-    renderGAD();
-}
-
-// ========== GAD-7 ==========
-function renderGAD() {
-    const q = gadQuestions[currentQ];
-    document.getElementById('qText').textContent = q.text;
-    document.getElementById('quizStatus').textContent = `Întrebarea ${currentQ + 1} din 7`;
-    document.getElementById('progressFill').style.width = ((currentQ + 1) / 7 * 100) + '%';
-
-    const cont = document.getElementById('qOptions');
-    cont.innerHTML = '';
-    selectedOpt = gadAnswers[currentQ];
-
-    gadOptions.forEach((opt, idx) => {
-        const btn = document.createElement('div');
-        btn.className = 'quiz-opt-btn' + (selectedOpt === idx ? ' selected' : '');
-        btn.innerHTML = `<span>${opt}</span><span>➔</span>`;
-        btn.onclick = () => {
-            selectedOpt = idx;
-            document.querySelectorAll('.quiz-opt-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            document.getElementById('continueBtn').disabled = false;
-        };
-        cont.appendChild(btn);
-    });
-    document.getElementById('continueBtn').disabled = selectedOpt === null;
-}
-
-function nextQ() {
-    if (selectedOpt === null) return;
-    gadAnswers[currentQ] = selectedOpt;
-    if (currentQ < 6) {
-        currentQ++;
-        selectedOpt = null;
-        renderGAD();
-    } else {
-        showResults();
-    }
-}
-
-function prevQ() {
-    if (currentQ > 0) {
-        currentQ--;
-        selectedOpt = gadAnswers[currentQ];
-        renderGAD();
-    } else {
-        document.getElementById('quiz-wrapper').style.display = 'none';
-        document.getElementById('setup-section').style.display = 'block';
-    }
-}
-
-// ========== RESULTS ==========
-function showResults() {
-    document.getElementById('quiz-wrapper').style.display = 'none';
-    document.getElementById('result-card').style.display = 'block';
-
-    let score = 0;
-    gadAnswers.forEach((a, i) => { if (a !== null) score += gadQuestions[i].scores[a]; });
-
-    let level, cls;
-    if (score <= 4) { level = 'Minimă'; cls = 'minimal'; }
-    else if (score <= 9) { level = 'Ușoară'; cls = 'mild'; }
-    else if (score <= 14) { level = 'Moderată'; cls = 'moderate'; }
-    else { level = 'Severă'; cls = 'severe'; }
-
-    document.getElementById('gadScore').textContent = `Scor: ${score} / 21`;
-    const badge = document.getElementById('gadBadge');
-    badge.textContent = level;
-    badge.className = 'score-badge ' + cls;
-
-    document.getElementById('resTitle').textContent = trends[selectedStyle].name + ' Style';
-    document.getElementById('resStyle').textContent = `Stil: ${trends[selectedStyle].name} • Corp: ${selectedBody} • Ten: ${selectedSkin} • Degete mâini: ${selectedFinger}`;
-
-    document.getElementById('resNails').textContent = nailRecs[selectedStyle] || nailRecs['minimalist'];
-    document.getElementById('resFeet').textContent = `Formă picior: ${selectedFoot} | Degete: ${selectedToe}. ${footRecs[selectedFoot] || ''}`;
-}
-
-// ========== FEEDBACK ==========
-function goToFeedback() {
-    document.getElementById('result-card').style.display = 'none';
-    document.getElementById('feedback-wrapper').style.display = 'block';
-    fbIndex = 0;
-    fbAnswers = new Array(5).fill(null);
-    fbSelected = null;
-    renderFb();
-}
-
-function renderFb() {
-    const q = feedbackQs[fbIndex];
-    document.getElementById('fbText').textContent = q.text;
-    document.getElementById('fbStatus').textContent = `Întrebarea ${fbIndex + 1} din 5`;
-    document.getElementById('fbProgress').style.width = ((fbIndex + 1) / 5 * 100) + '%';
-
-    const cont = document.getElementById('fbOptions');
-    cont.innerHTML = '';
-    fbSelected = fbAnswers[fbIndex];
-
-    q.options.forEach((opt, idx) => {
-        const btn = document.createElement('div');
-        btn.className = 'quiz-opt-btn' + (fbSelected === idx ? ' selected' : '');
-        btn.innerHTML = `<span>${opt}</span><span>➔</span>`;
-        btn.onclick = () => {
-            fbSelected = idx;
-            document.querySelectorAll('#fbOptions .quiz-opt-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            document.getElementById('fbContinue').disabled = false;
-        };
-        cont.appendChild(btn);
-    });
-    document.getElementById('fbContinue').disabled = fbSelected === null;
-}
-
-function nextFb() {
-    if (fbSelected === null) return;
-    fbAnswers[fbIndex] = fbSelected;
-    if (fbIndex < 4) {
-        fbIndex++;
-        fbSelected = null;
-        renderFb();
-    } else {
-        // Aici poți trimite fbAnswers + consentData + userEmail către backend
-        console.log('Feedback salvat:', { email: userEmail, consent: consentData, answers: fbAnswers, style: selectedStyle });
-        document.getElementById('feedback-wrapper').style.display = 'none';
-        document.getElementById('final-section').style.display = 'block';
-    }
-}
-
-function prevFb() {
-    if (fbIndex > 0) {
-        fbIndex--;
-        fbSelected = fbAnswers[fbIndex];
-        renderFb();
-    } else {
-        document.getElementById('feedback-wrapper').style.display = 'none';
-        document.getElementById('result-card').style.display = 'block';
-    }
-}
-</script>
-</body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Styling App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            cursor: none !important; 
+        }
+
+        body, html {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #0d0914; 
+            color: #1a1a1a;
+        }
+
+        .stars, .twinkling {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            display: block;
+        }
+        .stars {
+            background: #000 url('https://www.transparenttextures.com/patterns/stardust.png') repeat top center;
+            z-index: -2;
+        }
+        .twinkling {
+            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat top center;
+            z-index: -1;
+            animation: move-twink-back 200s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes move-twink-back {
+            from {background-position: 0 0;}
+            to {background-position: -10000px 5000px;}
+        }
+
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            font-size: 28px; 
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s linear;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);
+        }
+        .sparkle {
+            position: fixed;
+            width: 5px; height: 5px;
+            background: #ffd1dc; 
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            box-shadow: 0 0 8px #ffb6c1;
+            animation: fadeSparkle 0.6s forwards;
+        }
+        @keyframes fadeSparkle {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.1) translateY(15px); }
+        }
+
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .panel {
+            position: absolute;
+            width: 90%;
+            max-width: 420px;
+            max-height: 90vh;
+            background: linear-gradient(135deg, rgba(253, 233, 237, 0.9) 0%, rgba(243, 213, 222, 0.85) 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.5);
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .panel.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+        .panel.scrollable {
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+        .panel.scrollable::-webkit-scrollbar { width: 5px; }
+        .panel.scrollable::-webkit-scrollbar-thumb { background: #d4a5b4; border-radius: 10px; }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-section { text-align: center; margin-bottom: 25px; }
+        .logo { width: 60px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 10px; }
+        h1 { font-size: 24px; font-weight: 700; letter-spacing: 2px; line-height: 1.1; }
+        h1 span { font-weight: 400; font-size: 16px; letter-spacing: 4px; }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.4);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus { background: rgba(255,255,255,0.7); border-color: #d4a5b4; }
+
+        .gdpr-box {
+            background: rgba(255,255,255,0.3);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-wrapper, .cb-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .cb-option {
+            background: rgba(255,255,255,0.4);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: 0.2s;
+        }
+        .cb-option:hover { background: rgba(255,255,255,0.7); }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #e6b8c4, #d4a5b4);
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(212, 165, 180, 0.4);
+            transition: 0.3s;
+        }
+        .btn:hover { background: linear-gradient(90deg, #d4a5b4, #c293a2); transform: translateY(-2px); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #d4a5b4;
+            color: #d4a5b4;
+            box-shadow: none;
+        }
+        .btn-outline:hover { background: rgba(212, 165, 180, 0.1); }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 15px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .style-item { text-align: center; font-size: 11px; font-weight: 600; }
+        .planet {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 8px auto;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 5px 10px rgba(0,0,0,0.2);
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .style-item.active .planet { border-color: #fff; transform: scale(1.1); box-shadow: 0 0 15px #d4a5b4; }
+
+        .punk { background: linear-gradient(45deg, #2b2b2b, #ff4b4b); }
+        .cyberpunk { background: linear-gradient(45deg, #000, #0ff, #f0f); }
+        .rock { background: radial-gradient(circle, #555, #111); }
+        .minimalist { background: radial-gradient(circle, #fff, #ddd); }
+        .glamour { background: radial-gradient(circle, #ffd700, #ff8c00); }
+        .boho { background: radial-gradient(circle, #d4a373, #8b5a2b); }
+        .artdeco { background: repeating-linear-gradient(45deg, #000, #000 10px, #ffd700 10px, #ffd700 20px); }
+        .dadaism { background: conic-gradient(#f00, #0f0, #00f, #ff0); }
+
+        .traits-section { display: flex; gap: 15px; margin-bottom: 15px; }
+        .trait-box {
+            background: rgba(255,255,255,0.3);
+            border-radius: 12px;
+            padding: 10px;
+            flex: 1;
+            text-align: center;
+        }
+        .trait-box h4 { font-size: 11px; margin-bottom: 10px; opacity: 0.8; }
+        .skin-grid { display: flex; justify-content: space-around; }
+        .swatch { width: 25px; height: 25px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
+        .gender-tags { display: flex; flex-direction: column; gap: 5px; }
+        .gtag {
+            background: rgba(255,255,255,0.5);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .result-image-box {
+            width: 100%;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .res-img { width: 100%; height: 100%; object-fit: cover; }
+        .result-text p {
+            background: rgba(255,255,255,0.4);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .progress-container { margin-top: 15px; display: flex; align-items: center; gap: 10px;
 </html>
