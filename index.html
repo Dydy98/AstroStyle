@@ -40,6 +40,22 @@ body {
     border: 1.5px solid rgba(183,110,121,0.5);
 }
 
+/* Stilizare Logo */
+.site-logo {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--rose-gold);
+    box-shadow: 0 4px 12px rgba(183,110,121,0.3);
+    margin: 0 auto 12px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.site-logo:hover {
+    transform: scale(1.05);
+}
+
 h1 {
     font-family: 'Playfair Display', serif;
     text-align: center;
@@ -249,6 +265,9 @@ h1 {
 <body>
 <div class="main-container">
 
+    <!-- Logo integrat -->
+    <img src="images/logo.jpg" alt="AstroBeauty AI Logo" class="site-logo">
+
     <!-- ========== 1. LANDING + GDPR + CONSENT ========== -->
     <div id="landing-section">
         <h1>AstroBeauty AI</h1>
@@ -433,7 +452,6 @@ const trends = {
     "minimalist": { name: "Minimalist", x:50, y:85 }
 };
 
-// Nail recommendations by style
 const nailRecs = {
     "rose-gold": "Unghii migdală sau ovale, lungime medie, nuanțe nude-roz, chrome rose-gold sau french tip delicat.",
     "punk": "Formă coffin sau stiletto, negru mat, vișiniu închis sau design grafic. Lungime medie-lungă.",
@@ -452,7 +470,6 @@ const footRecs = {
     "celtic": "Degete înguste, arc ridicat – pantofi cu susținere a arcului și vârf mai îngust."
 };
 
-// GAD-7
 const gadQuestions = [
     { text: "În ultimele 2 săptămâni, cât de des te-ai simțit nervoasă, anxioasă sau tensionată?", scores: [0,1,2,3] },
     { text: "Cât de des nu ai putut să oprești sau să controlezi îngrijorarea?", scores: [0,1,2,3] },
@@ -468,7 +485,6 @@ let currentQ = 0;
 let gadAnswers = new Array(7).fill(null);
 let selectedOpt = null;
 
-// Feedback 5 questions × 5 options
 const feedbackQs = [
     { text: "Cât de ușor ți s-a părut să completezi testul?", options: ["Foarte greu", "Greu", "Neutru", "Ușor", "Foarte ușor"] },
     { text: "Cât de relevante ți s-au părut rezultatele pentru tine?", options: ["Deloc relevante", "Puțin relevante", "Oarecum relevante", "Relevante", "Foarte relevante"] },
@@ -665,7 +681,6 @@ function nextFb() {
         fbSelected = null;
         renderFb();
     } else {
-        // Aici poți trimite fbAnswers + consentData + userEmail către backend
         console.log('Feedback salvat:', { email: userEmail, consent: consentData, answers: fbAnswers, style: selectedStyle });
         document.getElementById('feedback-wrapper').style.display = 'none';
         document.getElementById('final-section').style.display = 'block';
